@@ -3,16 +3,11 @@ package javagame.Menu;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javagame.InitGame;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class SettingMenu extends Menu {
@@ -39,7 +34,7 @@ public class SettingMenu extends Menu {
         panel.add(labels, BorderLayout.EAST);
         panel.add(submit, BorderLayout.SOUTH);
 
-        JSpinner topLineCount = CreateSpinner("تعداد لاین راست به چپ", SettingMenuResult.getTopLineCount(), MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT + 10, 1, null);
+        JSpinner topLineCount = CreateSpinner("تعداد لاین راست به چپ", SettingMenuResult.getTopLineCount(), MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT , 1, null);
         controls.add(topLineCount);
         controls.add(CreateMargin(10, 0, 10, 0));
         
