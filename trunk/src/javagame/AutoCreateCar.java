@@ -38,7 +38,7 @@ public class AutoCreateCar implements Runnable {
             
             int speed = tempLine.getMinCarSpeed() + SecureRandom.nextInt(tempLine.getMaxCarSpeed());
             CarType carType =  new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
-            Car newCar = new Car(1, InitPostion(carType.getCarWidth()), speed,catType,this);
+            Car newCar = new Car(1,(tempLine.getDirection() == Const.LINE_DIRECTION_RTL )? new float[]{Const.GAME_WINDOWS_WIDTH,0}:new float[]{0,0}, speed,carType,tempLine);
             tempLine.CreateNewCar(newCar);
             
             try {

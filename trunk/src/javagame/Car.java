@@ -36,8 +36,12 @@ public class Car {
         return CarType;
     }
 
-    public float getPosition() {
+    public float getHeadPosition() {
         return Position[0];
+    }
+    
+     public float getEndPosition() {
+        return Position[1];
     }
 
     public int getId() {
@@ -64,10 +68,9 @@ public class Car {
 //        result[1] = Crosswalk.getMiddleOfPosition() + StartPositionRate + crosswalkStartPositionRate + DistanceToCrosswalk;
 //        return result;
 //    }
-
     public boolean IsIntheCrosswalk() {
         float[] crosswalkPosition = Line.getAchieveCrosswalkPosistion();
-        System.out.println(Position[0] +" "+crosswalkPosition[0] +" "+crosswalkPosition[1]);
+        System.out.println(Position[0] + " " + crosswalkPosition[0] + " " + crosswalkPosition[1]);
         return ((Position[0] >= crosswalkPosition[0])
                 && (Position[0] <= crosswalkPosition[1]));
 
@@ -76,7 +79,6 @@ public class Car {
 //    public void setAchieveCrosswalkTime(long[] achieveCrosswalkTime) {
 //        AchieveCrosswalkTime = achieveCrosswalkTime;
 //    }
-
 //    public final long[] calcuteAchieveCrosswalkTime() {
 //        float[] crosswalkPosition = getAchieveCrosswalkPosistion();
 //
@@ -88,7 +90,6 @@ public class Car {
 //
 //        return Achieve;
 //    }
-
     private float getSpeedInCrosswalk() {
         return Speed * .2f;
     }
@@ -100,9 +101,16 @@ public class Car {
 
     public void MoveInLine() {
         float tempSpeed = getSpeed();
-        Position[0] += Line.getDirection() == Const.LINE_DIRECTION_LTR
-                ? tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000
-                : tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000 * (-1);
+
+        if (Line.getDirection() == Const.LINE_DIRECTION_LTR) {
+            Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING;
+            Position[1] = Position[0] - CarType.getCarWidth();
+        } 
+        else {
+            Position[0] -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
+            Position[1] = Position[0] - CarType.getCarWidth();
+        }
+        
     }
 
     public void ChangeLine() {
