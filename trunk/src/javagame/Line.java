@@ -53,6 +53,10 @@ public final class Line {
         return Cars;
     }
 
+    public float[] getCrosswalkPosition() {
+        return CrosswalkPosition;
+    }
+
     public boolean getDirection() {
         return (Direction == Const.LINE_DIRECTION_RTL) ? Const.LINE_DIRECTION_RTL : Const.LINE_DIRECTION_LTR;
     }
@@ -63,9 +67,18 @@ public final class Line {
 
     public void CreateNewCar(Car newCar) {
         newCar.setLine(this);
-        //if(Cars == null)this.Cars = new ArrayList<>();
-
-        Cars.add(newCar);
+        if (Cars.size() > 0) {
+            Car lastCar = Cars.get(Cars.size() - 1);
+            if (getDirection() == Const.LINE_DIRECTION_LTR) {
+                if (lastCar.getEndPosition() >= lastCar.getCarType().getCarWidth()) {
+                    Cars.add(newCar);
+                }
+            } else if (lastCar.getEndPosition() >= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
+                Cars.add(newCar);
+            }
+        }else{
+            Cars.add(newCar);
+        }
     }
 
     public void Dispose() {
@@ -73,7 +86,7 @@ public final class Line {
     }
 
     public final float[] getAchieveCrosswalkPosistion() {
-        float middle = Crosswalk.getMiddleOfPosition();
+        float middle = Crosswalk.getMiddlePosition();
         float[] result = new float[2];
         if (Direction == Const.LINE_DIRECTION_LTR) {
 

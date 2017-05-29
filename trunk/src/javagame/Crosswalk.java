@@ -1,14 +1,14 @@
 package javagame;
 
 public class Crosswalk {
-    private static int MiddleOfPosition;
+    private static int MiddlePosition;
     
-    public static int getMiddleOfPosition(){
-        return MiddleOfPosition;
+    public static int getMiddlePosition(){
+        return MiddlePosition;
     }
     
-    public static void setMiddleOfPosition(int middleOfPosition){
-        MiddleOfPosition = middleOfPosition;
+    public static void setMiddlePosition(int middlePosition){
+        MiddlePosition = middlePosition;
     }
     
 }
