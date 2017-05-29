@@ -75,10 +75,12 @@ public class InitGraphic extends Frame implements Runnable {
                 });
                 try {
                     Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
-                } catch (Exception e) {
+                } catch (InterruptedException e) {
                     System.out.println(e);
                 }
+                
                 repaint();
+                
             } catch (Exception e) {
                 System.out.println(e);
             }

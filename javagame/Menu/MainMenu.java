@@ -26,10 +26,11 @@ public class MainMenu extends Menu {
         JPanel controls = new JPanel(new GridLayout(6,0));
         
         panel.add(controls, BorderLayout.CENTER);
+        
         JButton startGame = CreateButton("شروع بازی",
                 (ActionEvent e) -> {
                     InitGame start = new InitGame();
-                    start.AutoCreateCar(1, 1, 50);
+                    start.AutoCreateCar(SettingMenuResult.getTopLineCount(), SettingMenuResult.getBottomLineCount(), 50);
                 }
         );
         controls.add(startGame);//,BorderLayout.CENTER
