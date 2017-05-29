@@ -48,7 +48,7 @@ public class AutoCreateCar implements Runnable {
             }
         }
     }
-//    private float[] InitPostion(int carWidth){
+//  //  private float[] InitPostion(int carWidth){
 //        float[] position = new float[2];
 //
 //        int CarWidthRate = this.getDirection() == Const.LINE_DIRECTION_LTR
