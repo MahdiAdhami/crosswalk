@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class InitGraphic extends Frame implements Runnable {
 
@@ -18,6 +20,7 @@ public class InitGraphic extends Frame implements Runnable {
     public ArrayList<Line> Lines;
     // variable for keeping cross walk middle position
     private final int MiddleOfCrosswalkPosition;
+    // Line Image
     private Image CrosswalkImage;
 
     // Constructor for init lines and window
@@ -37,7 +40,7 @@ public class InitGraphic extends Frame implements Runnable {
     // Initialize game window
     private void SetInit() {
         setTitle(Const.GAME_NAME);
-
+        
         setSize(Const.GAME_WINDOWS_WIDTH, Const.GAME_WINDOWS_HEIGHT);
         setVisible(true);
         setAlwaysOnTop(true);

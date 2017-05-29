@@ -25,9 +25,9 @@ public final class Const {
     public final static int GAME_WINDOWS_HEIGHT = 500;
     
     
-    public final static long CREATE_CAR_RATE = 10000 - 0;
+    public final static long CREATE_CAR_RATE = 10000 - 9999;
     
-    public final static long SLEEP_TIME_RE_PAINTING = 300;
+    public final static long SLEEP_TIME_RE_PAINTING = 200;
 
     
     // Cars Speed Rate

@@ -11,7 +11,7 @@ public class AutoCreateCar implements Runnable {
     public static SecureRandom SecureRandom = new SecureRandom();
 
     AutoCreateCar(int RtlLineCount, int LtrLineCount, int middleOfCrosswalkPosition) {
-        Crosswalk.setMiddleOfPosition(middleOfCrosswalkPosition);
+        Crosswalk.setMiddlePosition(middleOfCrosswalkPosition);
         this.LtrLineCount = LtrLineCount;
         this.RtlLineCount = RtlLineCount;
     }

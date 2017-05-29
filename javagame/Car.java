@@ -68,9 +68,10 @@ public class Car {
 //        result[1] = Crosswalk.getMiddleOfPosition() + StartPositionRate + crosswalkStartPositionRate + DistanceToCrosswalk;
 //        return result;
 //    }
+    
     public boolean IsIntheCrosswalk() {
-        float[] crosswalkPosition = Line.getAchieveCrosswalkPosistion();
-        System.out.println(Position[0] + " " + crosswalkPosition[0] + " " + crosswalkPosition[1]);
+        float[] crosswalkPosition = Line.getCrosswalkPosition();
+//        System.out.println(Position[0] + " " + crosswalkPosition[0] + " " + crosswalkPosition[1]);
         return ((Position[0] >= crosswalkPosition[0])
                 && (Position[0] <= crosswalkPosition[1]));
 

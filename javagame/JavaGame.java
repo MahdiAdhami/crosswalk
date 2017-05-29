@@ -9,11 +9,11 @@ public class JavaGame {
 //  SettingMenuResult x = new SettingMenuResult(2,13,12);
 //  x.SaveChanges();
                     
-        MainMenu w = new MainMenu("شروع بازی", 200, 200);
-        w.Execute();
-
-//        InitGame init = new InitGame();
-//        init.AutoCreateCar(1, 0, 400);
+//        MainMenu w = new MainMenu("شروع بازی", 200, 200);
+//        w.Execute();
+//
+        InitGame init = new InitGame();
+        init.AutoCreateCar(2, 2, 400);
 }
 
 }
