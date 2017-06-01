@@ -47,6 +47,11 @@ public class Car {
     public int getId() {
         return Id;
     }
+    
+    public Line getLine()
+    {
+        return Line;
+    }
 
 //    public float[] getAchieveCrosswalkPosistion() {
 //        float StartPositionRate = 0f;
@@ -71,9 +76,18 @@ public class Car {
     
     public boolean IsIntheCrosswalk() {
         float[] crosswalkPosition = Line.getCrosswalkPosition();
-//        System.out.println(Position[0] + " " + crosswalkPosition[0] + " " + crosswalkPosition[1]);
-        return ((Position[0] >= crosswalkPosition[0])
-                && (Position[0] <= crosswalkPosition[1]));
+//      System.out.println(Position[0] + " " + crosswalkPosition[0] + " " + crosswalkPosition[1]);
+        if(Line.getDirection() == Const.LINE_DIRECTION_LTR)
+        {
+            return ((Position[0] + CarType.getCarWidth() >= crosswalkPosition[0]&& (Position[0]+ CarType.getCarWidth() <= crosswalkPosition[1])) 
+                    || (Position[1]+ CarType.getCarWidth() >= crosswalkPosition[0] && Position[1]+ CarType.getCarWidth() <= crosswalkPosition[1]) );
+        }
+        else
+        {
+            return ((Position[0] <= crosswalkPosition[0] && (Position[0] >= crosswalkPosition[1]))
+                    || (Position[1] <= crosswalkPosition[0] && Position[1] >= crosswalkPosition[1]) );
+        }
+        
 
     }
 
@@ -96,21 +110,44 @@ public class Car {
     }
 
     public float getSpeed() {
-        System.out.println(IsIntheCrosswalk());
+        System.out.println(IsIntheCrosswalk() +" " + CarType.getCarWidth() + " " + getHeadPosition());
         return (IsIntheCrosswalk()) ? getSpeedInCrosswalk() : Speed;
     }
 
     public void MoveInLine() {
         float tempSpeed = getSpeed();
-
-        if (Line.getDirection() == Const.LINE_DIRECTION_LTR) {
-            Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING;
-            Position[1] = Position[0] - CarType.getCarWidth();
-        } 
-        else {
-            Position[0] -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
-            Position[1] = Position[0] - CarType.getCarWidth();
+        
+        
+        
+        if(Line.getDirection() == Const.LINE_DIRECTION_LTR)
+        {
+            if(Position[0] >= 700)
+            {
+                Line.Dispose(getId());
+                return;
+            }
         }
+        else{
+            if(Position[1]<= 0)
+            {
+                Line.Dispose(getId());
+                return;
+            }
+        }
+        
+        
+        
+        
+            if (Line.getDirection() == Const.LINE_DIRECTION_LTR) {
+                Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
+                Position[1] = Position[0] - CarType.getCarWidth();
+              } 
+            else {
+                Position[0] -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
+                Position[1] = Position[0] + CarType.getCarWidth();
+                }
+        
+       
         
     }
 

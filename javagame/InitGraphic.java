@@ -55,6 +55,9 @@ public class InitGraphic extends Frame implements Runnable {
 
     }
 
+    
+    
+
     // use for draw object in window
     @Override
     public void paint(Graphics g) {
@@ -64,6 +67,7 @@ public class InitGraphic extends Frame implements Runnable {
                 g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getHeadPosition(), Linetemp.getPosition(), this);
             });
         });
+        super.paint(g);
     }
 
     // Implements  Thread 

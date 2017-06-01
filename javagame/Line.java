@@ -58,7 +58,7 @@ public final class Line {
     }
 
     public boolean getDirection() {
-        return (Direction == Const.LINE_DIRECTION_RTL) ? Const.LINE_DIRECTION_RTL : Const.LINE_DIRECTION_LTR;
+        return Direction;
     }
 
     public void AccidentCheck() {
@@ -66,40 +66,54 @@ public final class Line {
     }
 
     public void CreateNewCar(Car newCar) {
-        newCar.setLine(this);
+      //  newCar.setLine(this);
         if (Cars.size() > 0) {
             Car lastCar = Cars.get(Cars.size() - 1);
-            if (getDirection() == Const.LINE_DIRECTION_LTR) {
-                if (lastCar.getEndPosition() >= lastCar.getCarType().getCarWidth()) {
-                    Cars.add(newCar);
+            if (lastCar.getLine().getDirection() == newCar.getLine().getDirection()) {
+            
+                if (newCar.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
+                    if (lastCar.getEndPosition() >= lastCar.getCarType().getCarWidth() ) {
+                        Cars.add(newCar);
+                    }
                 }
-            } else if (lastCar.getEndPosition() >= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
-                Cars.add(newCar);
+                else {
+                    if (lastCar.getEndPosition() <= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
+                    Cars.add(newCar);
+                    }
+                }
             }
-        }else{
+        }
+        else{
             Cars.add(newCar);
         }
     }
 
-    public void Dispose() {
+    public void Dispose(int id) {
+        Cars.remove(id - 1);
 
     }
 
     public final float[] getAchieveCrosswalkPosistion() {
         float middle = Crosswalk.getMiddlePosition();
         float[] result = new float[2];
+        
+        
+        
         if (Direction == Const.LINE_DIRECTION_LTR) {
-
-            result[0] = middle - Const.CROSSWALK_WIDTH / 2 - Const.CROSSWALK_CHANGE_SPEED_DISTANCE;
+        
+            result[0] = middle - Const.CROSSWALK_WIDTH / 2 - Const.CROSSWALK_CHANGE_SPEED_DISTANCE ;
             result[1] = middle + Const.CROSSWALK_WIDTH / 2;
 
             return result;
-        } else {
-            result[0] = middle - Const.CROSSWALK_WIDTH / 2;
-            result[1] = middle + Const.CROSSWALK_WIDTH / 2 + Const.CROSSWALK_CHANGE_SPEED_DISTANCE;
+        
+        } 
+        else {
+            result[0] = middle + Const.CROSSWALK_WIDTH / 2 + Const.CROSSWALK_CHANGE_SPEED_DISTANCE ;
+            result[1] = middle - Const.CROSSWALK_WIDTH / 2;
 
             return result;
         }
     }
 
-}
+    }   
+
