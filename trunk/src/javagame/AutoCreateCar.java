@@ -32,8 +32,8 @@ public class AutoCreateCar implements Runnable {
 
     @Override
     public void run() {
-        int i =0;
-        while (i==0) {
+        
+        while (true) {
             int randomLine = SecureRandom.nextInt(LtrLineCount + RtlLineCount);
             Line tempLine = Lines.get(randomLine);
             
@@ -41,7 +41,7 @@ public class AutoCreateCar implements Runnable {
             CarType carType =  new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
             Car newCar = new Car(1,(tempLine.getDirection() == Const.LINE_DIRECTION_RTL )? new float[]{Const.GAME_WINDOWS_WIDTH,Const.GAME_WINDOWS_WIDTH + carType.getCarWidth()}:new float[]{-carType.getCarWidth(),0}, speed,carType,tempLine);
             tempLine.CreateNewCar(newCar);
-            i++;
+            
             try {
                 Thread.sleep(Const.CREATE_CAR_RATE);
             } catch (Exception e) {
