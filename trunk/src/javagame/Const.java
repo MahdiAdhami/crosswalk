@@ -1,6 +1,7 @@
 package javagame;
 
 import java.io.File;
+import javagame.Menu.SettingMenuResult;
 
 public final class Const {
     public final static int CAR_COUNT = 2;
@@ -22,12 +23,12 @@ public final class Const {
     public final static boolean LINE_DIRECTION_LTR = false;
 
     public final static int GAME_WINDOWS_WIDTH = 800;
-    public final static int GAME_WINDOWS_HEIGHT = 500;
+    public final static int GAME_WINDOWS_HEIGHT = (SettingMenuResult.getBottomLineCount() + SettingMenuResult.getTopLineCount() + 1 ) * 100;
     
     
     public final static long CREATE_CAR_RATE = 10000 - 9999;
     
-    public final static long SLEEP_TIME_RE_PAINTING = 200;
+    public final static long SLEEP_TIME_RE_PAINTING = 500;
 
     
     // Cars Speed Rate
