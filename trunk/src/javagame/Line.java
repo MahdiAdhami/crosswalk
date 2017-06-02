@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public final class Line {
 
     private int Id;
-    private int CarId;
     private int MaxCarSpeed;
     private int MinCarSpeed;
     private boolean Direction;
@@ -13,6 +12,7 @@ public final class Line {
     private ArrayList<Car> Cars;
     public static int CarCount = 0;
     private float[] CrosswalkPosition;
+    public static int carId = 1;
 
     public Line() {
         this.Cars = new ArrayList<>();
@@ -50,10 +50,6 @@ public final class Line {
         return MaxCarSpeed;
     }
 
-    public int getCarId() {
-        return CarId;
-    }
-
     public ArrayList<Car> getCars() {
         return Cars;
     }
@@ -69,50 +65,70 @@ public final class Line {
     public void AccidentCheck() {
 
     }
-
+    
+    public int getId(){
+        return Id;
+    }
+    
+    
     public void CreateNewCar(Car newCar) {
-        if (Cars.size() > 0) {
-            Car lastCar = Cars.get(Cars.size() - 1);
-            if (lastCar.getLine().getDirection() == newCar.getLine().getDirection()) {
-                if (newCar.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
-                    if (lastCar.getEndPosition() >= lastCar.getCarType().getCarWidth()) {
-                        Cars.add(newCar);
-                        CarId++;
-                    }
-                } else if (lastCar.getEndPosition() <= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
-                    Cars.add(newCar);
-                    CarId++;
+      //  newCar.setLine(this);
+      
+     // Cars.add(newCar);
+      
+     // System.out.println(Cars.indexOf(newCar));
+     // System.out.println("size " + Cars.size());
+      if (Cars.size() > 0) {
+        Car lastCar = Cars.get(Cars.size()-1);
+        if (lastCar.getLine().getDirection() == newCar.getLine().getDirection()) {
 
+            if (newCar.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
+                if (lastCar.getEndPosition() >= -lastCar.getCarType().getCarWidth() + 50 ) {
+                Cars.add(newCar);
+                carId++;
                 }
             }
-        } else {
-            Cars.add(newCar);
-            CarId++;
-
+            else {
+                if (lastCar.getEndPosition() <= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
+                Cars.add(newCar);
+                carId++;
+                }
+            }
         }
+      }
+      else{
+      Cars.add(newCar);
+      carId++;
+      }
+      
     }
 
-    public void Dispose(Car car) {
-        Cars.remove(car);
+    public void Dispose(int id) {
+        Cars.remove(id);
+        carId--;
     }
 
     public final float[] getAchieveCrosswalkPosistion() {
         float middle = Crosswalk.getMiddlePosition();
         float[] result = new float[2];
-
+        
+        
+        
         if (Direction == Const.LINE_DIRECTION_LTR) {
-
-            result[0] = middle - Const.CROSSWALK_WIDTH / 2 - Const.CROSSWALK_CHANGE_SPEED_DISTANCE;
+        
+            result[0] = middle - Const.CROSSWALK_WIDTH / 2 - Const.CROSSWALK_CHANGE_SPEED_DISTANCE ;
             result[1] = middle + Const.CROSSWALK_WIDTH / 2;
 
             return result;
-
-        } else {
-            result[0] = middle + Const.CROSSWALK_WIDTH / 2 + Const.CROSSWALK_CHANGE_SPEED_DISTANCE;
+        
+        } 
+        else {
+            result[0] = middle + Const.CROSSWALK_WIDTH / 2 + Const.CROSSWALK_CHANGE_SPEED_DISTANCE ;
             result[1] = middle - Const.CROSSWALK_WIDTH / 2;
 
             return result;
         }
     }
 
-}
+    }   
+

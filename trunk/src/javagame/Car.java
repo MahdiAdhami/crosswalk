@@ -13,29 +13,21 @@ public abstract class Car {
     //private long[] AchieveCrosswalkTime;
     //private Date CreatedDate;
     //private Date AccidentDate;
-
-    public Car(int Id, float[] Position, float Speed, CarType CarType, Line Line) {
-        this.Id = Id;
+    
+    public Car(int Id, float[] Position, int Speed, CarType CarType, Line Line) {
         this.Position = Position;
-        this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
+        this.Speed = Speed;
         this.CarType = CarType;
-        this.Line = Line;
+        this.Id = Id;
+        setLine(Line);
     }
-    
-    
-//    public Car(int Id, float[] Position, int Speed, CarType CarType, Line Line) {
-//        this.Position = Position;
-//        this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
-//        this.CarType = CarType;
-//        this.Id = Id;
-//        setLine(Line);
-//    }
-//
-//    public Car(float[] Position, int Speed, CarType CarType) {
-//        this.Position = Position;
-//        this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
-//        this.CarType = CarType;
-//    }
+
+    public Car(int Id, float[] Position, int Speed, CarType CarType) {
+        this.Position = Position;
+        this.Speed = Speed;
+        this.CarType = CarType;
+        this.Id = Id;
+    }
 
     public void setLine(Line line) {
         Line = line;
@@ -112,7 +104,6 @@ public abstract class Car {
     
     public abstract boolean IsIntheCrosswalk();
     public abstract void MoveInLine();
-    
  //   public abstract boolean ReachedFrontCar();
     
     
@@ -140,20 +131,26 @@ public abstract class Car {
 //    }
 
     private float getSpeedInCrosswalk() {
-        return Speed * Const.CROSSWALK_CHANGE_SPEED_RATE;
+        return Speed * Const.CROSSWALK_CHANGE_SPEED_Rate;
     }
 
     public float getSpeed() {
-        return (IsIntheCrosswalk()) ? getSpeedInCrosswalk() : Speed;
+        if(this.getLine().getId() == Sheep.lineIdForCrash())
+        {
+            return getSpeedInCrosswalk() ;
+        }
+        return Speed;
     }
     
-    public void ChangeSpeed()
+    public float getSpeedV2(boolean flag)
     {
-        float newSpeed = getSpeed() / 2;
-        Speed = 0;//getSpeed() - newSpeed;
+        
+        return (flag==true)? getSpeed()- changeSpeedForReach : getSpeed();
     }
-
+    
     public void ChangeLine() {
 
     }
+    
+    
 }

@@ -139,11 +139,11 @@ public class InitGraphic extends JPanel implements Runnable {
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
-
+//                Sheep.MoveInCrossWalk();
                 repaint();
 
             } catch (Exception e) {
-                System.out.println("InitGraphic run() " + e);
+                System.out.println(e);
             }
         }
     }
