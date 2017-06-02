@@ -12,10 +12,10 @@ public final class Const {
 
     public final static int LINE_HEIGHT = 100;
 
-    public final static String CROSSWALK_IMAGE = "\\src\\resources\\Line\\Line.png";
+    public final static String CROSSWALK_IMAGE = "\\src\\resources\\Line\\Line2.png";
     public final static int CROSSWALK_WIDTH = 100;
-    public final static int CROSSWALK_CHANGE_SPEED_DISTANCE = 40;
-    public final static float CROSSWALK_CHANGE_SPEED = 50;
+    public final static int CROSSWALK_CHANGE_SPEED_DISTANCE = 30;
+    public final static float CROSSWALK_CHANGE_SPEED_Rate = .4f;
     
     public final static String SETTING_FILE = "\\src\\resources\\Setting\\Setting.xml";
 
@@ -28,9 +28,12 @@ public final class Const {
     
     public final static long CREATE_CAR_RATE = 10000 - 9000;
     
-    public final static long SLEEP_TIME_RE_PAINTING = 500;
+    public final static long SLEEP_TIME_RE_PAINTING = 10;
 
     
     // Cars Speed Rate
     public final static int CREATE_CAR_SPEED_RATE = 40;
+    
+    //Sheep
+    public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\Sheep.png";
 }

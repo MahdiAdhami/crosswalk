@@ -1,80 +1,74 @@
-
 package javagame;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-
 public class Sheep {
-    
+
     private float[] PositionOfSheep;
-    private int Rate;      
+    private float[] SheepSize;
+    private int Rate;
     private BufferedImage ImageOfSheep;
-    
-  
-    
-    public Sheep(float[] position , int rate)
-    {
-        PositionOfSheep = position;
-        Rate = rate;
+
+    public Sheep(int Rate) {
+        this.Rate = Rate;
+        SheepSize = new float[]{24, 50};
+        PositionOfSheep = new float[]{(Const.GAME_WINDOWS_WIDTH - SheepSize[0]) / 2, Const.GAME_WINDOWS_HEIGHT - SheepSize[1]};
         try {
-            ImageOfSheep = ImageIO.read(new File(Const.PATH + "\\src\\Resources.Sheep\\Sheep.png"));
-                    } catch (IOException ex) {
-            Logger.getLogger(InitGraphic.class.getName()).log(Level.SEVERE, null, ex);
+            ImageOfSheep = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE));
+        } catch (IOException ex) {
+            System.out.println(ex);
         }
     }
-    
-    public float getXPosition()
-    {
+
+    public float getXPosition() {
         return PositionOfSheep[0];
     }
-    
-    public float getYPosition()
-    {
+
+    public float getYPosition() {
         return PositionOfSheep[1];
     }
-    
-    public void setRate(int r)
-    {
-        Rate=r;
+
+    public void setRate(int rate) {
+        Rate = rate;
     }
-    
-    public int getRate()
-    {
+
+    public int getRate() {
         return Rate;
     }
-    
-    
-    public BufferedImage getImage()
-    {
+
+    public BufferedImage getImage() {
         return ImageOfSheep;
     }
-    
+
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if(keyCode ==  KeyEvent.VK_UP)
-        {
-           PositionOfSheep[1] -=Rate;
-        }
-        else if(keyCode == KeyEvent.VK_DOWN)
-        {
-           PositionOfSheep[1] +=Rate;
-        }
-        else if(keyCode==KeyEvent.VK_RIGHT && PositionOfSheep[0]!=Const.GAME_WINDOWS_WIDTH / 2 + Const.CROSSWALK_WIDTH / 2)
-        {
-            PositionOfSheep[0] +=Rate;
-        }
-        else if(keyCode==KeyEvent.VK_LEFT && PositionOfSheep[0]!=Const.GAME_WINDOWS_WIDTH / 2 - Const.CROSSWALK_WIDTH / 2)
-        {
-            PositionOfSheep[0] -=Rate;
+        switch (keyCode) {
+            case KeyEvent.VK_UP:
+            case 87:
+                PositionOfSheep[1] -= Rate;
+                break;
+            case KeyEvent.VK_DOWN:
+            case 83:
+                PositionOfSheep[1] += Rate;
+                break;
+            case KeyEvent.VK_RIGHT:
+            case 68:
+                //&& PositionOfSheep[0] != Const.GAME_WINDOWS_WIDTH / 2 + Const.CROSSWALK_WIDTH / 2) {
+                PositionOfSheep[0] += Rate;
+                break;
+            case KeyEvent.VK_LEFT:
+            case 65:
+                //&& PositionOfSheep[0] != Const.GAME_WINDOWS_WIDTH / 2 - Const.CROSSWALK_WIDTH / 2) {
+                PositionOfSheep[0] -= Rate;
+                break;
+            default:
+                break;
         }
 
-    
     }
-    
+
 }

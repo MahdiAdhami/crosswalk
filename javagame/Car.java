@@ -1,17 +1,16 @@
 package javagame;
 
-public class Car {
+public abstract class Car {
+    protected int Id;
+    protected float[] Position;
+    protected float Speed;
+    protected CarType CarType;
+    protected Line Line;
 
-    private int Id;
-    private float[] Position;
-    private float Speed;
-    private CarType CarType;
     //private long[] AchieveCrosswalkTime;
     //private Date CreatedDate;
     //private Date AccidentDate;
-
-    private Line Line;
-
+    
     public Car(int Id, float[] Position, int Speed, CarType CarType, Line Line) {
         this.Position = Position;
         this.Speed = Speed;
@@ -29,7 +28,6 @@ public class Car {
 
     public void setLine(Line line) {
         Line = line;
-//        AchieveCrosswalkTime = calcuteAchieveCrosswalkTime();
     }
 
     public CarType getCarType() {
@@ -39,17 +37,16 @@ public class Car {
     public float getHeadPosition() {
         return Position[0];
     }
-    
-     public float getEndPosition() {
+
+    public float getEndPosition() {
         return Position[1];
     }
 
     public int getId() {
         return Id;
     }
-    
-    public Line getLine()
-    {
+
+    public Line getLine() {
         return Line;
     }
 
@@ -73,24 +70,19 @@ public class Car {
 //        result[1] = Crosswalk.getMiddleOfPosition() + StartPositionRate + crosswalkStartPositionRate + DistanceToCrosswalk;
 //        return result;
 //    }
-    
-    public boolean IsIntheCrosswalk() {
-        float[] crosswalkPosition = Line.getCrosswalkPosition();
-//      System.out.println(Position[0] + " " + crosswalkPosition[0] + " " + crosswalkPosition[1]);
-        if(Line.getDirection() == Const.LINE_DIRECTION_LTR)
-        {
-            return ((Position[0] + CarType.getCarWidth() >= crosswalkPosition[0]&& (Position[0]+ CarType.getCarWidth() <= crosswalkPosition[1])) 
-                    || (Position[1]+ CarType.getCarWidth() >= crosswalkPosition[0] && Position[1]+ CarType.getCarWidth() <= crosswalkPosition[1]) );
-        }
-        else
-        {
-            return ((Position[0] <= crosswalkPosition[0] && (Position[0] >= crosswalkPosition[1]))
-                    || (Position[1] <= crosswalkPosition[0] && Position[1] >= crosswalkPosition[1]) );
-        }
-        
-
-    }
-
+//    public boolean IsIntheCrosswalk() {
+//        float[] crosswalkPosition = Line.getCrosswalkPosition();
+//        if(Line.getDirection() == Const.LINE_DIRECTION_LTR)
+//        {
+//            return ((Position[0] + CarType.getCarWidth() >= crosswalkPosition[0]&& (Position[0]+ CarType.getCarWidth() <= crosswalkPosition[1])) 
+//                    || (Position[1]+ CarType.getCarWidth() >= crosswalkPosition[0] && Position[1]+ CarType.getCarWidth() <= crosswalkPosition[1]) );
+//        }
+//        else
+//        {
+//            return ((Position[0] <= crosswalkPosition[0] && (Position[0] >= crosswalkPosition[1]))
+//                    || (Position[1] <= crosswalkPosition[0] && Position[1] >= crosswalkPosition[1]) );
+//        }
+//    }
 //    public void setAchieveCrosswalkTime(long[] achieveCrosswalkTime) {
 //        AchieveCrosswalkTime = achieveCrosswalkTime;
 //    }
@@ -105,52 +97,42 @@ public class Car {
 //
 //        return Achieve;
 //    }
+//}
+    
+    public abstract boolean IsIntheCrosswalk();
+    public abstract void MoveInLine();
+    
+//        float tempSpeed = getSpeed();
+//
+//        if (Line.getDirection() == Const.LINE_DIRECTION_LTR) {
+//            if (Position[0] >= 700) {
+//                Line.Dispose(getId());
+//                return;
+//            }
+//        } else if (Position[1] <= 0) {
+//            Line.Dispose(getId());
+//            return;
+//        }
+//
+//        if (Line.getDirection() == Const.LINE_DIRECTION_LTR) {
+//            Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
+//            Position[1] = Position[0] - CarType.getCarWidth();
+//        } else {
+//            Position[0] -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
+//            Position[1] = Position[0] + CarType.getCarWidth();
+//        }
+//
+//    }
+
     private float getSpeedInCrosswalk() {
-        return Speed * .2f;
+        return Speed * Const.CROSSWALK_CHANGE_SPEED_Rate;
     }
 
     public float getSpeed() {
-        System.out.println(IsIntheCrosswalk() +" " + CarType.getCarWidth() + " " + getHeadPosition());
         return (IsIntheCrosswalk()) ? getSpeedInCrosswalk() : Speed;
     }
 
-    public void MoveInLine() {
-        float tempSpeed = getSpeed();
-        
-        
-        
-        if(Line.getDirection() == Const.LINE_DIRECTION_LTR)
-        {
-            if(Position[0] >= 700)
-            {
-                Line.Dispose(getId());
-                return;
-            }
-        }
-        else{
-            if(Position[1]<= 0)
-            {
-                Line.Dispose(getId());
-                return;
-            }
-        }
-        
-        
-        
-        
-            if (Line.getDirection() == Const.LINE_DIRECTION_LTR) {
-                Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
-                Position[1] = Position[0] - CarType.getCarWidth();
-              } 
-            else {
-                Position[0] -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
-                Position[1] = Position[0] + CarType.getCarWidth();
-                }
-        
-       
-        
-    }
-
+    
     public void ChangeLine() {
 
     }

@@ -1,7 +1,5 @@
 package javagame;
 
-import javagame.Menu.SettingMenuResult;
-
 public class InitGame{
     
     // Auto create Cars Method
@@ -10,11 +8,9 @@ public class InitGame{
         
         // Instance an object for create cars in a thread
         AutoCreateCar autoCreateCar = new AutoCreateCar(RtlLineCount, LtrLineCount, middleOfCrosswalkPosition);
-        Sheep SheepObject = new Sheep(new float[]{Const.GAME_WINDOWS_WIDTH/2,615},25);
-        
         
          // Instance an object for game graphics
-        InitGraphic base = new InitGraphic(autoCreateCar.getLines() , middleOfCrosswalkPosition ,SheepObject);
+        InitGraphic base = new InitGraphic(autoCreateCar.getLines() , middleOfCrosswalkPosition ,new Sheep(5));
         Thread threadBase = new Thread(base);
         threadBase.start();
         
