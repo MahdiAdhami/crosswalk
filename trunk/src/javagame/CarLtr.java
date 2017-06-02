@@ -1,43 +1,36 @@
 package javagame;
 
-import java.util.ArrayList;
-
 public class CarLtr extends Car {
 
-    public CarLtr(int Id, int Speed, CarType CarType, Line Line) {
-        super(Id, new float[]{(-1)*CarType.getCarWidth(), 0}, Speed, CarType, Line);
-    }
-
-    public CarLtr(int Id, int Speed, CarType CarType) {
-        super(Id, new float[]{(-1)*CarType.getCarWidth(), 0}, Speed, CarType);
+    public CarLtr(int Id, float Speed, javagame.CarType CarType, javagame.Line Line) {
+        super(Id, new float[]{(-1) * CarType.getCarWidth(), 0}, Speed, CarType, Line);
     }
 
     @Override
     public boolean IsIntheCrosswalk() {
         float[] crosswalkPosition = super.Line.getCrosswalkPosition();
-
         return ((Position[0] + CarType.getCarWidth() >= crosswalkPosition[0] && (Position[0] + CarType.getCarWidth() <= crosswalkPosition[1]))
                 || (Position[1] + CarType.getCarWidth() >= crosswalkPosition[0] && Position[1] + CarType.getCarWidth() <= crosswalkPosition[1]));
     }
 
     @Override
     public void MoveInLine() {
-        float tempSpeed= getSpeedV2(false);;
-        if(Line.getCars().size()>=2){
-            if(Line.getCars().get(Id-1).getHeadPosition() >= Line.getCars().get(Id).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
-            {
-                tempSpeed = getSpeedV2(true);
+        try {
+            if (Line.getCars().size() > 1) {
+                if (Line.getCars().get(Id - 1).getHeadPosition() >= Line.getCars().get(Id).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+                    ChangeSpeed();
+                }
             }
-            else {
-                tempSpeed = getSpeedV2(false);
-            }
+        } catch (Exception ex) {
+            System.out.println("Move in Line()" + ex);
         }
+
         if (Position[1] > Const.GAME_WINDOWS_WIDTH) {
-            Line.Dispose(getId());
+            Line.Dispose(this);
             return;
         }
 
-        Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
+        Position[0] += getSpeed() * Const.SLEEP_TIME_RE_PAINTING / 1000;
         Position[1] = Position[0] - CarType.getCarWidth();
     }
 
@@ -56,5 +49,5 @@ public class CarLtr extends Car {
     }
     
     
-    */
+     */
 }
