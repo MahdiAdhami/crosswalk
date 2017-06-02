@@ -1,5 +1,7 @@
 package javagame;
 
+import java.util.ArrayList;
+
 public class CarRtl extends Car {
 
     public CarRtl(int Id, int Speed, CarType CarType, Line Line) {
@@ -19,8 +21,15 @@ public class CarRtl extends Car {
     }
 
     @Override
-    public void MoveInLine() {
-        float tempSpeed = getSpeed();
+    public void MoveInLine(ArrayList<Car> cars,int index) {
+        float tempSpeed;
+        if(cars.get(index).getHeadPosition() >= cars.get(index+1).getHeadPosition()+changeSpeedForReach)
+        {
+            tempSpeed = getSpeedV2(true);
+        }
+        else {
+            tempSpeed = getSpeedV2(false);
+        }
 
         if (Position[1] < 0) {
             Line.Dispose(getId());

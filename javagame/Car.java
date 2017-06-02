@@ -1,11 +1,14 @@
 package javagame;
 
+import java.util.ArrayList;
+
 public abstract class Car {
     protected int Id;
     protected float[] Position;
     protected float Speed;
     protected CarType CarType;
     protected Line Line;
+    protected final float changeSpeedForReach = 20f;
 
     //private long[] AchieveCrosswalkTime;
     //private Date CreatedDate;
@@ -100,7 +103,10 @@ public abstract class Car {
 //}
     
     public abstract boolean IsIntheCrosswalk();
-    public abstract void MoveInLine();
+    public abstract void MoveInLine(ArrayList<Car> cars,int index);
+ //   public abstract boolean ReachedFrontCar();
+    
+    
     
 //        float tempSpeed = getSpeed();
 //
@@ -131,7 +137,11 @@ public abstract class Car {
     public float getSpeed() {
         return (IsIntheCrosswalk()) ? getSpeedInCrosswalk() : Speed;
     }
-
+    
+    public float getSpeedV2(boolean flag)
+    {
+        return (flag==true)? getSpeed()-20 : getSpeed();
+    }
     
     public void ChangeLine() {
 
