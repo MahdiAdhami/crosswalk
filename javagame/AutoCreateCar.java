@@ -17,11 +17,11 @@ public class AutoCreateCar implements Runnable {
     }
 
     public void InitLine() {
-        for (int i = 1; i <= RtlLineCount; i++) {
-            Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, Const.LINE_HEIGHT * (i - 1)));
+        for (int i = 1 ; i <= RtlLineCount ; i++) {
+            Lines.add(new Line(i, (i + 1) * Const.CREATE_CAR_SPEED_RATE, (i) * Const.CREATE_CAR_SPEED_RATE, Const.LINE_DIRECTION_RTL, Const.LINE_HEIGHT * (i - 1) + 50));
         }
-        for (int i = LtrLineCount, j = 1; i >= 1; i--, j++) {
-            Lines.add(new Line(i, (j + 1), (i), Const.LINE_DIRECTION_LTR, (Const.LINE_HEIGHT * (i - 1)) + RtlLineCount * Const.LINE_HEIGHT));
+        for (int i = RtlLineCount + 1 , j = 1; i <= RtlLineCount + LtrLineCount; i++ , j++) {
+            Lines.add(new Line(i, (j + 1) * Const.CREATE_CAR_SPEED_RATE, (j) * Const.CREATE_CAR_SPEED_RATE, Const.LINE_DIRECTION_LTR, (Const.LINE_HEIGHT * (j - 1)) + RtlLineCount * Const.LINE_HEIGHT +50) );
         }
     }
 
@@ -32,26 +32,26 @@ public class AutoCreateCar implements Runnable {
 
     @Override
     public void run() {
-        
+       
         while (true) {
             int randomLine = SecureRandom.nextInt(LtrLineCount + RtlLineCount);
             Line tempLine = Lines.get(randomLine);
 
-            int speed = tempLine.getMinCarSpeed() * 5 + SecureRandom.nextInt(tempLine.getMaxCarSpeed() * 10);
-
+            int speed = tempLine.getMinCarSpeed() + SecureRandom.nextInt(tempLine.getMaxCarSpeed());
             CarType carType;
             Car newCar;
-
+            
             if (tempLine.getDirection() == Const.LINE_DIRECTION_RTL) {
                 carType = new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
-                newCar = new CarRtl(tempLine.getCarId(),speed, carType, tempLine);
-            } else {
+                newCar = new CarRtl(tempLine.carId, speed, carType, tempLine);
+            }else{
                 carType = new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
-                newCar = new CarLtr(tempLine.getCarId(),speed, carType, tempLine);
+                newCar = new CarLtr(tempLine.carId, speed, carType, tempLine);
             }
-
+            
+            
             tempLine.CreateNewCar(newCar);
-
+            
             try {
                 Thread.sleep(Const.CREATE_CAR_RATE);
             } catch (Exception e) {

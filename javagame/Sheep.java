@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class Sheep {
 
-    private float[] PositionOfSheep;
+    static  private float[] PositionOfSheep;
     private float[] SheepSize;
     private int Rate;
     private BufferedImage ImageOfSheep;
@@ -16,7 +16,7 @@ public class Sheep {
     public Sheep(int Rate) {
         this.Rate = Rate;
         SheepSize = new float[]{24, 21};
-        PositionOfSheep = new float[]{(Const.GAME_WINDOWS_WIDTH - SheepSize[0]) / 2, Const.GAME_WINDOWS_HEIGHT - SheepSize[1]};
+        PositionOfSheep = new float[]{(Const.GAME_WINDOWS_WIDTH - SheepSize[0]) / 2, 615};
         try {
             ImageOfSheep = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE));
         } catch (IOException ex) {
@@ -49,14 +49,22 @@ public class Sheep {
 
         if (keyCode == KeyEvent.VK_UP || keyCode == 87) {
             PositionOfSheep[1] -= Rate;
+            System.out.println(PositionOfSheep[1]);
         } else if (keyCode == KeyEvent.VK_DOWN || keyCode == 83) {
             PositionOfSheep[1] += Rate;
+            System.out.println(PositionOfSheep[1]);
         } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == 68) {//&& PositionOfSheep[0] != Const.GAME_WINDOWS_WIDTH / 2 + Const.CROSSWALK_WIDTH / 2) {
             PositionOfSheep[0] += Rate;
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {//&& PositionOfSheep[0] != Const.GAME_WINDOWS_WIDTH / 2 - Const.CROSSWALK_WIDTH / 2) {
             PositionOfSheep[0] -= Rate;
         }
 
+    }
+    
+    public static int lineIdForCrash()
+    {
+        int check = (int) ((PositionOfSheep[1]+30)/100);
+        return check+1;
     }
 
 }
