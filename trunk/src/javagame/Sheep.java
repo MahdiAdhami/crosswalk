@@ -49,26 +49,32 @@ public class Sheep {
         return Rate;
     }
     
-    public void MoveInCrossWalk()
-    {
-        
-    }
+    
     public BufferedImage getImage()
     {
         return ImageOfSheep;
     }
     
     public void keyPressed(KeyEvent e) {
-    int keyCode = e.getKeyCode();
-    if(keyCode ==  KeyEvent.VK_UP)
-    {
-       System.out.print("pressed");
-    }
-    else if(keyCode == KeyEvent.VK_DOWN)
-    {
-       
-    }
+        int keyCode = e.getKeyCode();
+        if(keyCode ==  KeyEvent.VK_UP)
+        {
+           PositionOfSheep[1] -=Rate;
+        }
+        else if(keyCode == KeyEvent.VK_DOWN)
+        {
+           PositionOfSheep[1] +=Rate;
+        }
+        else if(keyCode==KeyEvent.VK_RIGHT && PositionOfSheep[0]!=Const.GAME_WINDOWS_WIDTH / 2 + Const.CROSSWALK_WIDTH / 2)
+        {
+            PositionOfSheep[0] +=Rate;
+        }
+        else if(keyCode==KeyEvent.VK_LEFT && PositionOfSheep[0]!=Const.GAME_WINDOWS_WIDTH / 2 - Const.CROSSWALK_WIDTH / 2)
+        {
+            PositionOfSheep[0] -=Rate;
+        }
+
     
-}
+    }
     
 }
