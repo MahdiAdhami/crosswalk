@@ -36,4 +36,7 @@ public final class Const {
     
     //Sheep
     public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\Sheep.png";
+    
+    
+    public final static int CHANGE_SPEED_DISTANCE_FOR_REACH=50;
 }

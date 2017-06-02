@@ -32,8 +32,8 @@ public class AutoCreateCar implements Runnable {
 
     @Override
     public void run() {
-
-        while (true) {
+       int i =1 ;
+        while (i>=0) {
             int randomLine = SecureRandom.nextInt(LtrLineCount + RtlLineCount);
             Line tempLine = Lines.get(randomLine);
 
@@ -50,7 +50,7 @@ public class AutoCreateCar implements Runnable {
             }
 
             tempLine.CreateNewCar(newCar);
-
+            i++;
             try {
                 Thread.sleep(Const.CREATE_CAR_RATE);
             } catch (Exception e) {
