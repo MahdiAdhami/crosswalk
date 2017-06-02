@@ -103,7 +103,7 @@ public abstract class Car {
 //}
     
     public abstract boolean IsIntheCrosswalk();
-    public abstract void MoveInLine(ArrayList<Car> cars,int index);
+    public abstract void MoveInLine();
  //   public abstract boolean ReachedFrontCar();
     
     
