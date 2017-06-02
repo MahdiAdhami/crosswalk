@@ -18,10 +18,10 @@ public class AutoCreateCar implements Runnable {
 
     public void InitLine() {
         for (int i = 1; i <= RtlLineCount; i++) {
-            Lines.add(new Line(i, (i + 1) * Const.CREATE_CAR_SPEED_RATE, (i) * Const.CREATE_CAR_SPEED_RATE, Const.LINE_DIRECTION_RTL, Const.LINE_HEIGHT * i));
+            Lines.add(new Line(i, (i + 1) * Const.CREATE_CAR_SPEED_RATE, (i) * Const.CREATE_CAR_SPEED_RATE, Const.LINE_DIRECTION_RTL, Const.LINE_HEIGHT * (i-1)));
         }
         for (int i = LtrLineCount , j = 1; i >= 1; i-- , j++) {
-            Lines.add(new Line(i, (j + 1) * Const.CREATE_CAR_SPEED_RATE, (i) * Const.CREATE_CAR_SPEED_RATE, Const.LINE_DIRECTION_LTR, (Const.LINE_HEIGHT * i) + RtlLineCount * Const.LINE_HEIGHT));
+            Lines.add(new Line(i, (j + 1) * Const.CREATE_CAR_SPEED_RATE, (i) * Const.CREATE_CAR_SPEED_RATE, Const.LINE_DIRECTION_LTR, (Const.LINE_HEIGHT * (i-1)) + RtlLineCount * Const.LINE_HEIGHT));
         }
     }
     
