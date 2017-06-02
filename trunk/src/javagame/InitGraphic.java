@@ -13,6 +13,8 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,9 +27,12 @@ public class InitGraphic extends JPanel implements Runnable {
     private final int MiddleOfCrosswalkPosition;
     // Line Image
     private BufferedImage CrosswalkImage;
+    
+    private Sheep sheep;
+   
 
     // Constructor for init lines and window
-    public InitGraphic(ArrayList<Line> Lines, int MiddleOfCrosswalkPosition) {
+    public InitGraphic(ArrayList<Line> Lines, int MiddleOfCrosswalkPosition,Sheep sh) {
         super();
         this.Lines = Lines;
         this.MiddleOfCrosswalkPosition = MiddleOfCrosswalkPosition;
@@ -38,7 +43,10 @@ public class InitGraphic extends JPanel implements Runnable {
             System.out.println(ex);
 
         }
+        
+        sheep = sh;
         SetInit();
+        
     }
 
     // Initialize game window
@@ -47,9 +55,9 @@ public class InitGraphic extends JPanel implements Runnable {
         
         JFrame gameFrame = new JFrame(Const.GAME_NAME);
        // JPanel gamePanel = new JPanel(true);
-        gameFrame.add(this);
         
-        gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, Const.GAME_WINDOWS_HEIGHT);
         gameFrame.setVisible(true);
         gameFrame.setAlwaysOnTop(true);
@@ -61,8 +69,9 @@ public class InitGraphic extends JPanel implements Runnable {
         
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         gameFrame.setLocation((dimension.width / 2) - (Const.GAME_WINDOWS_WIDTH / 2), (dimension.height / 2) - (Const.GAME_WINDOWS_HEIGHT / 2));
-
-
+        
+        gameFrame.add(this);
+        
 
         
         
@@ -84,7 +93,11 @@ public class InitGraphic extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g); 
-        g.drawImage(CrosswalkImage,MiddleOfCrosswalkPosition - Const.CROSSWALK_WIDTH/2, 0, this); 
+        
+        g.drawImage(CrosswalkImage,MiddleOfCrosswalkPosition - Const.CROSSWALK_WIDTH/2, 0, this);
+        
+        g.drawImage(sheep.getImage(),(int) sheep.getXPosition(),(int) sheep.getYPosition(), this); 
+        
             Lines.stream().forEach((Linetemp) -> {
                 Linetemp.getCars().stream().forEach((carTemp) -> {
                     g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getHeadPosition(), Linetemp.getPosition(), this);
@@ -128,12 +141,13 @@ public class InitGraphic extends JPanel implements Runnable {
                         carTemp.MoveInLine();
                     });
                 });
+                
                 try {
                     Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
-                
+                sheep.MoveInCrossWalk();
                 repaint();
                 
             } catch (Exception e) {

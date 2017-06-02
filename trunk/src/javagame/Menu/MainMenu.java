@@ -30,7 +30,7 @@ public class MainMenu extends Menu {
         JButton startGame = CreateButton("شروع بازی",
                 (ActionEvent e) -> {
                     InitGame start = new InitGame();
-                    start.AutoCreateCar(SettingMenuResult.getTopLineCount(), SettingMenuResult.getBottomLineCount(), 50);
+                    start.AutoCreateCar(SettingMenuResult.getTopLineCount(), SettingMenuResult.getBottomLineCount(), 400);
                 }
         );
         controls.add(startGame);//,BorderLayout.CENTER
