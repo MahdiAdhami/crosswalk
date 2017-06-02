@@ -1,7 +1,5 @@
 package javagame;
 
-import java.util.ArrayList;
-
 public abstract class Car {
     protected int Id;
     protected float[] Position;
@@ -16,7 +14,7 @@ public abstract class Car {
     
     public Car(int Id, float[] Position, int Speed, CarType CarType, Line Line) {
         this.Position = Position;
-        this.Speed = Speed;
+        this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
         this.CarType = CarType;
         this.Id = Id;
         setLine(Line);
@@ -24,7 +22,7 @@ public abstract class Car {
 
     public Car(int Id, float[] Position, int Speed, CarType CarType) {
         this.Position = Position;
-        this.Speed = Speed;
+        this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
         this.CarType = CarType;
         this.Id = Id;
     }
@@ -131,11 +129,11 @@ public abstract class Car {
 //    }
 
     private float getSpeedInCrosswalk() {
-        return Speed * Const.CROSSWALK_CHANGE_SPEED_Rate;
+        return Speed * Const.CROSSWALK_CHANGE_SPEED_RATE;
     }
 
     public float getSpeed() {
-        if(this.getLine().getId() == Sheep.lineIdForCrash())
+        if(this.getLine().getId() == Line.SheepCurrentLine && IsIntheCrosswalk())
         {
             return getSpeedInCrosswalk() ;
         }
@@ -144,7 +142,6 @@ public abstract class Car {
     
     public float getSpeedV2(boolean flag)
     {
-        
         return (flag==true)? getSpeed()- changeSpeedForReach : getSpeed();
     }
     
