@@ -130,7 +130,7 @@ public class InitGraphic extends JPanel implements Runnable {
             try {
                 Lines.stream().forEach((Linetemp) -> {
                     Linetemp.getCars().stream().forEach((Car carTemp) -> {
-                        carTemp.MoveInLine(Linetemp.getCars(),Linetemp.getCars().indexOf(carTemp));
+                        carTemp.MoveInLine();
                     });
                 });
 

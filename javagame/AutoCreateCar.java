@@ -32,8 +32,8 @@ public class AutoCreateCar implements Runnable {
 
     @Override
     public void run() {
-       int i =1 ;
-        while (i>=0) {
+       int idCar = 1 ;
+        while (true) {
             int randomLine = SecureRandom.nextInt(LtrLineCount + RtlLineCount);
             Line tempLine = Lines.get(randomLine);
 
@@ -43,14 +43,14 @@ public class AutoCreateCar implements Runnable {
             
             if (tempLine.getDirection() == Const.LINE_DIRECTION_RTL) {
                 carType = new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
-                newCar = new CarRtl(1, speed, carType, tempLine);
+                newCar = new CarRtl(idCar, speed, carType, tempLine);
             }else{
                 carType = new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
-                newCar = new CarLtr(1, speed, carType, tempLine);
+                newCar = new CarLtr(idCar, speed, carType, tempLine);
             }
 
             tempLine.CreateNewCar(newCar);
-            i++;
+            idCar++;
             try {
                 Thread.sleep(Const.CREATE_CAR_RATE);
             } catch (Exception e) {

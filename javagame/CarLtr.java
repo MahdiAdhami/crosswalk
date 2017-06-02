@@ -21,14 +21,16 @@ public class CarLtr extends Car {
     }
 
     @Override
-    public void MoveInLine(ArrayList<Car> cars,int index) {
-        float tempSpeed;
-        if(cars.get(index).getHeadPosition() >= cars.get(index+1).getHeadPosition()-changeSpeedForReach)
-        {
-            tempSpeed = getSpeedV2(true);
-        }
-        else {
-            tempSpeed = getSpeedV2(false);
+    public void MoveInLine() {
+        float tempSpeed= getSpeedV2(false);;
+        if(Line.getCars().size()>=2){
+            if(Line.getCars().get(Id-1).getHeadPosition() >= Line.getCars().get(Id).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
+            {
+                tempSpeed = getSpeedV2(true);
+            }
+            else {
+                tempSpeed = getSpeedV2(false);
+            }
         }
         if (Position[1] > Const.GAME_WINDOWS_WIDTH) {
             Line.Dispose(getId());
