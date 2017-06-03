@@ -15,6 +15,9 @@ public final class Line {
     private float[] CrosswalkPosition;
     private int CarId = 1;
     public static int SheepCurrentLine; 
+    private int removedCount = 0;
+    
+    
 
     public Line() {
         this.Cars = new ArrayList<>();
@@ -104,7 +107,7 @@ public final class Line {
 
     public void Dispose(Car car) {
         Cars.remove(car);
-        
+        removedCount++;
     }
 
     public final float[] getAchieveCrosswalkPosistion() {
@@ -130,4 +133,12 @@ public final class Line {
     {
         return car.getLine().getId();
     }
+    
+    public int getRemovedCount()
+    {
+        return removedCount;
+    }
+    
+    
+    
 }
