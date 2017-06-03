@@ -70,7 +70,7 @@ public class CarRtl extends Car {
 //            Line.Dispose(this);
 //            return;
 //        }
-//
+
 //        try {
 //            int id1 = super.getId();
 //
