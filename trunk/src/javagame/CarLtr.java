@@ -1,5 +1,7 @@
 package javagame;
 
+import java.util.ArrayList;
+
 public class CarLtr extends Car {
 
     public CarLtr(int Id, int Speed, CarType CarType, Line Line) {
@@ -20,19 +22,19 @@ public class CarLtr extends Car {
 
     @Override
     public void MoveInLine() {
+        //System.out.println(Position[0]);
         float tempSpeed= getSpeedV2(false);
         
         if (Position[1] > Const.GAME_WINDOWS_WIDTH) {
             try{
             Line.Dispose(Line.getCars().indexOf(this));
             }
-            catch(Exception ex)
+            catch(Exception e)
             {
-                System.err.println("CarLtr MoveInLine() " + ex);
+                System.out.print(e);
             }
         return;
         }
-        
         
 //        if(this.getLine().getCars().size()>=2){
 //            if(super.Line.getCars().get(super.getLine().carId).getHeadPosition() >= Line.getCars().get(super.getLine().carId-1).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
