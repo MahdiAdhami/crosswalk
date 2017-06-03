@@ -101,7 +101,7 @@ public final class Line {
 
     public void Dispose(int id) {
         Cars.remove(id);
-        carId--;
+        
     }
 
     public final float[] getAchieveCrosswalkPosistion() {

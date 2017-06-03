@@ -31,7 +31,7 @@ public class CarRtl extends Car {
             return;
         }
         
-        if(this.getLine().getCars().size()>=2){
+        if(this.getLine().getCars().size()>=3){
             
             int id1 = this.getId();
             int id2 = id1 - 1;
@@ -42,7 +42,7 @@ public class CarRtl extends Car {
             if(this.getLine().getDirection()==Const.LINE_DIRECTION_RTL)
             {
             
-                if(this.getLine().getCars().get(id1-2).getHeadPosition() <= this.getLine().getCars().get(id2-2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
+                if(this.getLine().getCars().get(id1-1).getHeadPosition() <= this.getLine().getCars().get(id2-1).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
                 {
                      tempSpeed = getSpeedV2(true);
                 }
