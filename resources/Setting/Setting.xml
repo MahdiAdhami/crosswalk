@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Settings>
 	<GameSettings>
-<<<<<<< .mine
+
+
 		<TopLineCount>3</TopLineCount>
 		<BottomLineCount>3</BottomLineCount>
-||||||| .r20
-		<TopLineCount>3</TopLineCount>
-		<BottomLineCount>1</BottomLineCount>
-=======
-		<TopLineCount>5</TopLineCount>
-		<BottomLineCount>5</BottomLineCount>
->>>>>>> .r21
+
 		<CrosswalkMiddlePosition>300</CrosswalkMiddlePosition>
 	</GameSettings>
 </Settings>
