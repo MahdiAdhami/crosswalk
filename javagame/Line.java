@@ -1,6 +1,7 @@
 package javagame;
 
 import java.util.ArrayList;
+import javagame.Menu.GameSetting;
 
 public final class Line {
 
@@ -12,12 +13,11 @@ public final class Line {
     private ArrayList<Car> Cars;
     public static int CarCount = 0;
     private float[] CrosswalkPosition;
-    private int carId = 1;
+    private int CarId = 1;
     public static int SheepCurrentLine; 
 
     public Line() {
         this.Cars = new ArrayList<>();
-        this.SheepCurrentLine = 0;
     }
 
     public Line(int Id, int MaxCarSpeed, int MinCarSpeed, boolean Direction, int Position) {
@@ -71,7 +71,7 @@ public final class Line {
     public int getId() {
         return Id;
     }
-
+    
     public void CreateNewCar(Car newCar) {
         //  newCar.setLine(this);
 
@@ -84,28 +84,31 @@ public final class Line {
 
                 if (newCar.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
                     if (lastCar.getEndPosition() >= -lastCar.getCarType().getCarWidth() + 50) {
+                        newCar.setId(CarId);
                         Cars.add(newCar);
-                        carId++;
+                        CarId++;
                     }
                 } else if (lastCar.getEndPosition() <= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
+                    newCar.setId(CarId);
                     Cars.add(newCar);
-                    carId++;
+                    CarId++;
                 }
             }
         } else {
+            newCar.setId(CarId);
             Cars.add(newCar);
-            carId++;
+            CarId++;
         }
 
     }
 
-    public void Dispose(int id) {
-        Cars.remove(id);
+    public void Dispose(Car car) {
+        Cars.remove(car);
         
     }
 
     public final float[] getAchieveCrosswalkPosistion() {
-        float middle = Crosswalk.getMiddlePosition();
+        float middle = GameSetting.getCrosswalkMiddlePosition();
         float[] result = new float[2];
 
         if (Direction == Const.LINE_DIRECTION_LTR) {
@@ -122,10 +125,7 @@ public final class Line {
             return result;
         }
     }
-    public int getCarId()
-    {
-        return carId;
-    }
+
     public int getLineIdByCar(Car car)
     {
         return car.getLine().getId();

@@ -34,7 +34,7 @@ public class SettingMenu extends Menu {
         panel.add(labels, BorderLayout.EAST);
         panel.add(submit, BorderLayout.SOUTH);
 
-        JSpinner topLineCount = CreateSpinner("تعداد لاین راست به چپ", SettingMenuResult.getTopLineCount(), MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT , 1, null);
+        JSpinner topLineCount = CreateSpinner("تعداد لاین راست به چپ", GameSetting.getRtlLineCount(), MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT , 1, null);
         controls.add(topLineCount);
         controls.add(CreateMargin(10, 0, 10, 0));
         
@@ -42,7 +42,7 @@ public class SettingMenu extends Menu {
         labels.add(lblTopLineCount);
         labels.add(CreateMargin(10, 0, 10, 0));
 
-        JSpinner bottomLineCount = CreateSpinner("تعداد لاین چپ به راست",  SettingMenuResult.getBottomLineCount(), MenuConst.MIN_BOTTOM_LINE_COUNT, MenuConst.MAX_BOTTOM_LINE_COUNT, 1, null);
+        JSpinner bottomLineCount = CreateSpinner("تعداد لاین چپ به راست",  GameSetting.getLtrLineCount(),MenuConst.MIN_BOTTOM_LINE_COUNT, MenuConst.MAX_BOTTOM_LINE_COUNT, 1, null);
         controls.add(bottomLineCount);
         controls.add(CreateMargin(10, 0, 10, 0));
 
@@ -53,16 +53,16 @@ public class SettingMenu extends Menu {
         JButton saveChanges = CreateButton("ذخیره",
                 (ActionEvent e) -> {
                     boolean error = false;
-                    if (!SettingMenuResult.setTopLineCount(topLineCount.getValue())) {
+                    if (!GameSetting.setRtlLineCount(topLineCount.getValue())) {
                         JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار لاین بالایی غیر معتبر", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT),"خطایی رخ داده",JOptionPane.ERROR_MESSAGE);
                         error = true;
                     }
-                    else if (!SettingMenuResult.setBottomLineCount(bottomLineCount.getValue())) {
+                    else if (!GameSetting.setLtrLineCount(bottomLineCount.getValue())) {
                         JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار لاین پایینی غیر معتبر", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_BOTTOM_LINE_COUNT, MenuConst.MAX_BOTTOM_LINE_COUNT),"خطایی رخ داده",JOptionPane.ERROR_MESSAGE);
                         error = true;
                     }
                     else{
-                        SettingMenuResult.SaveChanges();
+                        GameSetting.SaveChanges();
                         frame.dispose();
                     }
                 });

@@ -2,12 +2,11 @@ package javagame;
 
 import java.io.File;
 import java.security.SecureRandom;
-import javagame.Menu.SettingMenuResult;
 
 public final class Const {
 
     // SecureRandom for create random object
-    public final static SecureRandom RAND  = new SecureRandom();
+    public final static SecureRandom RAND = new SecureRandom();
 
     // Root path 
     public final static String PATH = new File(".").getAbsolutePath();
@@ -16,6 +15,7 @@ public final class Const {
     public final static int CAR_COUNT = 2;
     // Game name
     public final static String GAME_NAME = "نام بازی";
+    public final static String GAME_ICON = "\\src\\resources\\Line\\Line2.png";
 
     // Line
     public final static String LINE_IMAGE = "\\src\\resources\\Line\\Line2.png";
@@ -37,7 +37,7 @@ public final class Const {
 
     // Game size
     public final static int GAME_WINDOWS_WIDTH = 800;
-    public final static int GAME_WINDOWS_HEIGHT = (SettingMenuResult.getBottomLineCount() + SettingMenuResult.getTopLineCount() + 1) * 100;
+    public final static int GAME_WINDOWS_HEIGHT = 700; // اینو عوض نکن
     public final static int TOP_MARGIN = 20;
     public final static int BOTTOM_MARGIN = 100;
 
@@ -54,5 +54,7 @@ public final class Const {
     public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\Sheep{0}.png";
 
     // Change speed near other car 
-    public final static int CHANGE_SPEED_DISTANCE_FOR_REACH = 50;
+    public final static int CHANGE_SPEED_DISTANCE_FOR_REACH = 100;
+    public final static float CHANGE_SPEED_RATE_DISTANCE_FOR_REACH = .5f;
+
 }

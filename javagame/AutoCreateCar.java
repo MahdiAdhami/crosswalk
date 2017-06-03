@@ -1,19 +1,17 @@
 package javagame;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
+import javagame.Menu.GameSetting;
 
 public class AutoCreateCar implements Runnable {
-
+    
     ArrayList<Line> Lines = new ArrayList<>();
     public int RtlLineCount;
     public int LtrLineCount;
-    public static SecureRandom SecureRandom = new SecureRandom();
 
-    AutoCreateCar(int RtlLineCount, int LtrLineCount, int middleOfCrosswalkPosition) {
-        Crosswalk.setMiddlePosition(middleOfCrosswalkPosition);
-        this.LtrLineCount = LtrLineCount;
-        this.RtlLineCount = RtlLineCount;
+    AutoCreateCar() {
+        this.LtrLineCount = GameSetting.getLtrLineCount();
+        this.RtlLineCount = GameSetting.getRtlLineCount();
     }
 
     public void InitLine() {
@@ -33,23 +31,32 @@ public class AutoCreateCar implements Runnable {
     @Override
     public void run() {
         while (true) {
-            int randomLine = SecureRandom.nextInt(LtrLineCount + RtlLineCount);
+            
+            // Random int to select line for create new car 
+            int randomLine = Const.RAND.nextInt(LtrLineCount + RtlLineCount);
+            
+            // Get line with random int
             Line tempLine = Lines.get(randomLine);
-
-            int speed = tempLine.getMinCarSpeed() + SecureRandom.nextInt(tempLine.getMaxCarSpeed());
+            
+            // Create car speed 
+            int speed = tempLine.getMinCarSpeed() +  Const.RAND.nextInt(tempLine.getMaxCarSpeed());
+            
+            // variables for instance car object
             CarType carType;
             Car newCar;
             
+             // Check for direction 
             if (tempLine.getDirection() == Const.LINE_DIRECTION_RTL) {
-                carType = new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
-                newCar = new CarRtl(tempLine.getCarId(), speed, carType, tempLine);
+                carType = new CarType(tempLine.getDirection());
+                newCar = new CarRtl(speed, carType, tempLine);
             }else{
-                carType = new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
-                newCar = new CarLtr(tempLine.getCarId(), speed, carType, tempLine);
+                carType = new CarType(tempLine.getDirection());
+                newCar = new CarLtr(speed, carType, tempLine);
             }
-            
+            // Call create new car method of line 
             tempLine.CreateNewCar(newCar);
             
+            // Sleep thread wait for create new car again
             try {
                 Thread.sleep(Const.CREATE_CAR_RATE);
             } catch (Exception ex) {
