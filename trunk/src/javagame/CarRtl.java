@@ -22,7 +22,8 @@ public class CarRtl extends Car {
 
     @Override
     public void MoveInLine() {
-       // System.out.print(Position[0]);
+       
+        
         float tempSpeed= getSpeedV2(false);
         
         if (Position[1] < 0) {
@@ -31,10 +32,17 @@ public class CarRtl extends Car {
         }
         
         if(this.getLine().getCars().size()>=2){
-            if(this.getLine().getDirection() == Const.LINE_DIRECTION_RTL)
+            
+            int id1 = this.getId();
+            int id2 = id1 - 1;
+
+           // int lineid1 = this.getLine().getId();
+           //int lineid2 = Line.getLineIdByCar(Line.getCars().get(id2));
+
+            if(this.getLine().getDirection()==Const.LINE_DIRECTION_RTL)
             {
             
-                if(this.getLine().getCars().get(this.getLine().getCarId()-2).getHeadPosition() <= this.getLine().getCars().get(this.getLine().getCarId()-2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
+                if(this.getLine().getCars().get(id1-2).getHeadPosition() <= this.getLine().getCars().get(id2-2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
                 {
                      tempSpeed = getSpeedV2(true);
                 }

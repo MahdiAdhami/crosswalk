@@ -125,6 +125,9 @@ public final class Line {
     public int getCarId()
     {
         return carId;
-                
+    }
+    public int getLineIdByCar(Car car)
+    {
+        return car.getLine().getId();
     }
 }
