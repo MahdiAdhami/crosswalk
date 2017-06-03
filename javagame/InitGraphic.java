@@ -4,15 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javagame.Menu.Setting;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,50 +20,50 @@ public class InitGraphic extends JPanel implements Runnable {
 
     // ArrayList use to keep lines
     public ArrayList<Line> Lines;
+
     // variable for keeping cross walk middle position
     private final int MiddleOfCrosswalkPosition;
+
+    // Crosswalk Image
+    private Image CrosswalkImage;
+
     // Line Image
-    private BufferedImage CrosswalkImage;
+    private Image LineImage;
     // Sheep
     private final Sheep Sheep;
-    
-    private  BufferedImage LineImage;
-    
-    static public JFrame gameFrame;
 
     // Constructor for init lines and window
-    public InitGraphic(ArrayList<Line> Lines, int MiddleOfCrosswalkPosition, Sheep Sheep) {
-        super();
-        SetInit();
-
+    public InitGraphic(ArrayList<Line> Lines, int MiddleOfCrosswalkPosition) {
+           super();
         this.Lines = Lines;
+
         this.MiddleOfCrosswalkPosition = MiddleOfCrosswalkPosition;
-        
         try {
             CrosswalkImage = ImageIO.read(new File(Const.PATH + Const.CROSSWALK_IMAGE));
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
-        
-        this.Sheep = Sheep;
-        
-        try {
             LineImage = ImageIO.read(new File(Const.PATH + Const.LINE_IMAGE));
         } catch (IOException ex) {
-            Logger.getLogger(InitGraphic.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("InitGraphic InitGraphic() " + ex);
         }
+        this.Sheep = new Sheep(5, (Const.LINE_HEIGHT * (Setting.getTopLineCount() + Setting.getBottomLineCount())) + Const.TOP_MARGIN);
+        SetInit();
     }
 
     // Initialize game window
     private void SetInit() {
-        gameFrame = new JFrame(Const.GAME_NAME);
+        JFrame gameFrame = new JFrame(Const.GAME_NAME);
         gameFrame.addKeyListener(new KeyListener() {
             @Override
-            public void keyPressed(KeyEvent e) {Sheep.keyPressed(e);}
+            public void keyPressed(KeyEvent e) {
+                Sheep.keyPressed(e);
+            }
+
             @Override
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {
+            }
+
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
         });
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, Const.GAME_WINDOWS_HEIGHT);
@@ -98,24 +97,29 @@ public class InitGraphic extends JPanel implements Runnable {
 
     @Override
     public void paintComponent(Graphics g) {
+
+        // Call super methods for initialize
         super.paintComponent(g);
 
-        
-        
-        for(int i = 0 ; i <=Lines.size() ; i ++)
-        {
-            g.drawImage(LineImage, 0, i*Const.LINE_HEIGHT, this);
-        }
-        
-        for (int i = 1; i < ((Const.GAME_WINDOWS_HEIGHT / 20) -2); i++) {
-            g.drawImage(CrosswalkImage, MiddleOfCrosswalkPosition - Const.CROSSWALK_WIDTH / 2, i * 20, this);
-        }
-//        g.drawImage(Sheep.getImage(), (int)Sheep.getXPosition(), (int)Sheep.getYPosition(), this);
-        g.drawImage(Sheep.getImage(), (int)Sheep.getXPosition(), (int)Sheep.getYPosition(), this);
+        // Draw lines
+        Lines.stream().forEach((lineTemp) -> {
+            for (int i = 1; i < (Const.GAME_WINDOWS_WIDTH); i += Const.LINE_WIDTH) {
+                g.drawImage(LineImage, i, lineTemp.getPosition(), this);
+            }
+        });
 
+        // Draw crosswalk
+        for (int i = 0; i < (Const.LINE_HEIGHT * (Lines.size())) / Const.CROSSWALK_HEIGHT; i++) {
+            g.drawImage(CrosswalkImage, MiddleOfCrosswalkPosition - Const.CROSSWALK_WIDTH / 2, (i * Const.CROSSWALK_HEIGHT) + Const.TOP_MARGIN, this);
+        }
+
+        // Draw Sheep
+        g.drawImage(Sheep.getImage(), (int) Sheep.getXPosition(), (int) Sheep.getYPosition(), this);
+
+        // Draw cars
         Lines.stream().forEach((Linetemp) -> {
             Linetemp.getCars().stream().forEach((carTemp) -> {
-                g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getHeadPosition(), Linetemp.getPosition(), this);
+                g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getHeadPosition(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2, this);
             });
         });
     }
@@ -157,17 +161,15 @@ public class InitGraphic extends JPanel implements Runnable {
                 try {
                     Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
                 } catch (InterruptedException e) {
-                    System.out.println(e);
+                    System.err.println("InitGraphic run() " + e);
                 }
 //                Sheep.MoveInCrossWalk();
                 repaint();
 
-            } catch (Exception e) {
-                System.out.println(e);
+            } catch (Exception ex) {
+                System.err.println("CarLtr run() " + ex);
             }
         }
     }
 
-    
-    
 }

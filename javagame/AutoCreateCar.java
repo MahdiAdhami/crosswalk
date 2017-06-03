@@ -18,10 +18,10 @@ public class AutoCreateCar implements Runnable {
 
     public void InitLine() {
         for (int i = 1 ; i <= RtlLineCount ; i++) {
-            Lines.add(new Line(i, (i + 1) * Const.CREATE_CAR_SPEED_RATE, (i) * Const.CREATE_CAR_SPEED_RATE, Const.LINE_DIRECTION_RTL, Const.LINE_HEIGHT * (i - 1) + 50 ));
+            Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, Const.LINE_HEIGHT * (i - 1) + Const.TOP_MARGIN));
         }
         for (int i = RtlLineCount + 1 , j = 1; i <= RtlLineCount + LtrLineCount; i++ , j++) {
-            Lines.add(new Line(i, (j + 1) * Const.CREATE_CAR_SPEED_RATE, (j) * Const.CREATE_CAR_SPEED_RATE, Const.LINE_DIRECTION_LTR, (Const.LINE_HEIGHT * (j - 1)) + RtlLineCount * Const.LINE_HEIGHT + 50) );
+            Lines.add(new Line(i, (j + 1), (j) , Const.LINE_DIRECTION_LTR, (Const.LINE_HEIGHT * (j - 1)) + RtlLineCount * Const.LINE_HEIGHT + Const.TOP_MARGIN) );
         }
     }
 
@@ -32,7 +32,6 @@ public class AutoCreateCar implements Runnable {
 
     @Override
     public void run() {
-       
         while (true) {
             int randomLine = SecureRandom.nextInt(LtrLineCount + RtlLineCount);
             Line tempLine = Lines.get(randomLine);
@@ -43,19 +42,18 @@ public class AutoCreateCar implements Runnable {
             
             if (tempLine.getDirection() == Const.LINE_DIRECTION_RTL) {
                 carType = new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
-                newCar = new CarRtl(tempLine.carId, speed, carType, tempLine);
+                newCar = new CarRtl(tempLine.getCarId(), speed, carType, tempLine);
             }else{
                 carType = new CarType(65 + SecureRandom.nextInt(Const.CAR_COUNT), tempLine.getDirection());
-                newCar = new CarLtr(tempLine.carId, speed, carType, tempLine);
+                newCar = new CarLtr(tempLine.getCarId(), speed, carType, tempLine);
             }
-            
             
             tempLine.CreateNewCar(newCar);
             
             try {
                 Thread.sleep(Const.CREATE_CAR_RATE);
-            } catch (Exception e) {
-                System.out.println("1)" + e);
+            } catch (Exception ex) {
+                System.err.println("AutoCreateCar run() " + ex);
             }
         }
     }

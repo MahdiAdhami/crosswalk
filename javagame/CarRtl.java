@@ -24,19 +24,27 @@ public class CarRtl extends Car {
     public void MoveInLine() {
        // System.out.print(Position[0]);
         float tempSpeed= getSpeedV2(false);
-        /*if(Line.getCars().size()>=2){
-        if(Line.getCars().get(Id-1).getHeadPosition() <= Line.getCars().get(Id).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
-        {
-        tempSpeed = getSpeedV2(true);
-        }
-        else {
-        tempSpeed = getSpeedV2(false);
-        }
-        }*/
-         if (Position[1] < 0) {
+        
+        if (Position[1] < 0) {
             Line.Dispose(Line.getCars().indexOf(this));
             return;
         }
+        
+        if(this.getLine().getCars().size()>=2){
+            if(this.getLine().getDirection() == Const.LINE_DIRECTION_RTL)
+            {
+            
+                if(this.getLine().getCars().get(this.getLine().getCarId()-2).getHeadPosition() <= this.getLine().getCars().get(this.getLine().getCarId()-2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
+                {
+                     tempSpeed = getSpeedV2(true);
+                }
+                else {
+                     tempSpeed = getSpeedV2(false);
+                }
+                    
+            }
+        }
+         
 
         Position[0] -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
         Position[1] = Position[0] + CarType.getCarWidth();
