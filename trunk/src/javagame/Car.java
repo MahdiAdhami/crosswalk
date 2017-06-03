@@ -53,6 +53,10 @@ public abstract class Car {
         }
         return Speed;
     }
+    public float getSpeedV2(boolean flag)
+    {
+        return(flag==true)? 20 : getSpeed();
+    }
 
     // Setter methods
     public void setId(int id) {

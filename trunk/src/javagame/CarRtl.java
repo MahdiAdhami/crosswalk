@@ -38,7 +38,33 @@ public class CarRtl extends Car {
 
     @Override
     public void MoveInLine() {
-        float tempSpeed = getSpeed();
+        float tempSpeed = getSpeedV2(false);
+        
+        
+        if (this.getLine().getCars().size() >= 3) {
+            for(int i = this.getLine().getCars().size() ; i >= this.getLine().getCars().size()-this.getLine().getRemovedCount() ; i-- )
+            {
+                if (this.getLine().getCars().get(i - 1).getHeadPosition() >= this.getLine().getCars().get(i - 2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+                tempSpeed = getSpeedV2(true);
+  
+            }
+        
+                }
+
+        
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 //
 //        if (Position[1] < 0) {
 //            Line.Dispose(this);

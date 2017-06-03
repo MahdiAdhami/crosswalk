@@ -49,6 +49,7 @@ public final class Const {
 
     // Cars Speed Rate
     public final static int CREATE_CAR_SPEED_RATE = 70;
+    public final static int DECREASE_SPEED_RATE = 20;
 
     // Sheep
     public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\Sheep{0}.png";

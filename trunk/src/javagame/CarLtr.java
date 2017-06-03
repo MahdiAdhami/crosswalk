@@ -32,7 +32,7 @@ public class CarLtr extends Car {
     @Override
     public void MoveInLine() {
 
-        float tempSpeed = getSpeed();
+        float tempSpeed = getSpeedV2(false);
 
         if (Position[1] > Const.GAME_WINDOWS_WIDTH) {
             try {
@@ -42,6 +42,22 @@ public class CarLtr extends Car {
             }
             return;
         }
+        
+        
+        
+        if (this.getLine().getCars().size() >= 3) {
+            for(int i = this.getLine().getCars().size() ; i >= this.getLine().getCars().size()-this.getLine().getRemovedCount() ; i-- )
+            {
+                if (this.getLine().getCars().get(i - 1).getHeadPosition() >= this.getLine().getCars().get(i - 2).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+                tempSpeed = getSpeedV2(true);
+  
+            }
+        
+                }
+
+        
+        }
+        
 
 //        if (this.getLine().getCars().size() >= 3) {
 //            int id1 = this.getId();
@@ -57,6 +73,7 @@ public class CarLtr extends Car {
 //        }
         Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
         Position[1] = Position[0] - CarType.getCarWidth();
+    
     }
 
     /* @Override
@@ -83,4 +100,5 @@ public class CarLtr extends Car {
 
         System.out.print("Death");
     }
+    
 }
