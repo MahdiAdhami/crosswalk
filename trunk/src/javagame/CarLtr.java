@@ -1,7 +1,5 @@
 package javagame;
 
-import java.util.ArrayList;
-
 public class CarLtr extends Car {
 
     public CarLtr(int Id, int Speed, CarType CarType, Line Line) {
@@ -22,30 +20,32 @@ public class CarLtr extends Car {
 
     @Override
     public void MoveInLine() {
-        //System.out.println(Position[0]);
         float tempSpeed= getSpeedV2(false);
         
         if (Position[1] > Const.GAME_WINDOWS_WIDTH) {
             try{
             Line.Dispose(Line.getCars().indexOf(this));
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
-                System.out.print(e);
+                System.err.println("CarLtr MoveInLine() " + ex);
             }
         return;
         }
         
-//        if(this.getLine().getCars().size()>=2){
-//            if(super.Line.getCars().get(super.getLine().carId).getHeadPosition() >= Line.getCars().get(super.getLine().carId-1).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
-//            {
-//                tempSpeed = getSpeedV2(true);
-//            }
-//            else {
-//                tempSpeed = getSpeedV2(false);
-//            }
-//        }
-        
+       
+                if(this.getLine().getCars().size()>=2){
+                    if(this.getLine().getDirection() == Const.LINE_DIRECTION_LTR)
+                 { 
+                    if(this.getLine().getCars().get(this.getLine().getCarId()-2).getHeadPosition() >= this.getLine().getCars().get(this.getLine().getCarId()-3).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
+                    {
+                        tempSpeed = getSpeedV2(true);
+                    }
+                    else {
+                        tempSpeed = getSpeedV2(false);
+                    }
+                }
+            }
 
         Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
         Position[1] = Position[0] - CarType.getCarWidth();
