@@ -4,7 +4,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import javagame.Menu.Setting;
+import javagame.Menu.GameSetting;
 import javax.imageio.ImageIO;
 
 public class Sheep {
@@ -18,7 +18,8 @@ public class Sheep {
     public Sheep(int Rate, float PositionYOfSheep) {
         this.Rate = Rate;
         SheepSize = new float[]{50, 50};
-        this.PositionOfSheep = new float[]{Setting.getCrosswalkMiddlePosition() - (SheepSize[0] / 2), PositionYOfSheep + getSheepHeight() / 2};
+        
+        this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - (SheepSize[0] / 2), PositionYOfSheep + getSheepHeight() / 2};
 
         this.MaxYPosition = new float[]{SheepSize[0], PositionYOfSheep};
         
@@ -78,14 +79,14 @@ public class Sheep {
             ImageStatus = 1;
             PositionOfSheep[1] += Rate;
         } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == 68) {
-            if (Setting.getCrosswalkMiddlePosition() + Const.CROSSWALK_WIDTH / 2 <= PositionOfSheep[0] + getSheepWidth() + Rate) {
+            if (GameSetting.getCrosswalkMiddlePosition() + Const.CROSSWALK_WIDTH / 2 <= PositionOfSheep[0] + getSheepWidth() + Rate) {
                 return;
             }
             ImageStatus = 2;
             PositionOfSheep[0] += Rate;
 
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
-            if (Setting.getCrosswalkMiddlePosition() - Const.CROSSWALK_WIDTH / 2 >= PositionOfSheep[0]) {
+            if (GameSetting.getCrosswalkMiddlePosition() - Const.CROSSWALK_WIDTH / 2 >= PositionOfSheep[0]) {
                 return;
             }
             ImageStatus = 3;

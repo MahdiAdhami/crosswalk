@@ -26,63 +26,62 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class SettingMenuResult {
+public class GameSetting {
 
-    private static int TopLineCount;
-    private static int BottomLineCount;
+    private static int RtlLineCount;
+    private static int LtrLineCount;
     private static int CrosswalkMiddlePosition;
-    
-    public static void Init(int TopLineCount, int BottomLineCount,int CrosswalkMiddlePosition) {
-        SettingMenuResult.TopLineCount = TopLineCount;
-        SettingMenuResult.BottomLineCount = BottomLineCount;
-        SettingMenuResult.CrosswalkMiddlePosition = CrosswalkMiddlePosition;
+    private static String SettingPath = Const.SETTING_FILE;
+
+    /// Getter Methods
+    public static int getRtlLineCount() {
+        GameSetting.UpdateSettings();
+        return RtlLineCount;
     }
 
-    public static int getTopLineCount() {
-        if(TopLineCount == 0){
-            UpdateSettings();
-        }
-        return TopLineCount;
-    }
-
-    public static int getBottomLineCount() {
-        if(BottomLineCount == 0){
-            UpdateSettings();
-        }
-        return BottomLineCount;
+    public static int getLtrLineCount() {
+        GameSetting.UpdateSettings();
+        return LtrLineCount;
     }
 
     public static int getCrosswalkMiddlePosition() {
-        if(CrosswalkMiddlePosition == 0){
-            UpdateSettings();
-        }
+        GameSetting.UpdateSettings();
         return CrosswalkMiddlePosition;
     }
 
-    public static boolean setTopLineCount(Object value) {
-            int valueAsInt = Integer.parseInt(value.toString().trim());
-            if (valueAsInt >= MenuConst.MIN_TOP_LINE_COUNT && valueAsInt <= MenuConst.MAX_TOP_LINE_COUNT) {
-                TopLineCount = valueAsInt;
-                return true;
-            }
-            return false;
-       
+    /// Setter Methods
+    public static void setSettingPath(String path) {
+        SettingPath = path;
+        UpdateSettings();
     }
 
-    public static boolean setBottomLineCount(Object value) {
-            int valueAsInt = Integer.parseInt(value.toString().trim());
-            
-            if (valueAsInt >= MenuConst.MIN_BOTTOM_LINE_COUNT && valueAsInt <= MenuConst.MAX_BOTTOM_LINE_COUNT) {
-                BottomLineCount = valueAsInt;
-                return true;
-            }
-            return false;
-       
+    public static boolean setRtlLineCount(Object value) {
+        int valueAsInt = Integer.parseInt(value.toString().trim());
+        if (valueAsInt >= MenuConst.MIN_TOP_LINE_COUNT && valueAsInt <= MenuConst.MAX_TOP_LINE_COUNT) {
+            RtlLineCount = valueAsInt;
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean setLtrLineCount(Object value) {
+        int valueAsInt = Integer.parseInt(value.toString().trim());
+        if (valueAsInt >= MenuConst.MIN_BOTTOM_LINE_COUNT && valueAsInt <= MenuConst.MAX_BOTTOM_LINE_COUNT) {
+            LtrLineCount = valueAsInt;
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean setCrosswalkMiddlePosition(Object value) {
+        int valueAsInt = Integer.parseInt(value.toString().trim());
+        CrosswalkMiddlePosition = valueAsInt;
+        return true;
     }
 
     public static void SaveChanges() {
         try {
-            String path = Const.PATH + Const.SETTING_FILE;
+            String path = Const.PATH + SettingPath;
             File inputFile = new File(path);
 
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -104,30 +103,30 @@ public class SettingMenuResult {
 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) node;
-                    if ("TopLineCount".equals(eElement.getNodeName())) {
-                        eElement.setTextContent(String.format("%d", TopLineCount));
-                    } else if ("BottomLineCount".equals(eElement.getNodeName())) {
-                        eElement.setTextContent(String.format("%d", BottomLineCount));
+                    if (SettingConst.RtlLineCount.equals(eElement.getNodeName())) {
+                        eElement.setTextContent(String.format("%d", RtlLineCount));
+                    } else if (SettingConst.LtrLineCount.equals(eElement.getNodeName())) {
+                        eElement.setTextContent(String.format("%d", LtrLineCount));
+                    } else if (SettingConst.CrosswalkMiddlePosition.equals(eElement.getNodeName())) {
+                        eElement.setTextContent(String.format("%d", CrosswalkMiddlePosition));
                     }
                 }
             }
-           
+
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StreamResult consoleResult = new StreamResult(new File(path));
             transformer.transform(source, consoleResult);
 
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            System.out.println(e);
-        } catch (TransformerException ex) {
-            Logger.getLogger(SettingMenuResult.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException | SAXException | IOException | TransformerException ex) {
+            System.err.println("Setting SaveChange() " + ex);
         }
     }
 
-    public static void UpdateSettings(){
-       try{
-            String path = Const.PATH + Const.SETTING_FILE;
+    private static void UpdateSettings() {
+        try {
+            String path = Const.PATH + SettingPath;
             File inputFile = new File(path);
 
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -149,15 +148,17 @@ public class SettingMenuResult {
 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) node;
-                    if ("TopLineCount".equals(eElement.getNodeName())) {
-                        setTopLineCount(eElement.getTextContent());
-                    } else if ("BottomLineCount".equals(eElement.getNodeName())) {
-                        setBottomLineCount(eElement.getTextContent());
+                    if (SettingConst.RtlLineCount.equals(eElement.getNodeName())) {
+                        setRtlLineCount(eElement.getTextContent());
+                    } else if (SettingConst.LtrLineCount.equals(eElement.getNodeName())) {
+                        setLtrLineCount(eElement.getTextContent());
+                    } else if (SettingConst.CrosswalkMiddlePosition.equals(eElement.getNodeName())) {
+                        setCrosswalkMiddlePosition(eElement.getTextContent());
                     }
                 }
             }
-       } catch (ParserConfigurationException | SAXException | IOException ex) {
-            System.out.println(ex);
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            System.err.println("Setting SaveChange() " + ex);
         }
     }
 }

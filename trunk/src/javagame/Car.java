@@ -1,38 +1,30 @@
 package javagame;
 
 public abstract class Car {
+
     protected int Id;
     protected float[] Position;
     protected float Speed;
     protected CarType CarType;
     protected Line Line;
-    protected final float changeSpeedForReach = 20f;
 
-    //private long[] AchieveCrosswalkTime;
-    //private Date CreatedDate;
-    //private Date AccidentDate;
-    
-    public Car(int Id, float[] Position, int Speed, CarType CarType, Line Line) {
+    // Constructors
+    public Car(float[] Position, int Speed, CarType CarType, Line Line) {
         this.Position = Position;
         this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
         this.CarType = CarType;
-        this.Id = Id;
-        setLine(Line);
+        this.Line = Line;
     }
 
-    public Car(int Id, float[] Position, int Speed, CarType CarType) {
+    public Car(float[] Position, int Speed, CarType CarType) {
         this.Position = Position;
         this.Speed = Speed;
         this.CarType = CarType;
-        this.Id = Id;
     }
 
-    public void setLine(Line line) {
-        Line = line;
-    }
-
-    public CarType getCarType() {
-        return CarType;
+    // Getter methods
+    public int getId() {
+        return Id;
     }
 
     public float getHeadPosition() {
@@ -43,14 +35,53 @@ public abstract class Car {
         return Position[1];
     }
 
-    public int getId() {
-        return Id;
+    public CarType getCarType() {
+        return CarType;
     }
 
     public Line getLine() {
         return Line;
     }
 
+    private float getSpeedInCrosswalk() {
+        return Speed * Const.CROSSWALK_CHANGE_SPEED_RATE;
+    }
+
+    public float getSpeed() {
+        if (getLine().getId() == Line.SheepCurrentLine && IsNeartheCrosswalk()) {
+            return getSpeedInCrosswalk();
+        }
+        return Speed;
+    }
+
+    // Setter methods
+    public void setId(int id) {
+        Id = id;
+    }
+
+    // Check for sheep accident with car
+    public boolean isNearToSheepAccident() {
+        return (getLine().getId() == Line.SheepCurrentLine) && IsNeartheCrosswalk();
+    }
+
+    // Change line of car
+    public void ChangeLine() {
+    }
+
+    public abstract boolean IsNeartheCrosswalk();
+
+    public abstract void MoveInLine();
+
+    public abstract void checkSheepAccident();
+
+    public abstract float getSpeedNearOtherCar(float speed);
+
+}
+
+///////////////////
+//private long[] AchieveCrosswalkTime;
+//private Date CreatedDate;
+//private Date AccidentDate;
 //    public float[] getAchieveCrosswalkPosistion() {
 //        float StartPositionRate = 0f;
 //        float crosswalkStartPositionRate = 0f;
@@ -99,13 +130,7 @@ public abstract class Car {
 //        return Achieve;
 //    }
 //}
-    
-    public abstract boolean IsIntheCrosswalk();
-    public abstract void MoveInLine();
- //   public abstract boolean ReachedFrontCar();
-    
-    
-    
+//   public abstract boolean ReachedFrontCar();
 //        float tempSpeed = getSpeed();
 //
 //        if (Line.getDirection() == Const.LINE_DIRECTION_LTR) {
@@ -127,27 +152,3 @@ public abstract class Car {
 //        }
 //
 //    }
-
-    private float getSpeedInCrosswalk() {
-        return Speed * Const.CROSSWALK_CHANGE_SPEED_RATE;
-    }
-
-    public float getSpeed() {
-        if(this.getLine().getId() == Line.SheepCurrentLine && IsIntheCrosswalk())
-        {
-            return getSpeedInCrosswalk() ;
-        }
-        return Speed;
-    }
-    
-    public float getSpeedV2(boolean flag)
-    {
-        return (flag==true)? 2 : getSpeed();
-    }
-    
-    public void ChangeLine() {
-
-    }
-    
-    
-}
