@@ -34,15 +34,15 @@ public class CarLtr extends Car {
 
         float tempSpeed = getSpeedV2(false);
 
-        if (Position[1] > Const.GAME_WINDOWS_WIDTH) {
-            try {
-                Line.Dispose(this);
-            } catch (Exception ex) {
-                System.err.println("CarLtr MoveInLine() " + ex);
-            }
-            return;
-        }
-        
+//        if (Position[1] > Const.GAME_WINDOWS_WIDTH) {
+//            try {
+//                Line.Dispose(this);
+//            } catch (Exception ex) {
+//                System.err.println("CarLtr MoveInLine() " + ex);
+//            }
+//            return;
+//        }
+//        
         
         
         if (this.getLine().getCars().size() >= 3) {
