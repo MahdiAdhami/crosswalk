@@ -45,7 +45,7 @@ public final class Const {
     public final static long CREATE_CAR_RATE = 10000 - 9900;
 
     // Repaint time
-    public final static long SLEEP_TIME_RE_PAINTING = 10;
+    public final static long SLEEP_TIME_RE_PAINTING = 1;
 
     // Cars Speed Rate
     public final static int CREATE_CAR_SPEED_RATE = 70;

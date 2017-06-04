@@ -30,6 +30,7 @@ public class AutoCreateCar implements Runnable {
 
     @Override
     public void run() {
+        
         while (true) {
             
             // Random int to select line for create new car 
