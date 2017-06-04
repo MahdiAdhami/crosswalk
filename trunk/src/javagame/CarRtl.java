@@ -105,18 +105,16 @@ public class CarRtl extends Car {
         
         
         if (this.getLine().getCars().size() >= 2) {
-            for(int i = this.getLine().getCars().size() ; i >= 2 ; i-- )
+            for(int i = 2 ; i <= this.getLine().getCars().size() ; i++ )
             {
                 if(!(this.getLine().isDisposed(this.getLine().getCars().get(i - 1)) && this.getLine().isDisposed(this.getLine().getCars().get(i - 2)))){
                     if (this.getLine().getCars().get(i - 1).getHeadPosition() <= this.getLine().getCars().get(i - 2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
                     tempSpeed = getSpeedV2(true);
 
-                      }
+                    }
                 }
-                }
-
-        
-        }
+           }
+       }
         
         
         
