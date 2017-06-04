@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Settings>
     <GameSettings>
-        <RtlLineCount>5</RtlLineCount>
-        <LtrLineCount>5</LtrLineCount>
+        <RtlLineCount>1</RtlLineCount>
+        <LtrLineCount>0</LtrLineCount>
         <CrosswalkMiddlePosition>300</CrosswalkMiddlePosition>
     </GameSettings>
 </Settings>
