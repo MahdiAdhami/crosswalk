@@ -7,6 +7,7 @@ public abstract class Car {
     protected float Speed;
     protected CarType CarType;
     protected Line Line;
+   // TakeOver obj;
 
     // Constructors
     public Car(float[] Position, int Speed, CarType CarType, Line Line) {
@@ -14,12 +15,14 @@ public abstract class Car {
         this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
         this.CarType = CarType;
         this.Line = Line;
+        //obj = new TakeOver();
     }
 
     public Car(float[] Position, int Speed, CarType CarType) {
         this.Position = Position;
         this.Speed = Speed;
         this.CarType = CarType;
+        //obj = new TakeOver();
     }
 
     // Getter methods

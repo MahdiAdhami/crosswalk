@@ -1,7 +1,9 @@
 package javagame;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javagame.Menu.GameSetting;
 import javax.swing.JOptionPane;
 
 public class CarRtl extends Car {
@@ -35,20 +37,82 @@ public class CarRtl extends Car {
                 || (Position[1] <= crosswalkPosition[0] && Position[1] >= crosswalkPosition[1]));
 
     }
+    
+//    public boolean checkAccident(Car thisCar) {
+//        int lineID = 1;
+//        Line tempLine = thisCar.getLine();
+////        for (int i = 1; i <= GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount(); i++) {
+////            tempLine = Lines.get(i - 1);
+////
+////            if (tempLine.getCars().contains(thisCar)) {
+////                lineID = tempLine.getId();
+////                break;
+////            }
+////        }
+//        ArrayList<Car> tempCars = null;
+//        try {
+//            tempCars = tempLine.getCars();
+//        } catch (Exception e) {
+//            System.out.println("checkaccident" + e.getClass() + " " + e + "tempcars arraylist");
+//        }
+//
+//        int tempIndex = 0;
+//        try {
+//            tempIndex = tempCars.indexOf(thisCar);
+//        } catch (Exception e) {
+//            System.out.println("checkaccident" + e.getClass() + " " + e + "tempcars index");
+//        }
+//
+////        if (this.getLine().getCars().size() >= 3) {
+////            for(int i = this.getLine().getCars().size() ; i >= this.getLine().getCars().size()-this.getLine().getRemovedCount() ; i-- )
+////            {
+////                if (this.getLine().getCars().get(i - 1).getHeadPosition() >= this.getLine().getCars().get(i - 2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+////                tempSpeed = getSpeedV2(true);
+////        
+////           
+//
+////            }
+//               
+//                    
+//                        if (tempCars.get(tempIndex).getHeadPosition() <= tempCars.get(tempIndex - 1).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+//                            return true;
+//                        }
+//
+//                    
+//                
+//
+//            
+//        
+//        return false;
+//    }
+//
+//
+//
+//    
+//    
+//    
 
     @Override
     public void MoveInLine() {
-        float tempSpeed = getSpeedV2(false);
         
         
-        if (this.getLine().getCars().size() >= 3) {
-            for(int i = this.getLine().getCars().size() ; i >= this.getLine().getCars().size()-this.getLine().getRemovedCount() ; i-- )
+            float tempSpeed = getSpeedV2(false);
+            
+            if (Position[1] < 0) {
+            Line.Dispose(this);
+            return;
+        }
+        
+        
+        if (this.getLine().getCars().size() >= 2) {
+            for(int i = this.getLine().getCars().size() ; i >= 2 ; i-- )
             {
-                if (this.getLine().getCars().get(i - 1).getHeadPosition() >= this.getLine().getCars().get(i - 2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
-                tempSpeed = getSpeedV2(true);
-  
-            }
-        
+                if(!(this.getLine().isDisposed(this.getLine().getCars().get(i - 1)) && this.getLine().isDisposed(this.getLine().getCars().get(i - 2)))){
+                    if (this.getLine().getCars().get(i - 1).getHeadPosition() <= this.getLine().getCars().get(i - 2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+                    tempSpeed = getSpeedV2(true);
+
+                      }
+                }
                 }
 
         
@@ -56,20 +120,8 @@ public class CarRtl extends Car {
         
         
         
+
         
-        
-        
-        
-        
-        
-        
-        
-        
-//
-//        if (Position[1] < 0) {
-//            Line.Dispose(this);
-//            return;
-//        }
 
 //        try {
 //            int id1 = super.getId();

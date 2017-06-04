@@ -13,7 +13,7 @@ public final class Line {
     private ArrayList<Car> Cars;
     public static int CarCount = 0;
     private float[] CrosswalkPosition;
-    private int CarId = 1;
+    private int CarId = 0;
     public static int SheepCurrentLine; 
     private int removedCount = 0;
     
@@ -139,6 +139,10 @@ public final class Line {
         return removedCount;
     }
     
+    public boolean isDisposed(Car temp)
+    {
+        return(this.getCars().contains(temp))? false : true;
+    }
     
     
 }

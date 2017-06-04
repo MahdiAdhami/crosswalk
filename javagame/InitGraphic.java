@@ -139,7 +139,7 @@ public class InitGraphic extends JPanel implements Runnable {
                 Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
 
             } catch (Exception ex) {
-                System.err.println("CarLtr run() " + ex);
+                System.err.println("InitGraphic run() " + ex);
             }
         }
     }
