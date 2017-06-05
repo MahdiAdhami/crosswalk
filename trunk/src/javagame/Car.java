@@ -10,7 +10,8 @@ public abstract class Car {
    // TakeOver obj;
 
     // Constructors
-    public Car(float[] Position, int Speed, CarType CarType, Line Line) {
+    public Car(int Id,float[] Position, int Speed, CarType CarType, Line Line) {
+        this.Id = Id;
         this.Position = Position;
         this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
         this.CarType = CarType;
@@ -18,7 +19,8 @@ public abstract class Car {
         //obj = new TakeOver();
     }
 
-    public Car(float[] Position, int Speed, CarType CarType) {
+    public Car(int Id,float[] Position, int Speed, CarType CarType) {
+        this.Id = Id;
         this.Position = Position;
         this.Speed = Speed;
         this.CarType = CarType;
@@ -65,6 +67,13 @@ public abstract class Car {
     public void setId(int id) {
         Id = id;
     }
+    public void setLine(int index)
+    {
+        AutoCreateCar acc = new AutoCreateCar();
+        Line = acc.getLines().get(index);
+        Line.getCars().add(this);
+    }
+    
 
     // Check for sheep accident with car
     public boolean isNearToSheepAccident() {
