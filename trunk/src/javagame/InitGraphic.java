@@ -5,18 +5,21 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import javafx.scene.shape.Circle;
 import javagame.Menu.GameSetting;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 public class InitGraphic extends JPanel implements Runnable {
 
@@ -31,10 +34,9 @@ public class InitGraphic extends JPanel implements Runnable {
 
     // Line Image
     private Image LineImage;
-    
-    // Sheep
-    public static final Sheep Sheep = new Sheep(5, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN);
 
+    // Sheep
+    public static final Sheep Sheep = new Sheep(5, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
 
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
@@ -59,22 +61,13 @@ public class InitGraphic extends JPanel implements Runnable {
         } catch (IOException ex) {
             System.err.println("InitGraphic SetInit() " + ex);
         }
+        
+        // Add listeners for mouse and keyboard event
+        GameListener gameListener = new GameListener();
+        gameFrame.addKeyListener(gameListener.KeyListener);
+        gameFrame.addMouseListener(gameListener.MouseListener);
 
-        gameFrame.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                Sheep.keyPressed(e);
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
+        //
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, Const.GAME_WINDOWS_HEIGHT);
         gameFrame.setVisible(true);
@@ -87,13 +80,11 @@ public class InitGraphic extends JPanel implements Runnable {
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         gameFrame.setLocation((dimension.width / 2) - (Const.GAME_WINDOWS_WIDTH / 2), (dimension.height / 2) - (Const.GAME_WINDOWS_HEIGHT / 2));
-
         gameFrame.add(this);
     }
 
     @Override
     public void paintComponent(Graphics g) {
-
         // Call super methods for initialize
         super.paintComponent(g);
 
@@ -113,33 +104,48 @@ public class InitGraphic extends JPanel implements Runnable {
         g.drawImage(Sheep.getImage(), (int) Sheep.getXPosition(), (int) Sheep.getYPosition(), this);
 
         // Draw cars
-        Lines.stream().forEach((Linetemp) -> {
-            Linetemp.getCars().stream().forEach((carTemp) -> {
-                g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getHeadPosition(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2, this);
+        try {
+            Lines.stream().forEach((Linetemp) -> {
+                Linetemp.getCars().stream().forEach((carTemp) -> {
+                    g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getPositionForDraw(),Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2, this);
+                });
             });
-        });
+
+        } catch (Exception ex) {
+            System.err.println("InitGraphic paintComponent() " + ex.getMessage());
+        }
+
+        //Buttons
+        g.setFont(new Font("tahoma", 0, 12));
+        g.drawString(String.format("مرحله ی %d ", 5), Const.GAME_WINDOWS_WIDTH - 100, 20);
+        g.drawString(String.format("امتیاز %d ", 5), Const.GAME_WINDOWS_WIDTH - 175, 20);
+
+        g.drawRoundRect(10, 5, 70, 23, 5, 5);
+        g.drawString("توقف بازی", 20, 20);
+
     }
 
     // Implements  Thread 
     @Override
     public void run() {
         while (true) {
+            if(InitGame.GameStop){
+               continue; 
+            }
             try {
                 Lines.stream().forEach((Line Linetemp) -> {
                     Linetemp.getCars().stream().forEach((Car carTemp) -> {
                         carTemp.MoveInLine();
-                        carTemp.checkSheepAccident();
                     });
                 });
 
                 // Repaint panel
                 repaint();
-
                 // Sleep time for repaint again
                 Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
 
             } catch (Exception ex) {
-                System.err.println("InitGraphic run() " + ex);
+                System.err.println("InitGraphic run() " + ex.getMessage());
             }
         }
     }

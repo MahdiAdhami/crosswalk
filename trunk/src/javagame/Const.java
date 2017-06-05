@@ -29,7 +29,7 @@ public final class Const {
     public final static String CROSSWALK_IMAGE = "\\src\\resources\\Line\\Crosswalk2.png";
     public final static int CROSSWALK_WIDTH = 100;
     public final static int CROSSWALK_HEIGHT = 20;
-    public final static int CROSSWALK_CHANGE_SPEED_DISTANCE = 30;
+    public final static int CROSSWALK_CHANGE_SPEED_DISTANCE = 110;
     public final static float CROSSWALK_CHANGE_SPEED_RATE = .4f;
 
     //Setting File
@@ -38,24 +38,24 @@ public final class Const {
     // Game size
     public final static int GAME_WINDOWS_WIDTH = 800;
     public final static int GAME_WINDOWS_HEIGHT = 700; // اینو عوض نکن
-    public final static int TOP_MARGIN = 20;
-    public final static int BOTTOM_MARGIN = 100;
+    public final static int TOP_MARGIN = 40;
 
     // Create car rate
-    public final static long CREATE_CAR_RATE = 10000 - 9900;
+    public final static long CREATE_CAR_RATE = 10000 - 9500;
 
     // Repaint time
-    public final static long SLEEP_TIME_RE_PAINTING = 1;
+    public final static long SLEEP_TIME_RE_PAINTING = 10;
 
     // Cars Speed Rate
-    public final static int CREATE_CAR_SPEED_RATE = 70;
+    public final static int CREATE_CAR_SPEED_RATE = 100;
     public final static int DECREASE_SPEED_RATE = 20;
 
     // Sheep
     public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\Sheep{0}.png";
+    public final static int SHEEP_DISTANCE_LINE_WHEN_GAME_START = 30;
 
     // Change speed near other car 
     public final static int CHANGE_SPEED_DISTANCE_FOR_REACH = 100;
     public final static float CHANGE_SPEED_RATE_DISTANCE_FOR_REACH = .5f;
-
+    
 }

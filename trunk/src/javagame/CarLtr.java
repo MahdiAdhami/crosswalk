@@ -1,38 +1,108 @@
 package javagame;
 
-import java.util.ArrayList;
-import javagame.Menu.GameSetting;
-
 public class CarLtr extends Car {
 
-    public CarLtr(int Id,int Speed, CarType CarType, Line Line) {
-        super(Id,new float[]{(-1) * CarType.getCarWidth(), (-2) * CarType.getCarWidth()}, Speed, CarType, Line);
-        
-    }
-
-    public CarLtr(int Id, int Speed, CarType CarType) {
-        super(Id,new float[]{(-1) * CarType.getCarWidth(), (-2) * CarType.getCarWidth()}, Speed, CarType);
+    // Constructor
+    public CarLtr(int Speed, CarType CarType, Line Line) {
+        super(new float[]{(-1) * CarType.getCarWidth(), (-2) * CarType.getCarWidth()}, Speed, CarType, Line);
     }
 
     @Override
-    public boolean IsNeartheCrosswalk() {
-        float[] crosswalkPosition = Line.getCrosswalkPosition();
-
-        return ((Position[0] + CarType.getCarWidth() >= crosswalkPosition[0] && (Position[0] + CarType.getCarWidth() <= crosswalkPosition[1]))
-                || (Position[1] + CarType.getCarWidth() >= crosswalkPosition[0] && Position[1] + CarType.getCarWidth() <= crosswalkPosition[1]));
+    public float getEndPosition() {
+        return Position[0] - CarType.getCarWidth();
     }
 
     @Override
-    public float getSpeedNearOtherCar(float speed) {
-        try {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public float getPositionForDraw() {
+        return getEndPosition();
+    }
 
-        } catch (Exception ex) {
-            System.err.println("Car getSpeedNearOtherCar() :" + ex);
-            return Speed;
+    @Override
+    public void checkSheepAccident() {
+        if (!isNearToSheepAccident()) {
+            return;
+        }
+        if (getHeadPosition() >= InitGraphic.Sheep.getXPosition()) {
+            InitGame.GameStop = true;
         }
     }
-    
+
+    @Override
+    public void MoveInLine() {
+        float tempSpeed = getSpeed();
+        if (Position[0] - CarType.getCarWidth() > Const.GAME_WINDOWS_WIDTH) {
+            try {
+                Line.Dispose(this);
+            } catch (Exception ex) {
+                System.err.println("CarLtr MoveInLine() " + ex);
+            }
+            return;
+        }
+        Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
+        checkSheepAccident();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////    
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    @Override
+    public boolean IsNeartheOtherCar() {
+        int carId = super.getId();
+        try {
+            //System.out.println(getLine().getCars().get(carId - 1).getEndPosition() + " " +this.getHeadPosition());
+            if (getLine().getCars().get(carId - 1).getEndPosition() - this.getHeadPosition() <= Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+                return true;
+            }
+        } catch (Exception ex) {
+            System.err.println("CarLtr IsNeartheOtherCar() " + ex);
+            return false;
+        }
+        return false;
+    }
+
+    @Override
+    public float getSpeedNearOtherCar() {
+        if (IsNeartheOtherCar()) {
+            try {
+                Car temp = getLine().getCars().get(super.getId() - 1);
+                if (temp.getSpeed() <= getSpeed()) {
+                    return getSpeed();
+                }
+            } catch (Exception ex) {
+//                System.err.println("CarLtr IsNeartheOtherCar() " + ex);
+            }
+        }
+        return super.getSpeed();
+    }
+}
+
+///////////
+//        if (this.getLine().getCars().size() >= 2) {
+//          //  for(int i = 2 ; i <= this.getLine().getCars().size() ; i++ )
+//            //{
+//                if(!(this.getLine().isDisposed(this.getLine().getCars().get(i - 1)) && this.getLine().isDisposed(this.getLine().getCars().get(i - 2)))){
+//                    if (this.getLine().getCars().get(i - 1).getHeadPosition() >= this.getLine().getCars().get(i - 2).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+//                    tempSpeed = getSpeedV2(true);
+//
+//                    }
+//                }      
+//            //}
+//
+//        
+//        }
+//        
+//        if (this.getLine().getCars().size() >= 3) {
+//            int id1 = this.getId();
+//            int id2 = id1 - 1;
+//
+//            //  int lineid1 = this.getLine().getId();
+//            //  int lineid2 = ;
+//            if (this.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
+//                if (this.getLine().getCars().get(id1 - 1).getHeadPosition() >= this.getLine().getCars().get(id2 - 1).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+//                    tempSpeed = getSpeedNearOtherCar();
+//                }
+//            }
+//        }
 //    
 //    public boolean checkAccident(Car thisCar) {
 //        int lineID = 1;
@@ -73,91 +143,3 @@ public class CarLtr extends Car {
 //        
 //        return false;
 //    }
-//
-//
-//
-//    
-//    
-//    
-//    
-//    
-//    
-    
-
-    @Override
-    public void MoveInLine() {
-        int i = this.getId();
-        float tempSpeed = getSpeedV2(false);
-
-        if (Position[1] > Const.GAME_WINDOWS_WIDTH) {
-            try {
-                Line.Dispose(this);
-            } catch (Exception ex) {
-                System.err.println("CarLtr MoveInLine() " + ex);
-            }
-            return;
-        }
-        
-        
-        
-        
-//        if (this.getLine().getCars().size() >= 2) {
-//          //  for(int i = 2 ; i <= this.getLine().getCars().size() ; i++ )
-//            //{
-//                if(!(this.getLine().isDisposed(this.getLine().getCars().get(i - 1)) && this.getLine().isDisposed(this.getLine().getCars().get(i - 2)))){
-//                    if (this.getLine().getCars().get(i - 1).getHeadPosition() >= this.getLine().getCars().get(i - 2).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
-//                    tempSpeed = getSpeedV2(true);
-//
-//                    }
-//                }      
-//            //}
-//
-//        
-//        }
-//        
-        
-        
-
-//        if (this.getLine().getCars().size() >= 3) {
-//            int id1 = this.getId();
-//            int id2 = id1 - 1;
-//
-//            //  int lineid1 = this.getLine().getId();
-//            //  int lineid2 = ;
-//            if (this.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
-//                if (this.getLine().getCars().get(id1 - 1).getHeadPosition() >= this.getLine().getCars().get(id2 - 1).getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
-//                    tempSpeed = getSpeedNearOtherCar();
-//                }
-//            }
-//        }
-        Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
-        Position[1] = Position[0] - CarType.getCarWidth();
-    
-    }
-
-    /* @Override
-    public boolean ReachedFrontCar() {
-    ArrayList<Car> tempCars = super.Line.getCars();
-    
-    for(int i=0;i <= tempCars.size() ; i++)
-    {
-    if(tempCars.get(i).getHeadPosition() >= tempCars.get(i++).getHeadPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH)
-    {
-    
-    }
-    }
-    
-    }
-    
-    
-     */
-    @Override
-    public void checkSheepAccident() {
-        if (!super.isNearToSheepAccident()) {
-            return;
-        }
-
-        System.out.print("Death");
-    }
-    
-}

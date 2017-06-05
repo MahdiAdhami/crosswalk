@@ -1,7 +1,13 @@
 package javagame;
 
 public class InitGame {
+    public static boolean GameStop;
 
+    public InitGame() {
+        this.GameStop = false;
+    }
+    
+    
     // Auto create Cars Method
     public void AutoCreateCar() {
 
@@ -19,10 +25,10 @@ public class InitGame {
         autoCreateCar.InitLine();
         threadAutoCreateCar.start();
         
-        TakeOver sebghat = new TakeOver(autoCreateCar.getLines());
-        Thread threadSebghat = new Thread(sebghat);
-        threadSebghat.start();
-        
+//        TakeOver sebghat = new TakeOver(autoCreateCar.getLines());
+//        Thread threadSebghat = new Thread(sebghat);
+//        threadSebghat.start();
+//        
        // TakeOver takeOver = new TakeOver(autoCreateCar.getLines());
 
     }

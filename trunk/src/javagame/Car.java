@@ -7,20 +7,16 @@ public abstract class Car {
     protected float Speed;
     protected CarType CarType;
     protected Line Line;
-   // TakeOver obj;
 
     // Constructors
-    public Car(int Id,float[] Position, int Speed, CarType CarType, Line Line) {
-        this.Id = Id;
+    public Car(float[] Position, int Speed, CarType CarType, Line Line) {
         this.Position = Position;
         this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
         this.CarType = CarType;
         this.Line = Line;
-        //obj = new TakeOver();
     }
 
-    public Car(int Id,float[] Position, int Speed, CarType CarType) {
-        this.Id = Id;
+    public Car(float[] Position, int Speed, CarType CarType) {
         this.Position = Position;
         this.Speed = Speed;
         this.CarType = CarType;
@@ -30,14 +26,6 @@ public abstract class Car {
     // Getter methods
     public int getId() {
         return Id;
-    }
-
-    public float getHeadPosition() {
-        return Position[0];
-    }
-
-    public float getEndPosition() {
-        return Position[1];
     }
 
     public CarType getCarType() {
@@ -53,27 +41,26 @@ public abstract class Car {
     }
 
     public float getSpeed() {
-        if (getLine().getId() == Line.SheepCurrentLine && IsNeartheCrosswalk()) {
+        if (IsNeartheCrosswalk()) { // getLine().getId() == Line.SheepCurrentLine && 
             return getSpeedInCrosswalk();
         }
         return Speed;
     }
-    public float getSpeedV2(boolean flag)
-    {
-        return(flag==true)? 30 : getSpeed();
+
+    public float getSpeedV2(boolean flag) {
+        return (flag == true) ? 30 : getSpeed();
     }
 
     // Setter methods
     public void setId(int id) {
         Id = id;
     }
-    public void setLine(int index)
-    {
+
+    public void setLine(int index) {
         AutoCreateCar acc = new AutoCreateCar();
         Line = acc.getLines().get(index);
         Line.getCars().add(this);
     }
-    
 
     // Check for sheep accident with car
     public boolean isNearToSheepAccident() {
@@ -83,15 +70,30 @@ public abstract class Car {
     // Change line of car
     public void ChangeLine() {
     }
+    
+    // Is near to crosswalk
+    public boolean IsNeartheCrosswalk() {
+        float[] crosswalkPosition = Line.getCrosswalkPosition();
 
-    public abstract boolean IsNeartheCrosswalk();
+        return ((getHeadPosition() >= crosswalkPosition[0] && (getHeadPosition() <= crosswalkPosition[1]))
+                || (getEndPosition() >= crosswalkPosition[0] && getEndPosition() <= crosswalkPosition[1]));
+    }
+
+    public abstract boolean IsNeartheOtherCar();
 
     public abstract void MoveInLine();
 
     public abstract void checkSheepAccident();
 
-    public abstract float getSpeedNearOtherCar(float speed);
+    public abstract float getSpeedNearOtherCar();
 
+    public float getHeadPosition() {
+        return Position[0];
+    }
+
+    public abstract float getEndPosition();
+
+    public abstract float getPositionForDraw();
 }
 
 ///////////////////

@@ -8,7 +8,6 @@ public class AutoCreateCar implements Runnable {
     ArrayList<Line> Lines = new ArrayList<>();
     public int RtlLineCount;
     public int LtrLineCount;
-    public static int carID = 0 ;
 
     AutoCreateCar() {
         this.LtrLineCount = GameSetting.getLtrLineCount();
@@ -33,7 +32,9 @@ public class AutoCreateCar implements Runnable {
     public void run() {
         
         while (true) {
-            
+            if(InitGame.GameStop){
+               continue; 
+            }
             // Random int to select line for create new car 
             int randomLine = Const.RAND.nextInt(LtrLineCount + RtlLineCount);
             
@@ -50,14 +51,13 @@ public class AutoCreateCar implements Runnable {
              // Check for direction 
             if (tempLine.getDirection() == Const.LINE_DIRECTION_RTL) {
                 carType = new CarType(tempLine.getDirection());
-                newCar = new CarRtl(carID,speed, carType, tempLine);
+                newCar = new CarRtl(speed, carType, tempLine);
             }else{
                 carType = new CarType(tempLine.getDirection());
-                newCar = new CarLtr(carID,speed, carType, tempLine);
+                newCar = new CarLtr(speed, carType, tempLine);
             }
             // Call create new car method of line 
             tempLine.CreateNewCar(newCar);
-            carID++;
             // Sleep thread wait for create new car again
             try {
                 Thread.sleep(Const.CREATE_CAR_RATE);
