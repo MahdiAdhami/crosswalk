@@ -15,21 +15,21 @@ public class Sheep {
     private Image[] ImageOfSheep;
     private float[] MaxYPosition;
     private int ImageStatus;
+
     public Sheep(int Rate, float PositionYOfSheep) {
         this.Rate = Rate;
         SheepSize = new float[]{50, 50};
-        
-        this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - (SheepSize[0] / 2), PositionYOfSheep + getSheepHeight() / 2};
+
+        this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep- getSheepHeight() / 2};
 
         this.MaxYPosition = new float[]{SheepSize[0], PositionYOfSheep};
-        
+
         try {
             ImageOfSheep = new Image[4];
             ImageOfSheep[0] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Up")));
             ImageOfSheep[1] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Down")));
             ImageOfSheep[2] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Right")));
             ImageOfSheep[3] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Left")));
-
         } catch (IOException ex) {
             System.err.println("Sheep Sheep() " + ex);
         }
@@ -40,7 +40,7 @@ public class Sheep {
     }
 
     public float getYPosition() {
-        return PositionOfSheep[1] - getSheepHeight() / 2;
+        return PositionOfSheep[1] ;
     }
 
     public void setRate(int rate) {
@@ -79,7 +79,7 @@ public class Sheep {
             ImageStatus = 1;
             PositionOfSheep[1] += Rate;
         } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == 68) {
-            if (GameSetting.getCrosswalkMiddlePosition() + Const.CROSSWALK_WIDTH / 2 <= PositionOfSheep[0] + getSheepWidth() + Rate) {
+            if (GameSetting.getCrosswalkMiddlePosition() + Const.CROSSWALK_WIDTH / 2 <= PositionOfSheep[0] + getSheepWidth()) {
                 return;
             }
             ImageStatus = 2;
@@ -92,7 +92,9 @@ public class Sheep {
             ImageStatus = 3;
             PositionOfSheep[0] -= Rate;
         }
+        System.out.println(getXPosition());
         CheckLine();
+
     }
 
     public void CheckLine() {
