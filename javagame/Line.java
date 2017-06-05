@@ -13,7 +13,7 @@ public final class Line {
     private ArrayList<Car> Cars;
     public static int CarCount = 0;
     private float[] CrosswalkPosition;
-    private int CarId = 1;
+    //private int CarId = 1;
     public static int SheepCurrentLine; 
     private int removedCount = 0;
     
@@ -87,20 +87,20 @@ public final class Line {
 
                 if (newCar.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
                     if (lastCar.getEndPosition() >= -lastCar.getCarType().getCarWidth() + 50) {
-                        newCar.setId(CarId);
+                       // newCar.setId(CarId);
                         Cars.add(newCar);
-                        CarId++;
+                       // CarId++;
                     }
                 } else if (lastCar.getEndPosition() <= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
-                    newCar.setId(CarId);
+                    //newCar.setId(CarId);
                     Cars.add(newCar);
-                    CarId++;
+                    //CarId++;
                 }
             }
         } else {
-            newCar.setId(CarId);
+            //newCar.setId(CarId);
             Cars.add(newCar);
-            CarId++;
+           // CarId++;
         }
 
     }

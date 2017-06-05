@@ -8,12 +8,12 @@ import javax.swing.JOptionPane;
 
 public class CarRtl extends Car {
 
-    public CarRtl(int Speed, CarType CarType, Line Line) {
-        super(new float[]{Const.GAME_WINDOWS_WIDTH, Const.GAME_WINDOWS_WIDTH + CarType.getCarWidth()}, Speed, CarType, Line);
+    public CarRtl(int Id,int Speed, CarType CarType, Line Line) {
+        super(Id,new float[]{Const.GAME_WINDOWS_WIDTH, Const.GAME_WINDOWS_WIDTH + CarType.getCarWidth()}, Speed, CarType, Line);
     }
 
     public CarRtl(int Id, float[] Position, int Speed, CarType CarType) {
-        super(new float[]{Const.GAME_WINDOWS_WIDTH, Const.GAME_WINDOWS_WIDTH + CarType.getCarWidth()}, Speed, CarType);
+        super(Id,new float[]{Const.GAME_WINDOWS_WIDTH, Const.GAME_WINDOWS_WIDTH + CarType.getCarWidth()}, Speed, CarType);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class CarRtl extends Car {
 
     @Override
     public void MoveInLine() {
-        
+        int i = this.getId();
         
             float tempSpeed = getSpeedV2(false);
             
@@ -103,20 +103,20 @@ public class CarRtl extends Car {
             return;
         }
         
-        
-        if (this.getLine().getCars().size() >= 2) {
-            for(int i = 2 ; i <= this.getLine().getCars().size() ; i++ )
-            {
-                if(!(this.getLine().isDisposed(this.getLine().getCars().get(i - 1)) && this.getLine().isDisposed(this.getLine().getCars().get(i - 2)))){
-                    if (this.getLine().getCars().get(i - 1).getHeadPosition() <= this.getLine().getCars().get(i - 2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
-                    tempSpeed = getSpeedV2(true);
-
-                    }
-                }
-           }
-       }
-        
-        
+//        
+//       if (super.getLine().getCars().size() >= 3) {
+//            //for(int i = 2 ; i <= this.getLine().getCars().size() ; i++ )
+//            //{
+//                if(!(this.getLine().isDisposed(this.getLine().getCars().get(i - 1)) && this.getLine().isDisposed(this.getLine().getCars().get(i - 2)))){
+//                    if (this.getLine().getCars().get(i - 1).getHeadPosition() <= this.getLine().getCars().get(i - 2).getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+//                    tempSpeed = getSpeedV2(true);
+//
+//                    }
+//                }
+//           //}
+//       }
+//        
+//        
         
 
         
