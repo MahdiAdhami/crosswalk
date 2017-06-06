@@ -17,15 +17,20 @@ import javagame.Line;
 import javagame.Sheep;
 
 public class Load {
-            int j = 1;
-            int idLine  = 1;
-            int idCar = 0 ;
-            Car newCar = null;
-            CarType newCarType = null;
+    
+    
+    int j = 1;
+    int idLine  = 1;
+    int idCar = 0 ;
+    Car newCar = null;
+    CarType newCarType = null;
+    
+    
     public Load()
     {
         Start();
     }
+    
     public void Start()
     {
         Scanner reader = null ;
@@ -87,6 +92,7 @@ public class Load {
         String[] sheepStringSplited = sheepString.split(" ");
         InitGraphic.Sheep = new Sheep(new int[]{Integer.parseInt(sheepStringSplited[0]),Integer.parseInt(sheepStringSplited[1])},Float.parseFloat(sheepStringSplited[2]));
         InitGraphic.Sheep.setPositionX(Float.parseFloat(sheepStringSplited[3]));
+        sheepReader.close();
         
         InitGraphic base = new InitGraphic(AutoCreateCar.Lines);
         Thread threadBase = new Thread(base);
