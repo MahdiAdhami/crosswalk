@@ -38,18 +38,14 @@ public class SaveAndLoad {
         try {
             LinesReader = new Scanner(Linefile);
             SheepReader = new Scanner(SheepFile);
-            
+
             GameSetting.setSettingPath(Const.SAVE_FILE_ADDRESS_SETTING);
-            
+
         } catch (FileNotFoundException ex) {
             System.err.println("Load LoadGame()");
         }
 
-        int idLine = 1;
-        int j = 1;
-        int idCar = 0;
-        Car newCar = null;
-        CarType newCarType = null;
+        int lineId = 0;
 
         if (LinesReader != null && SheepReader != null) {
             ArrayList<Line> lines = new ArrayList<>();
@@ -57,39 +53,28 @@ public class SaveAndLoad {
             while (LinesReader.hasNextLine()) {
                 String nextLineFromReader = LinesReader.nextLine();
 
-                if (nextLineFromReader.matches("Line Id = \\d true")) {
-                    String[] nextLineSplited = nextLineFromReader.split(" ");
-                    idLine = Integer.parseInt(nextLineSplited[3]);
-                    lines.add(new Line(idLine, idLine + 1, idLine, Const.LINE_DIRECTION_RTL, Const.LINE_HEIGHT * (idLine - 1) + Const.TOP_MARGIN));
-                } else if (nextLineFromReader.matches("Line Id = \\d false")) {
-                    String[] nextLineSplited = nextLineFromReader.split(" ");
-                    idLine = Integer.parseInt(nextLineSplited[3]);
-                    lines.add(new Line(idLine, j + 1, j, Const.LINE_DIRECTION_LTR, Const.LINE_HEIGHT * (idLine - 1) + Const.TOP_MARGIN));
-                } else {
-                    String[] nextLineSplited = nextLineFromReader.split(" ");
-                    if (lines.get(idLine - 1).getDirection() == Const.LINE_DIRECTION_LTR) {
-                        newCarType = new CarType(nextLineSplited[5], Integer.parseInt(nextLineSplited[3]), Integer.parseInt(nextLineSplited[4]));
-                        newCar = new CarLtr(Float.parseFloat(nextLineSplited[1]), (int) Float.parseFloat(nextLineSplited[2]), newCarType, lines.get(idLine - 1));
-                        idCar = Integer.parseInt(nextLineSplited[0]);
-                        newCar.setId(idCar);
+                if (nextLineFromReader.startsWith("Line")) {
+                    String[] temp = nextLineFromReader.split(",");
+                    lines.add(new Line(Integer.parseInt(temp[1]), Integer.parseInt(temp[2]), Integer.parseInt(temp[3]), "1".equals(temp[4]), Integer.parseInt(temp[5]), "1".equals(temp[6]), Integer.parseInt(temp[7])));
+                    lineId++;
+                } else if (nextLineFromReader.startsWith("Car")) {
+                    String[] temp = nextLineFromReader.split(",");
+                    Line tempLine = lines.get(lineId - 1);
+                    if (tempLine.getDirection() == Const.LINE_DIRECTION_LTR) {
+                        tempLine.getCars().add(new CarLtr(Integer.parseInt(temp[1]), Float.parseFloat(temp[2]), Float.parseFloat(temp[3]), temp[4],tempLine));
                     } else {
-                        newCarType = new CarType(nextLineSplited[5], Integer.parseInt(nextLineSplited[3]), Integer.parseInt(nextLineSplited[4]));
-                        newCar = new CarRtl(Float.parseFloat(nextLineSplited[1]), (int) Float.parseFloat(nextLineSplited[2]), newCarType, lines.get(idLine - 1));
-                        idCar = Integer.parseInt(nextLineSplited[0]);
-                        newCar.setId(idCar);
+                        tempLine.getCars().add(new CarRtl(Integer.parseInt(temp[1]), Float.parseFloat(temp[2]), Float.parseFloat(temp[3]), temp[4],tempLine));
                     }
-                    lines.get(idLine - 1).getCars().add(newCar);
-                    lines.get(idLine - 1).setCarId(idCar + 1);
                 }
             }
 
-            LinesReader.close();
-
             String sheepString = SheepReader.nextLine();
             String[] sheepStringSplited = sheepString.split(" ");
-            InitGraphic.Sheep = new Sheep(new int[]{Integer.parseInt(sheepStringSplited[0]), Integer.parseInt(sheepStringSplited[1]) }, Float.parseFloat(sheepStringSplited[2])+ InitGraphic.Sheep.getSheepHeight()/2 );
+            InitGraphic.Sheep = new Sheep(new int[]{Integer.parseInt(sheepStringSplited[0]), Integer.parseInt(sheepStringSplited[1])}, Float.parseFloat(sheepStringSplited[2]) + InitGraphic.Sheep.getSheepHeight() / 2);
             InitGraphic.Sheep.setPositionX(Float.parseFloat(sheepStringSplited[3]));
+
             SheepReader.close();
+            LinesReader.close();
 
             return lines;
         }
@@ -104,20 +89,16 @@ public class SaveAndLoad {
         try {
             writerForCars = new PrintWriter(Const.PATH + Const.SAVE_FILE_ADDRESS_LINE, "UTF-8");
             writerForSheep = new PrintWriter(Const.PATH + Const.SAVE_FILE_ADDRESS_SHEEP, "UTF-8");
-            
+
             GameSetting.writeSetting(Const.SAVE_FILE_ADDRESS_SETTING);
-            
+
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         for (Line tempLine : line) {
-            writerForCars.println("Line Id = " + tempLine.getId() + " " + tempLine.getDirection());
+            writerForCars.println(tempLine.SaveToFile());
             for (Car tempCar : tempLine.getCars()) {
-                writerForCars.println(tempCar.getId() + " " + tempCar.getHeadPosition()
-                        + " " + tempCar.getSpeed() + " "
-                        + tempCar.getCarType().getCarWidth()
-                        + " " + tempCar.getCarType().getCarHeight() + " "
-                        + tempCar.getCarType().getCarPathString());
+                writerForCars.println(tempCar.SaveToFile());
             }
         }
 

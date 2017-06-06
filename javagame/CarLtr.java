@@ -6,9 +6,13 @@ public class CarLtr extends Car {
     public CarLtr(int Speed, CarType CarType, Line Line) {
         super((-1) * CarType.getCarWidth(), Speed, CarType, Line);
     }
-    
-    public CarLtr(float head,int Speed, CarType CarType, Line Line) {
+
+    public CarLtr(float head, int Speed, CarType CarType, Line Line) {
         super(head, Speed, CarType, Line);
+    }
+
+    public CarLtr(int Id, float HeadPosition, float Speed, String CarType, Line Line) {
+        super(Id, HeadPosition, Speed, CarType, Line);
     }
 
     @Override
@@ -34,6 +38,7 @@ public class CarLtr extends Car {
     @Override
     public void MoveInLine() {
         float tempSpeed = getSpeed();
+
         if (HeadPosition - CarType.getCarWidth() > Const.GAME_WINDOWS_WIDTH) {
             try {
                 Line.Dispose(this);
@@ -51,13 +56,18 @@ public class CarLtr extends Car {
     ///////////////////////////////////////////////////////////////////////////
     @Override
     public boolean IsNeartheOtherCar() {
-        int carId = super.getId();
         try {
-            if (getLine().getCars().get(carId - 1).getEndPosition() - this.getHeadPosition() <= Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+            Car car = Line.Cars.get(Line.CarId - Id - 1);
+            
+            if (car.getEndPosition() < 0 || HeadPosition < 0) {// || car.HeadPosition == getHeadPosition()
+                return false;
+            }
+
+            if (car.getEndPosition() - HeadPosition <= Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
                 return true;
             }
         } catch (Exception ex) {
-            System.err.println("CarLtr IsNeartheOtherCar() " + ex);
+//            System.err.println("CarLtr IsNeartheOtherCar() " + ex);
             return false;
         }
         return false;
@@ -65,18 +75,16 @@ public class CarLtr extends Car {
 
     @Override
     public float getSpeedNearOtherCar() {
-        if (IsNeartheOtherCar()) {
-            try {
-//                Car temp = getLine().getCars().get(super.getId() - 1);
-//                if (temp.getSpeed() <= getSpeed()) {
-                return getSpeed();
-                //             }
-            } catch (Exception ex) {
-//                System.err.println("CarLtr IsNeartheOtherCar() " + ex);
+        try {
+            if (IsNeartheOtherCar()) {
+                return 0;
             }
+        } catch (Exception ex) {
+//                System.err.println("CarLtr IsNeartheOtherCar() " + ex);
         }
         return super.getSpeed();
     }
+
 }
 
 ///////////

@@ -6,20 +6,13 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javagame.Menu.GameSetting;
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicArrowButton;
 
 public class InitGraphic extends JPanel implements Runnable {
 
@@ -69,7 +62,8 @@ public class InitGraphic extends JPanel implements Runnable {
 
         //
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, Const.GAME_WINDOWS_HEIGHT);
+        int gameHeight = (GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT + 4 * Const.TOP_MARGIN;
+        gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, gameHeight);
         gameFrame.setVisible(true);
 //        gameFrame.setAlwaysOnTop(true);
         gameFrame.setResizable(false);
@@ -79,7 +73,7 @@ public class InitGraphic extends JPanel implements Runnable {
         gameFrame.setForeground(Color.red);
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        gameFrame.setLocation((dimension.width / 2) - (Const.GAME_WINDOWS_WIDTH / 2), (dimension.height / 2) - (Const.GAME_WINDOWS_HEIGHT / 2));
+        gameFrame.setLocation((dimension.width / 2) - (Const.GAME_WINDOWS_WIDTH / 2), (dimension.height / 2) - (gameHeight / 2));
         gameFrame.add(this);
     }
 
@@ -125,6 +119,7 @@ public class InitGraphic extends JPanel implements Runnable {
 
         g.drawRoundRect(100, 5, 120, 23, 6, 6);
         g.drawString("ذخیره سازی بازی", 120, 20);
+
     }
 
     // Implements  Thread 
@@ -143,6 +138,17 @@ public class InitGraphic extends JPanel implements Runnable {
 
                 // Repaint panel
                 repaint();
+
+                // Run after wait
+                if (InitGame.RunAfterWait) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception ex) {
+                        System.err.println("InitGraphic paintComponent() 1 " + ex.getMessage());
+                    }
+                    InitGame.RunAfterWait = false;
+                }
+
                 // Sleep time for repaint again
                 Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
 

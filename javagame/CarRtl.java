@@ -5,8 +5,13 @@ public class CarRtl extends Car {
     public CarRtl(int Speed, CarType CarType, Line Line) {
         super(Const.GAME_WINDOWS_WIDTH, Speed, CarType, Line);
     }
-    public CarRtl(float head,int Speed, CarType CarType, Line Line) {
+
+    public CarRtl(float head, int Speed, CarType CarType, Line Line) {
         super(head, Speed, CarType, Line);
+    }
+
+    public CarRtl(int Id, float HeadPosition, float Speed, String CarType, Line Line) {
+        super(Id, HeadPosition, Speed, CarType, Line);
     }
 
     @Override
@@ -15,17 +20,17 @@ public class CarRtl extends Car {
             return;
         }
 //       System.out.println(getHeadPosition()+"  " + InitGraphic.Sheep.getXPosition() + "   "+InitGraphic.Sheep.getSheepWidth()/2);
-        if (this.getHeadPosition() <= InitGraphic.Sheep.getXPosition() + InitGraphic.Sheep.getSheepWidth()){
+        if (this.getHeadPosition() <= InitGraphic.Sheep.getXPosition() + InitGraphic.Sheep.getSheepWidth()) {
             InitGame.GameStop = true;
         }
 
     }
- 
+
     @Override
     public void MoveInLine() {
         int i = this.getId();
 
-        float tempSpeed = getSpeedV2(false);
+        float tempSpeed = getSpeed();
 
         if (getEndPosition() < (-1) * CarType.getCarWidth()) {
             Line.Dispose(this);
@@ -33,7 +38,7 @@ public class CarRtl extends Car {
         }
 
         HeadPosition -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
-        
+
         checkSheepAccident();
     }
 
@@ -55,18 +60,16 @@ public class CarRtl extends Car {
 
     @Override
     public float getEndPosition() {
-        return HeadPosition +  CarType.getCarWidth();
+        return HeadPosition + CarType.getCarWidth();
     }
-    
+
     @Override
-    public float getPositionForDraw(){
+    public float getPositionForDraw() {
         return getHeadPosition();
     }
 }
 
-
 //////////////////////////////
-
 //        
 //       if (super.getLine().getCars().size() >= 3) {
 //            //for(int i = 2 ; i <= this.getLine().getCars().size() ; i++ )
@@ -93,17 +96,6 @@ public class CarRtl extends Car {
 //        } catch (Exception ex) {
 //            System.err.println("CarLtr MoveInLine() " + ex);
 //        }
-
-
-
-
-
-
-
-
-
-
-
 //    public boolean checkAccident(Car thisCar) {
 //        int lineID = 1;
 //        Line tempLine = thisCar.getLine();
@@ -157,8 +149,4 @@ public class CarRtl extends Car {
 //    
 //    
 //   
-
-
-
-
 

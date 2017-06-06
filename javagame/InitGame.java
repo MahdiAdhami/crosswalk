@@ -6,9 +6,11 @@ import javagame.Menu.GameSetting;
 public class InitGame {
 
     public static boolean GameStop;
+    public static boolean RunAfterWait;
 
     public InitGame() {
-        this.GameStop = false;
+        InitGame.GameStop = false;
+        InitGame.RunAfterWait = true;
     }
 
     public void AutoMoveSheep(long sleepInMilliSecond, int randRate) {
