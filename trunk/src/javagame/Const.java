@@ -37,11 +37,8 @@ public final class Const {
 
     // Game size
     public final static int GAME_WINDOWS_WIDTH = 800;
-    public final static int GAME_WINDOWS_HEIGHT = 700; // اینو عوض نکن
+//    public final static int GAME_WINDOWS_HEIGHT = 700; // اینو عوض نکن
     public final static int TOP_MARGIN = 40;
-
-    // Create car rate
-    public final static long CREATE_CAR_RATE = 10000 - 9500;
 
     // Repaint time
     public final static long SLEEP_TIME_RE_PAINTING = 10;

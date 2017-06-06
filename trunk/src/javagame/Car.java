@@ -1,7 +1,5 @@
 package javagame;
 
-import javax.swing.text.Position;
-
 public abstract class Car {
 
     protected int Id;
@@ -18,10 +16,12 @@ public abstract class Car {
         this.Line = Line;
     }
 
-    public Car(float HeadPosition, int Speed, CarType CarType) {
+    public Car(int Id, float HeadPosition, float Speed, String CarType, Line Line) {
+        this.Id = Id;
         this.HeadPosition = HeadPosition;
         this.Speed = Speed;
-        this.CarType = CarType;
+        this.CarType = new CarType(Line.getDirection());
+        this.Line = Line;
     }
 
     // Getter methods
@@ -48,23 +48,25 @@ public abstract class Car {
         return Speed;
     }
 
-    public float getSpeedV2(boolean flag) {
-        return (flag == true) ? 30 : getSpeed();
+    public String SaveToFile() {
+        return String.format("Car,%d,%f,%f,%s", Id, HeadPosition, Speed, CarType.getCarNameAndType());
     }
 
     // Setter methods
     public void setId(int id) {
         Id = id;
     }
-    
-    public void setSpeedFromLoad(float speed)
-    {
+
+    public void setSpeedFromLoad(float speed) {
         Speed = speed;
     }
-    
-    public void setHeadPositionFromLoad(float head)
-    {
+
+    public void setHeadPositionFromLoad(float head) {
         HeadPosition = head;
+    }
+
+    public float getHeadPosition() {
+        return HeadPosition;
     }
 
     public void setLine(int index) {
@@ -81,7 +83,7 @@ public abstract class Car {
     // Change line of car
     public void ChangeLine() {
     }
-    
+
     // Is near to crosswalk
     public boolean IsNeartheCrosswalk() {
         float[] crosswalkPosition = Line.getCrosswalkPosition();
@@ -97,10 +99,6 @@ public abstract class Car {
     public abstract void checkSheepAccident();
 
     public abstract float getSpeedNearOtherCar();
-
-    public float getHeadPosition() {
-        return HeadPosition;
-    }
 
     public abstract float getEndPosition();
 

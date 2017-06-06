@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javagame.Menu.GameSetting;
 
 public class AutoCreateCar implements Runnable {
-    
+
     public ArrayList<Line> Lines = new ArrayList<>();
     public int RtlLineCount;
     public int LtrLineCount;
@@ -13,14 +13,16 @@ public class AutoCreateCar implements Runnable {
         this.LtrLineCount = GameSetting.getLtrLineCount();
         this.RtlLineCount = GameSetting.getRtlLineCount();
     }
-    
 
     public void InitLine() {
-        for (int i = 1 ; i <= RtlLineCount ; i++) {
-            Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_HEIGHT  + Const.TOP_MARGIN));
+        boolean canCarTakeOver = false;
+        for (int i = 1; i <= RtlLineCount; i++) {
+            canCarTakeOver = i != RtlLineCount;
+            Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN, canCarTakeOver));
         }
-        for (int i = RtlLineCount + 1 , j = 1; i <= RtlLineCount + LtrLineCount; i++ , j++) {
-            Lines.add(new Line(i, (j + 1), (j) , Const.LINE_DIRECTION_LTR, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN) );
+        for (int i = RtlLineCount + 1, j = LtrLineCount; i <= RtlLineCount + LtrLineCount; i++, j--) {
+            canCarTakeOver = i != RtlLineCount + 1;
+            Lines.add(new Line(i, (j + 1), (j), Const.LINE_DIRECTION_LTR, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN, canCarTakeOver));
         }
     }
 
@@ -31,34 +33,34 @@ public class AutoCreateCar implements Runnable {
 
     @Override
     public void run() {
-        
         while (true) {
-            if(InitGame.GameStop){
-               continue; 
+            if (InitGame.GameStop) {
+                continue;
             }
             // Random int to select line for create new car 
             int randomLine = Const.RAND.nextInt(LtrLineCount + RtlLineCount);
-            
+
             // Get line with random int
             Line tempLine = Lines.get(randomLine);
-            
+
             // Create car speed 
-            int speed = tempLine.getMinCarSpeed() +  Const.RAND.nextInt(tempLine.getMaxCarSpeed());
-            
+            int speed = tempLine.getMinCarSpeed() + Const.RAND.nextInt(tempLine.getMaxCarSpeed());
+
             // variables for instance car object
             CarType carType;
             Car newCar;
-            
-             // Check for direction 
+
+            // Check for direction 
             if (tempLine.getDirection() == Const.LINE_DIRECTION_RTL) {
                 carType = new CarType(tempLine.getDirection());
                 newCar = new CarRtl(speed, carType, tempLine);
-            }else{
+            } else {
                 carType = new CarType(tempLine.getDirection());
                 newCar = new CarLtr(speed, carType, tempLine);
             }
             // Call create new car method of line 
             tempLine.CreateNewCar(newCar);
+
             // Sleep thread wait for create new car again
             try {
                 Thread.sleep(GameSetting.getAutoCreateCarRate());

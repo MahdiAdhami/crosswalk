@@ -10,27 +10,49 @@ public final class Line {
     private int MinCarSpeed;
     private boolean Direction;
     private int Position;
-    private ArrayList<Car> Cars;
+    public ArrayList<Car> Cars;
     private float[] CrosswalkPosition;
-    private int CarId;
+    public int CarId;
     public static int SheepCurrentLine;
+    public boolean CanCarOvertaking;
 
     public Line() {
         this.Cars = new ArrayList<>();
     }
 
-    public Line(int Id, int MaxCarSpeed, int MinCarSpeed, boolean Direction, int Position) {
+    public Line(int Id, int MaxCarSpeed, int MinCarSpeed, boolean Direction, int Position, boolean CanCarOvertaking) {
         this();
         this.Id = Id;
         this.Position = Position;
         this.MaxCarSpeed = MaxCarSpeed * Const.CREATE_CAR_SPEED_RATE;
         this.MinCarSpeed = MinCarSpeed * Const.CREATE_CAR_SPEED_RATE;
         this.Direction = Direction;
+        this.CanCarOvertaking = CanCarOvertaking;
+        CrosswalkPosition = getAchieveCrosswalkPosistion();
+    }
+
+    public Line(int Id, int MaxCarSpeed, int MinCarSpeed, boolean Direction, int Position, boolean CanCarOvertaking, int CarId) {
+        this();
+        this.Id = Id;
+        this.MaxCarSpeed = MaxCarSpeed;
+        this.MinCarSpeed = MinCarSpeed;
+        this.Direction = Direction;
+        this.Position = Position;
+        this.CarId = CarId;
+        this.CanCarOvertaking = CanCarOvertaking;
         CrosswalkPosition = getAchieveCrosswalkPosistion();
     }
 
     public int getPosition() {
         return Position;
+    }
+
+    public boolean getCanCarOvertaking() {
+        return CanCarOvertaking;
+    }
+
+    public int getCarId() {
+        return CarId;
     }
 
     public int getMinCarSpeed() {
@@ -55,6 +77,10 @@ public final class Line {
 
     public void AccidentCheck() {
 
+    }
+
+    public String SaveToFile() {
+        return String.format("Line,%d,%d,%d,%s,%d,%s,%d", Id, MaxCarSpeed, MinCarSpeed, Direction == true ? "1" : "0", Position, CanCarOvertaking == true ? "1" : "0", CarId);
     }
 
     public int getId() {
@@ -106,8 +132,8 @@ public final class Line {
             return result;
         }
     }
-    public void setCarId(int id)
-    {
+
+    public void setCarId(int id) {
         CarId = id;
     }
 
