@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import javagame.Menu.GameSetting;
+import javagame.Save.Save;
 import javax.imageio.ImageIO;
 
 public class Sheep {
@@ -16,6 +17,7 @@ public class Sheep {
     private float[] MaxYPosition;
     private int ImageStatus;
     public static boolean AutoMove = false;
+    
 
     public Sheep(int[] Rate, float PositionYOfSheep) {
         this.Rate = Rate;
@@ -23,9 +25,13 @@ public class Sheep {
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
 
         this.MaxYPosition = new float[]{SheepSize[0], PositionYOfSheep};
-
+        
+           
+           
         try {
             ImageOfSheep = new Image[4];
+            
+            
             ImageOfSheep[0] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Up")));
             ImageOfSheep[1] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Down")));
             ImageOfSheep[2] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Right")));
@@ -45,6 +51,10 @@ public class Sheep {
 
     public void setRate(int[] rate) {
         Rate = rate;
+    }
+    public void setPositionX(float x)
+    {
+        PositionOfSheep[0]=x;
     }
 
     public int[] getRate() {
@@ -110,6 +120,11 @@ public class Sheep {
             goRight();
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
             goLeft();
+        }
+        else if ( keyCode == 84) {
+            Save saveTheGame = new Save();
+            saveTheGame.init();
+            
         }
     }
 

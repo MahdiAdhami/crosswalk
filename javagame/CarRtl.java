@@ -5,6 +5,9 @@ public class CarRtl extends Car {
     public CarRtl(int Speed, CarType CarType, Line Line) {
         super(Const.GAME_WINDOWS_WIDTH, Speed, CarType, Line);
     }
+    public CarRtl(float head,int Speed, CarType CarType, Line Line) {
+        super(head, Speed, CarType, Line);
+    }
 
     @Override
     public void checkSheepAccident() {

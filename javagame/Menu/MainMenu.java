@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import javagame.InitGame;
+import javagame.Load.Load;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,6 +43,13 @@ public class MainMenu extends Menu {
                 }
         );
         controls.add(Setting);
+        
+        JButton loadLastGame = CreateButton("بارگذاری اخرین بازی",
+                (ActionEvent event) -> {
+                    Load load = new Load();
+                }
+        );
+        controls.add(loadLastGame);
         
         JButton exit = CreateButton("خروج",
                 (ActionEvent event) -> {

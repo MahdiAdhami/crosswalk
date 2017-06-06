@@ -12,16 +12,25 @@ public class CarType {
     private int CarHeight;
 
     private BufferedImage Image;
-    private final boolean LineDirection;
-
+    private final boolean LineDirection ;
+    private String CarPathString;
+    
     public CarType(boolean LineDirection) {
         this.LineDirection = LineDirection;
         InitialCarImage();
     }
+    
+    public CarType(String carPath , int width , int height) {
+        CarPathString = carPath;
+        CarWidth = width;
+        CarHeight = height;
+        LineDirection = true ;  // برای رفع خطا
+        InitialCarImageForLoad();
+    }
 
     private void InitialCarImage() {
-        String Car = (char) (65 + Const.RAND.nextInt(Const.CAR_COUNT)) + "-" + ((LineDirection == Const.LINE_DIRECTION_LTR) ? "1" : "2");
-        File CarImage = new File(Const.PATH + "\\src\\resources\\Cars\\" + Car + ".png");
+        CarPathString = (char) (65 + Const.RAND.nextInt(Const.CAR_COUNT)) + "-" + ((LineDirection == Const.LINE_DIRECTION_LTR) ? "1" : "2");
+        File CarImage = new File(Const.PATH + "\\src\\resources\\Cars\\" + CarPathString + ".png");
         try {
             Image = ImageIO.read(CarImage);
             CarWidth = Image.getWidth();
@@ -30,11 +39,19 @@ public class CarType {
             System.err.println("CarType InitialCarImage() " + ex);
         }
     }
-
-    public void setCarWidth(int carWidth) {
-        CarWidth = carWidth;
+    
+    private void InitialCarImageForLoad() {
+        
+        File CarImage = new File(Const.PATH + "\\src\\resources\\Cars\\" + CarPathString + ".png");
+        try {
+            Image = ImageIO.read(CarImage);
+            CarWidth = Image.getWidth();
+            CarHeight = Image.getHeight();
+        } catch (IOException ex) {
+            System.err.println("CarType InitialCarImage() " + ex);
+        }
     }
-
+    
     public int getCarWidth() {
         return CarWidth;
     }
@@ -46,4 +63,14 @@ public class CarType {
     public Image getImage() {
         return Image;
     }
+    public String getCarPathString()
+    {
+        return CarPathString;
+    }
+    
+    public void setCarPathString(String path)
+    {
+        CarPathString = path;
+    }
+    
 }

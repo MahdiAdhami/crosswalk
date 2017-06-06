@@ -5,21 +5,21 @@ import javagame.Menu.GameSetting;
 
 public class AutoCreateCar implements Runnable {
     
-    ArrayList<Line> Lines = new ArrayList<>();
+    public static ArrayList<Line> Lines = new ArrayList<>();
     public int RtlLineCount;
     public int LtrLineCount;
 
-    AutoCreateCar() {
+    public AutoCreateCar() {
         this.LtrLineCount = GameSetting.getLtrLineCount();
         this.RtlLineCount = GameSetting.getRtlLineCount();
     }
 
     public void InitLine() {
         for (int i = 1 ; i <= RtlLineCount ; i++) {
-            Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, Const.LINE_HEIGHT * (i - 1) + Const.TOP_MARGIN));
+            Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_HEIGHT  + Const.TOP_MARGIN));
         }
         for (int i = RtlLineCount + 1 , j = 1; i <= RtlLineCount + LtrLineCount; i++ , j++) {
-            Lines.add(new Line(i, (j + 1), (j) , Const.LINE_DIRECTION_LTR, (Const.LINE_HEIGHT * (j - 1)) + RtlLineCount * Const.LINE_HEIGHT + Const.TOP_MARGIN) );
+            Lines.add(new Line(i, (j + 1), (j) , Const.LINE_DIRECTION_LTR, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN) );
         }
     }
 
