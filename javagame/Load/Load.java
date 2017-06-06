@@ -15,6 +15,7 @@ import javagame.Const;
 import javagame.InitGraphic;
 import javagame.Line;
 import javagame.Sheep;
+import javax.swing.JOptionPane;
 
 public class Load {
     
@@ -24,21 +25,40 @@ public class Load {
     int idCar = 0 ;
     Car newCar = null;
     CarType newCarType = null;
+    Scanner reader;
+    Scanner sheepReader;
+    File readerFile;
+    File sheepReaderFile;     
     
     
     public Load()
     {
+        readerFile = new File(Const.PATH + "Save-File.txt");
+        sheepReaderFile = new File(Const.PATH + "Save-File-Sheep.txt");
+        if(!sheepReaderFile.exists() || !readerFile.exists())
+        {
+            JOptionPane.showMessageDialog(null,"شما تاکنون بازی نکرده اید  , برای بارگذاری باید حداقل یک بار بازی کنید","خطا در بارگذاری بازی " , JOptionPane.ERROR_MESSAGE);
+        }
+        
+        try {
+            reader = new Scanner(readerFile);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Load.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        try {
+            sheepReader = new Scanner(sheepReaderFile);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Load.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         Start();
     }
     
     public void Start()
     {
-        Scanner reader = null ;
-        try {
-            reader = new Scanner(new File(Const.PATH + "Save-File.txt"));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Load.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         
         
         
@@ -64,7 +84,8 @@ public class Load {
                 if(AutoCreateCar.Lines.get(idLine-1).getDirection() == Const.LINE_DIRECTION_LTR){
                     newCarType = new CarType(nextLineSplited[5],Integer.parseInt(nextLineSplited[3]),Integer.parseInt(nextLineSplited[4]));
                     newCar = new CarLtr(Float.parseFloat(nextLineSplited[1]), (int) Float.parseFloat(nextLineSplited[2]),newCarType,AutoCreateCar.Lines.get(idLine-1));
-                    newCar.setId(Integer.parseInt(nextLineSplited[0]));
+                    idCar = Integer.parseInt(nextLineSplited[0]);
+                    newCar.setId(idCar);
                 }
                 else
                 {
@@ -74,19 +95,12 @@ public class Load {
                     newCar.setId(idCar);
                 }
                 AutoCreateCar.Lines.get(idLine-1).getCars().add(newCar);
-                AutoCreateCar.Lines.get(idLine-1).setCarId(idCar);
+                AutoCreateCar.Lines.get(idLine-1).setCarId(idCar+1);
             }
         }
         
         reader.close();
         
-        
-        Scanner sheepReader = null;
-        try {
-            sheepReader = new Scanner(new File(Const.PATH + "Save-File-Sheep.txt"));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Load.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
         String sheepString = sheepReader.nextLine();
         String[] sheepStringSplited = sheepString.split(" ");
