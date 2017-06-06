@@ -106,5 +106,9 @@ public final class Line {
             return result;
         }
     }
+    public void setCarId(int id)
+    {
+        CarId = id;
+    }
 
 }

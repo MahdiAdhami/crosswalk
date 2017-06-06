@@ -1,5 +1,7 @@
 package javagame;
 
+import javax.swing.text.Position;
+
 public abstract class Car {
 
     protected int Id;
@@ -53,6 +55,16 @@ public abstract class Car {
     // Setter methods
     public void setId(int id) {
         Id = id;
+    }
+    
+    public void setSpeedFromLoad(float speed)
+    {
+        Speed = speed;
+    }
+    
+    public void setHeadPositionFromLoad(float head)
+    {
+        HeadPosition = head;
     }
 
     public void setLine(int index) {

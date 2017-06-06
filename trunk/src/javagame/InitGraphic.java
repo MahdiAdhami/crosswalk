@@ -36,7 +36,7 @@ public class InitGraphic extends JPanel implements Runnable {
     private Image LineImage;
 
     // Sheep
-    public static final Sheep Sheep = new Sheep(new int[]{5,25}, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
+    public static Sheep Sheep = new Sheep(new int[]{5,25}, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
 
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
@@ -123,6 +123,8 @@ public class InitGraphic extends JPanel implements Runnable {
         g.drawRoundRect(10, 5, 70, 23, 5, 5);
         g.drawString("توقف بازی", 20, 20);
 
+        g.drawRoundRect(100, 5, 120, 23, 6, 6);
+        g.drawString("ذخیره سازی بازی", 120, 20);
     }
 
     // Implements  Thread 
