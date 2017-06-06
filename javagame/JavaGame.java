@@ -10,6 +10,7 @@ public class JavaGame {
         //  x.SaveChanges();
         InitGame init = new InitGame();
         init.AutoCreateCar();
+//        init.AutoMoveSheep(250,10);
         // Remove
         ////////////////////////////
 
