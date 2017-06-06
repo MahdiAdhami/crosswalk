@@ -3,24 +3,23 @@ package javagame;
 public abstract class Car {
 
     protected int Id;
-    protected float[] Position;
+    protected float HeadPosition;
     protected float Speed;
     protected CarType CarType;
     protected Line Line;
 
     // Constructors
-    public Car(float[] Position, int Speed, CarType CarType, Line Line) {
-        this.Position = Position;
+    public Car(float HeadPosition, int Speed, CarType CarType, Line Line) {
+        this.HeadPosition = HeadPosition;
         this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
         this.CarType = CarType;
         this.Line = Line;
     }
 
-    public Car(float[] Position, int Speed, CarType CarType) {
-        this.Position = Position;
+    public Car(float HeadPosition, int Speed, CarType CarType) {
+        this.HeadPosition = HeadPosition;
         this.Speed = Speed;
         this.CarType = CarType;
-        //obj = new TakeOver();
     }
 
     // Getter methods
@@ -41,7 +40,7 @@ public abstract class Car {
     }
 
     public float getSpeed() {
-        if (IsNeartheCrosswalk()) { // getLine().getId() == Line.SheepCurrentLine && 
+        if (isNearToSheepAccident()) {
             return getSpeedInCrosswalk();
         }
         return Speed;
@@ -88,7 +87,7 @@ public abstract class Car {
     public abstract float getSpeedNearOtherCar();
 
     public float getHeadPosition() {
-        return Position[0];
+        return HeadPosition;
     }
 
     public abstract float getEndPosition();

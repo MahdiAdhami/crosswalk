@@ -60,7 +60,7 @@ public class AutoCreateCar implements Runnable {
             tempLine.CreateNewCar(newCar);
             // Sleep thread wait for create new car again
             try {
-                Thread.sleep(Const.CREATE_CAR_RATE);
+                Thread.sleep(GameSetting.getAutoCreateCarRate());
             } catch (Exception ex) {
                 System.err.println("AutoCreateCar run() " + ex);
             }

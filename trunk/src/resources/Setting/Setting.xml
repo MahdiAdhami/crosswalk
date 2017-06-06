@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Settings>
     <GameSettings>
-        <RtlLineCount>1</RtlLineCount>
+        <RtlLineCount>0</RtlLineCount>
         <LtrLineCount>1</LtrLineCount>
         <CrosswalkMiddlePosition>400</CrosswalkMiddlePosition>
+        <AutoCreateCarRate>250</AutoCreateCarRate>
     </GameSettings>
 </Settings>

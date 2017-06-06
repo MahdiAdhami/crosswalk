@@ -4,12 +4,12 @@ public class CarLtr extends Car {
 
     // Constructor
     public CarLtr(int Speed, CarType CarType, Line Line) {
-        super(new float[]{(-1) * CarType.getCarWidth(), (-2) * CarType.getCarWidth()}, Speed, CarType, Line);
+        super((-1) * CarType.getCarWidth(), Speed, CarType, Line);
     }
 
     @Override
     public float getEndPosition() {
-        return Position[0] - CarType.getCarWidth();
+        return HeadPosition - CarType.getCarWidth();
     }
 
     @Override
@@ -22,7 +22,7 @@ public class CarLtr extends Car {
         if (!isNearToSheepAccident()) {
             return;
         }
-        if (getHeadPosition() >= InitGraphic.Sheep.getXPosition()) {
+        if (getHeadPosition() >= InitGraphic.Sheep.getXPosition() && getEndPosition() <= InitGraphic.Sheep.getXPosition() + InitGraphic.Sheep.getSheepWidth()) {
             InitGame.GameStop = true;
         }
     }
@@ -30,7 +30,7 @@ public class CarLtr extends Car {
     @Override
     public void MoveInLine() {
         float tempSpeed = getSpeed();
-        if (Position[0] - CarType.getCarWidth() > Const.GAME_WINDOWS_WIDTH) {
+        if (HeadPosition - CarType.getCarWidth() > Const.GAME_WINDOWS_WIDTH) {
             try {
                 Line.Dispose(this);
             } catch (Exception ex) {
@@ -38,7 +38,7 @@ public class CarLtr extends Car {
             }
             return;
         }
-        Position[0] += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
+        HeadPosition += tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
         checkSheepAccident();
     }
 
@@ -49,7 +49,6 @@ public class CarLtr extends Car {
     public boolean IsNeartheOtherCar() {
         int carId = super.getId();
         try {
-            //System.out.println(getLine().getCars().get(carId - 1).getEndPosition() + " " +this.getHeadPosition());
             if (getLine().getCars().get(carId - 1).getEndPosition() - this.getHeadPosition() <= Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
                 return true;
             }
@@ -64,10 +63,10 @@ public class CarLtr extends Car {
     public float getSpeedNearOtherCar() {
         if (IsNeartheOtherCar()) {
             try {
-                Car temp = getLine().getCars().get(super.getId() - 1);
-                if (temp.getSpeed() <= getSpeed()) {
-                    return getSpeed();
-                }
+//                Car temp = getLine().getCars().get(super.getId() - 1);
+//                if (temp.getSpeed() <= getSpeed()) {
+                return getSpeed();
+                //             }
             } catch (Exception ex) {
 //                System.err.println("CarLtr IsNeartheOtherCar() " + ex);
             }

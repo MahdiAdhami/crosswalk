@@ -11,16 +11,16 @@ public class Sheep {
 
     private float[] PositionOfSheep;
     private float[] SheepSize;
-    private int Rate;
+    private int[] Rate;
     private Image[] ImageOfSheep;
     private float[] MaxYPosition;
     private int ImageStatus;
+    public static boolean AutoMove = false;
 
-    public Sheep(int Rate, float PositionYOfSheep) {
+    public Sheep(int[] Rate, float PositionYOfSheep) {
         this.Rate = Rate;
         SheepSize = new float[]{50, 50};
-
-        this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep- getSheepHeight() / 2};
+        this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
 
         this.MaxYPosition = new float[]{SheepSize[0], PositionYOfSheep};
 
@@ -40,14 +40,14 @@ public class Sheep {
     }
 
     public float getYPosition() {
-        return PositionOfSheep[1] ;
+        return PositionOfSheep[1];
     }
 
-    public void setRate(int rate) {
+    public void setRate(int[] rate) {
         Rate = rate;
     }
 
-    public int getRate() {
+    public int[] getRate() {
         return Rate;
     }
 
@@ -63,38 +63,68 @@ public class Sheep {
         return ImageOfSheep[ImageStatus];
     }
 
+    public void goUp() {
+        if (Const.TOP_MARGIN - getSheepWidth() >= getYPosition()) {
+            return;
+        }
+        ImageStatus = 0;
+        PositionOfSheep[1] -= Rate[1];
+    }
+
+    public void goDown() {
+        if (MaxYPosition[1] <= getYPosition()) {
+            return;
+        }
+        ImageStatus = 1;
+        PositionOfSheep[1] += Rate[1];
+    }
+
+    public void goRight() {
+        if (GameSetting.getCrosswalkMiddlePosition() + Const.CROSSWALK_WIDTH / 2 <= PositionOfSheep[0] + getSheepWidth()) {
+            return;
+        }
+        ImageStatus = 2;
+        PositionOfSheep[0] += Rate[0];
+    }
+
+    public void goLeft() {
+        if (GameSetting.getCrosswalkMiddlePosition() - Const.CROSSWALK_WIDTH / 2 >= PositionOfSheep[0]) {
+            return;
+        }
+        ImageStatus = 3;
+        PositionOfSheep[0] -= Rate[0];
+    }
+
     public void keyPressed(KeyEvent e) {
+        if (Sheep.AutoMove) {
+            return;
+        }
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_UP || keyCode == 87) {
-            if (Const.TOP_MARGIN - getSheepWidth() >= getYPosition()) {
-                return;
-            }
-            ImageStatus = 0;
-            PositionOfSheep[1] -= Rate;
-
+            goUp();
+            CheckLine();
         } else if (keyCode == KeyEvent.VK_DOWN || keyCode == 83) {
-            if (MaxYPosition[1] <= getYPosition()) {
-                return;
-            }
-            ImageStatus = 1;
-            PositionOfSheep[1] += Rate;
+            goDown();
+            CheckLine();
         } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == 68) {
-            if (GameSetting.getCrosswalkMiddlePosition() + Const.CROSSWALK_WIDTH / 2 <= PositionOfSheep[0] + getSheepWidth()) {
-                return;
-            }
-            ImageStatus = 2;
-            PositionOfSheep[0] += Rate;
-
+            goRight();
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
-            if (GameSetting.getCrosswalkMiddlePosition() - Const.CROSSWALK_WIDTH / 2 >= PositionOfSheep[0]) {
-                return;
-            }
-            ImageStatus = 3;
-            PositionOfSheep[0] -= Rate;
+            goLeft();
         }
-        System.out.println(getXPosition());
-        CheckLine();
+    }
 
+    public void keyPressed(int keyCode) {
+        if (keyCode == 87) {
+            goUp();
+            CheckLine();
+        } else if (keyCode == 83) {
+            goDown();
+            CheckLine();
+        } else if (keyCode == 68) {
+            goRight();
+        } else if (keyCode == 65) {
+            goLeft();
+        }
     }
 
     public void CheckLine() {

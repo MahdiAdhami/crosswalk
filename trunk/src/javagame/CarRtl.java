@@ -3,7 +3,7 @@ package javagame;
 public class CarRtl extends Car {
 
     public CarRtl(int Speed, CarType CarType, Line Line) {
-        super(new float[]{Const.GAME_WINDOWS_WIDTH,CarType.getCarWidth() + Const.GAME_WINDOWS_WIDTH}, Speed, CarType, Line);
+        super(Const.GAME_WINDOWS_WIDTH, Speed, CarType, Line);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class CarRtl extends Car {
             return;
         }
 
-        Position[0] -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
+        HeadPosition -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
         
         checkSheepAccident();
     }
@@ -52,7 +52,7 @@ public class CarRtl extends Car {
 
     @Override
     public float getEndPosition() {
-        return Position[0] +  CarType.getCarWidth();
+        return HeadPosition +  CarType.getCarWidth();
     }
     
     @Override
