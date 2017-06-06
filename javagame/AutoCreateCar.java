@@ -5,7 +5,7 @@ import javagame.Menu.GameSetting;
 
 public class AutoCreateCar implements Runnable {
     
-    public static ArrayList<Line> Lines = new ArrayList<>();
+    public ArrayList<Line> Lines = new ArrayList<>();
     public int RtlLineCount;
     public int LtrLineCount;
 
@@ -13,6 +13,7 @@ public class AutoCreateCar implements Runnable {
         this.LtrLineCount = GameSetting.getLtrLineCount();
         this.RtlLineCount = GameSetting.getRtlLineCount();
     }
+    
 
     public void InitLine() {
         for (int i = 1 ; i <= RtlLineCount ; i++) {

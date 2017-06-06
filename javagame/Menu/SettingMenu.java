@@ -29,39 +29,37 @@ public class SettingMenu extends Menu {
 
         JPanel submit = new JPanel(new GridLayout(1, 0));
 
-
         panel.add(controls, BorderLayout.CENTER);
         panel.add(labels, BorderLayout.EAST);
         panel.add(submit, BorderLayout.SOUTH);
 
-        JSpinner topLineCount = CreateSpinner("تعداد لاین راست به چپ", GameSetting.getRtlLineCount(), MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT , 1, null);
+        JSpinner topLineCount = CreateSpinner("تعداد لاین راست به چپ", GameSetting.getRtlLineCount(), MenuConst.MIN_TOP_LINE_COUNT - 10, MenuConst.MAX_TOP_LINE_COUNT + 10, 1, null);
         controls.add(topLineCount);
         controls.add(CreateMargin(10, 0, 10, 0));
-        
+
         JLabel lblTopLineCount = CreateLabel(String.format("%s %s(%d-%d)", "تعداد لاین راست به چپ", "بین", MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT));
         labels.add(lblTopLineCount);
         labels.add(CreateMargin(10, 0, 10, 0));
 
-        JSpinner bottomLineCount = CreateSpinner("تعداد لاین چپ به راست",  GameSetting.getLtrLineCount(),MenuConst.MIN_BOTTOM_LINE_COUNT, MenuConst.MAX_BOTTOM_LINE_COUNT, 1, null);
+        JSpinner bottomLineCount = CreateSpinner("تعداد لاین چپ به راست", GameSetting.getLtrLineCount(), MenuConst.MIN_BOTTOM_LINE_COUNT - 10, MenuConst.MAX_BOTTOM_LINE_COUNT + 10, 1, null);
         controls.add(bottomLineCount);
         controls.add(CreateMargin(10, 0, 10, 0));
 
         JLabel lblbottomLineCount = CreateLabel(String.format("%s %s(%d-%d)", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT));
         labels.add(lblbottomLineCount);
         labels.add(CreateMargin(10, 0, 10, 0));
-        
+
         JButton saveChanges = CreateButton("ذخیره",
                 (ActionEvent e) -> {
                     boolean error = false;
                     if (!GameSetting.setRtlLineCount(topLineCount.getValue())) {
-                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار لاین بالایی غیر معتبر", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT),"خطایی رخ داده",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار لاین بالایی غیر معتبر", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                         error = true;
-                    }
-                    else if (!GameSetting.setLtrLineCount(bottomLineCount.getValue())) {
-                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار لاین پایینی غیر معتبر", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_BOTTOM_LINE_COUNT, MenuConst.MAX_BOTTOM_LINE_COUNT),"خطایی رخ داده",JOptionPane.ERROR_MESSAGE);
+                    } else if (!GameSetting.setLtrLineCount(bottomLineCount.getValue())) {
+                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار لاین پایینی غیر معتبر", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_BOTTOM_LINE_COUNT, MenuConst.MAX_BOTTOM_LINE_COUNT), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                         error = true;
-                    }
-                    else{
+                    } else {
+                        GameSetting.setDefaultSettingPath();
                         GameSetting.SaveChanges();
                         frame.dispose();
                     }

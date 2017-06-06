@@ -36,16 +36,15 @@ public class InitGraphic extends JPanel implements Runnable {
     private Image LineImage;
 
     // Sheep
-    public static Sheep Sheep = new Sheep(new int[]{5,25}, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
+    public static Sheep Sheep = new Sheep(new int[]{5, 25}, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
 
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
         super();
-        SetInit();
-
         this.Lines = Lines;
+
+        SetInit();
         this.MiddleOfCrosswalkPosition = GameSetting.getCrosswalkMiddlePosition();
-//        this.Sheep = new Sheep(5, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN);
 
     }
 
@@ -61,9 +60,10 @@ public class InitGraphic extends JPanel implements Runnable {
         } catch (IOException ex) {
             System.err.println("InitGraphic SetInit() " + ex);
         }
-        
+
         // Add listeners for mouse and keyboard event
-        GameListener gameListener = new GameListener();
+        GameListener gameListener = new GameListener(this.Lines);
+
         gameFrame.addKeyListener(gameListener.KeyListener);
         gameFrame.addMouseListener(gameListener.MouseListener);
 
@@ -107,7 +107,7 @@ public class InitGraphic extends JPanel implements Runnable {
         try {
             Lines.stream().forEach((Linetemp) -> {
                 Linetemp.getCars().stream().forEach((carTemp) -> {
-                    g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getPositionForDraw(),Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2, this);
+                    g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2, this);
                 });
             });
 
@@ -131,8 +131,8 @@ public class InitGraphic extends JPanel implements Runnable {
     @Override
     public void run() {
         while (true) {
-            if(InitGame.GameStop){
-               continue; 
+            if (InitGame.GameStop) {
+                continue;
             }
             try {
                 Lines.stream().forEach((Line Linetemp) -> {

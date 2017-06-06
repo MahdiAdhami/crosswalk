@@ -37,29 +37,28 @@ public class GameSetting {
 
     /// Getter Methods
     public static int getAutoCreateCarRate() {
-        GameSetting.UpdateSettings();
         return AutoCreateCarRate;
     }
 
     public static int getRtlLineCount() {
-        GameSetting.UpdateSettings();
         return RtlLineCount;
     }
 
     public static int getLtrLineCount() {
-        GameSetting.UpdateSettings();
         return LtrLineCount;
     }
 
     public static int getCrosswalkMiddlePosition() {
-        GameSetting.UpdateSettings();
         return CrosswalkMiddlePosition;
     }
 
     /// Setter Methods
     public static void setSettingPath(String path) {
         SettingPath = path;
-        UpdateSettings();
+    }
+
+    public static void setDefaultSettingPath() {
+        SettingPath = Const.SETTING_FILE;
     }
 
     public static boolean setRtlLineCount(Object value) {
@@ -96,7 +95,7 @@ public class GameSetting {
         writeSetting(SettingPath);
     }
 
-    private static void UpdateSettings() {
+    public static void UpdateSettings() {
         readSetting(SettingPath);
     }
 
@@ -140,53 +139,99 @@ public class GameSetting {
         }
     }
 
-    public static void writeSetting(String pathAddress) {
+    public static void writeSetting(String path) {
         try {
-            String path = Const.PATH + "\\src\\" +pathAddress;
-            
-            File inputFile = new File(path);
-            
+
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(inputFile);
 
-            Node Settings = doc.getFirstChild();
-            Node GameSettings = doc.getElementsByTagName("GameSettings").item(0);
+            // root elements
+            Document doc = docBuilder.newDocument();
+            Element rootElement = doc.createElement("Settings");
+            doc.appendChild(rootElement);
 
-            // update GameSettings attribute
-            //NamedNodeMap attr = GameSettings.getAttributes();
-            //Node nodeAttr = attr.getNamedItem("company");
-            //nodeAttr.setTextContent("Lamborigini");
-            // loop the GameSettings child node
-            NodeList list = GameSettings.getChildNodes();
+            // staff elements
+            Element staff = doc.createElement("GameSettings");
+            rootElement.appendChild(staff);
 
-            for (int temp = 0; temp < list.getLength(); temp++) {
-                Node node = list.item(temp);
+            Element firstname = doc.createElement(SettingConst.RtlLineCount);
+            firstname.appendChild(doc.createTextNode(String.format("%d", getRtlLineCount())));
+            staff.appendChild(firstname);
+            
+            firstname = doc.createElement(SettingConst.LtrLineCount);
+            firstname.appendChild(doc.createTextNode(String.format("%d", getLtrLineCount())));
+            staff.appendChild(firstname);
+            
+            firstname = doc.createElement(SettingConst.AutoCreateCarRate);
+            firstname.appendChild(doc.createTextNode(String.format("%d", getAutoCreateCarRate())));
+            staff.appendChild(firstname);
+            
+            firstname = doc.createElement(SettingConst.CrosswalkMiddlePosition);
+            firstname.appendChild(doc.createTextNode(String.format("%d", getCrosswalkMiddlePosition())));
+            staff.appendChild(firstname);
 
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) node;
-                    if (SettingConst.RtlLineCount.equals(eElement.getNodeName())) {
-                        eElement.setTextContent(String.format("%d", RtlLineCount));
-                    } else if (SettingConst.LtrLineCount.equals(eElement.getNodeName())) {
-                        eElement.setTextContent(String.format("%d", LtrLineCount));
-                    } else if (SettingConst.CrosswalkMiddlePosition.equals(eElement.getNodeName())) {
-                        eElement.setTextContent(String.format("%d", CrosswalkMiddlePosition));
-                    } else if (SettingConst.AutoCreateCarRate.equals(eElement.getNodeName())) {
-                        eElement.setTextContent(String.format("%d", AutoCreateCarRate));
-                    }
-                }
-            }
 
+            // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult consoleResult = new StreamResult(new File(path));
-            transformer.transform(source, consoleResult);
+            StreamResult result = new StreamResult(new File(Const.PATH + path));
 
-        } catch (ParserConfigurationException | SAXException | IOException | TransformerException ex) {
-            System.err.println("Setting SaveChange() " + ex);
+            transformer.transform(source, result);
+
+        }catch (ParserConfigurationException | TransformerException ex) {
+            System.err.println("Setting writeSetting() " + ex);
         }
+
     }
+
+//    public static void writeSetting(String pathAddress) {
+//        try {
+//            String path = Const.PATH + pathAddress;
+//
+//            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+//
+//            Node Settings = doc.getFirstChild();
+//            Node GameSettings = doc.getElementsByTagName("GameSettings").item(0);
+//
+//            // update GameSettings attribute
+//            //NamedNodeMap attr = GameSettings.getAttributes();
+//            //Node nodeAttr = attr.getNamedItem("company");
+//            //nodeAttr.setTextContent("Lamborigini");
+//            // loop the GameSettings child node
+//            NodeList list = GameSettings.getChildNodes();
+//
+//            for (int temp = 0; temp < list.getLength(); temp++) {
+//                Node node = list.item(temp);
+//
+//                if (node.getNodeType() == Node.ELEMENT_NODE) {
+//                    Element eElement = (Element) node;
+//                    if (SettingConst.RtlLineCount.equals(eElement.getNodeName())) {
+//                        eElement.setTextContent(String.format("%d", RtlLineCount));
+//                    } else if (SettingConst.LtrLineCount.equals(eElement.getNodeName())) {
+//                        eElement.setTextContent(String.format("%d", LtrLineCount));
+//                    } else if (SettingConst.CrosswalkMiddlePosition.equals(eElement.getNodeName())) {
+//                        eElement.setTextContent(String.format("%d", CrosswalkMiddlePosition));
+//                    } else if (SettingConst.AutoCreateCarRate.equals(eElement.getNodeName())) {
+//                        eElement.setTextContent(String.format("%d", AutoCreateCarRate));
+//                    }
+//                }
+//            }
+//
+//            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//            Transformer transformer = transformerFactory.newTransformer();
+//            DOMSource source = new DOMSource(doc);
+//
+//            File file = new File(path);
+//            StreamResult consoleResult = new StreamResult(file);
+//
+//            transformer.transform(source, consoleResult);
+//
+//        } catch (ParserConfigurationException | SAXException | IOException | TransformerException ex) {
+//            System.err.println("Setting writeSetting() " + ex);
+//        }
+//    }
 
 }
 
