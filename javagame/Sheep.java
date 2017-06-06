@@ -121,11 +121,6 @@ public class Sheep {
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
             goLeft();
         }
-        else if ( keyCode == 84) {
-            Save saveTheGame = new Save();
-            saveTheGame.init();
-            
-        }
     }
 
     public void keyPressed(int keyCode) {

@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javagame.Save.Save;
 
 public class GameListener {
 
@@ -42,6 +43,11 @@ public class GameListener {
             public void mousePressed(MouseEvent e) {
                 if (e.getX() >= 2 && e.getX() <= 90 && e.getY() > 0 && e.getY() < 60) {
                     InitGame.GameStop = !InitGame.GameStop;
+                }
+                else if(e.getX() >= 100 && e.getX() <= 220 && e.getY() >=5 && e.getY() <=28)
+                {
+                    Save saveGame = new Save();
+                    saveGame.init();
                 }
             }
 
