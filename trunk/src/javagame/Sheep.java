@@ -5,33 +5,25 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import javagame.Menu.GameSetting;
-import javagame.Save.Save;
 import javax.imageio.ImageIO;
 
-public class Sheep {
+public final class Sheep {
 
     private float[] PositionOfSheep;
     private float[] SheepSize;
     private int[] Rate;
     private Image[] ImageOfSheep;
-    private float[] MaxYPosition;
     private int ImageStatus;
     public static boolean AutoMove = false;
-    
 
     public Sheep(int[] Rate, float PositionYOfSheep) {
         this.Rate = Rate;
         SheepSize = new float[]{50, 50};
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
 
-        this.MaxYPosition = new float[]{SheepSize[0], PositionYOfSheep};
-        
-           
-           
         try {
             ImageOfSheep = new Image[4];
-            
-            
+
             ImageOfSheep[0] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Up")));
             ImageOfSheep[1] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Down")));
             ImageOfSheep[2] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Right")));
@@ -52,9 +44,9 @@ public class Sheep {
     public void setRate(int[] rate) {
         Rate = rate;
     }
-    public void setPositionX(float x)
-    {
-        PositionOfSheep[0]=x;
+
+    public void setPositionX(float x) {
+        PositionOfSheep[0] = x;
     }
 
     public int[] getRate() {
@@ -82,7 +74,7 @@ public class Sheep {
     }
 
     public void goDown() {
-        if (MaxYPosition[1] <= getYPosition()) {
+        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT) + Const.TOP_MARGIN <= getYPosition()) {
             return;
         }
         ImageStatus = 1;
@@ -106,10 +98,13 @@ public class Sheep {
     }
 
     public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == 13) {
+            // Stop Game Code
+        }
         if (Sheep.AutoMove) {
             return;
         }
-        int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_UP || keyCode == 87) {
             goUp();
             CheckLine();
@@ -121,6 +116,8 @@ public class Sheep {
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
             goLeft();
         }
+        int line = (int) Math.floor((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) + 1;
+        System.out.println(getXPosition() + "  " + getYPosition() +" "+ line);
     }
 
     public void keyPressed(int keyCode) {
@@ -135,6 +132,7 @@ public class Sheep {
         } else if (keyCode == 65) {
             goLeft();
         }
+
     }
 
     public void CheckLine() {

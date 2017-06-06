@@ -1,5 +1,6 @@
 package javagame;
 
+import javagame.Menu.GameSetting;
 import javagame.Menu.MainMenu;
 
 public class JavaGame {
@@ -18,7 +19,7 @@ public class JavaGame {
 
          //Initialize main menu     
          MainMenu mainMenu = new MainMenu("شروع بازی", 200, 200);
-                 mainMenu.Execute();
+         mainMenu.Execute();
     }
 
 }

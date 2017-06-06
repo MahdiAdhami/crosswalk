@@ -9,14 +9,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javagame.Save.Save;
+import java.util.ArrayList;
 
 public class GameListener {
 
     public KeyListener KeyListener;
     public MouseListener MouseListener;
+    public ArrayList<Line> Lines;
 
-    public GameListener() {
+    public GameListener(ArrayList<Line> Lines) {
+        this.Lines = Lines;
 
         KeyListener = new KeyListener() {
             @Override
@@ -41,13 +43,12 @@ public class GameListener {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getX() >= 2 && e.getX() <= 90 && e.getY() > 0 && e.getY() < 60) {
+                if (e.getX() >= 2 && e.getX() < 90 && e.getY() > 0 && e.getY() < 60) {
                     InitGame.GameStop = !InitGame.GameStop;
-                }
-                else if(e.getX() >= 100 && e.getX() <= 220 && e.getY() >=5 && e.getY() <=28)
-                {
-                    Save saveGame = new Save();
-                    saveGame.init();
+                } else if (e.getX() > 100 && e.getX() < 320 && e.getY() > 0 && e.getY() < 60) {
+                    SaveAndLoad saveGame = new SaveAndLoad();
+                    saveGame.SaveGame(Lines);
+                    InitGame.GameStop = !InitGame.GameStop;
                 }
             }
 
@@ -64,7 +65,5 @@ public class GameListener {
             }
 
         };
-
     }
-
 }

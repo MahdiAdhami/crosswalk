@@ -9,7 +9,7 @@ public final class Const {
     public final static SecureRandom RAND = new SecureRandom();
 
     // Root path 
-    public final static String PATH = new File(".").getAbsolutePath();
+    public final static String PATH = new File("").getAbsolutePath();
 
     // Car count
     public final static int CAR_COUNT = 2;
@@ -57,5 +57,10 @@ public final class Const {
     // Change speed near other car 
     public final static int CHANGE_SPEED_DISTANCE_FOR_REACH = 100;
     public final static float CHANGE_SPEED_RATE_DISTANCE_FOR_REACH = .5f;
-    
+
+    // Save and load
+    public final static String SAVE_FILE_ADDRESS_LINE = "\\src\\resources\\Resume\\Line.txt";
+    public final static String SAVE_FILE_ADDRESS_SHEEP = "\\src\\resources\\Resume\\Sheep.txt";
+    public final static String SAVE_FILE_ADDRESS_SETTING = "\\src\\resources\\Resume\\Setting.xml";
+
 }
