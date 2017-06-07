@@ -78,8 +78,9 @@ public final class Line {
     public void AccidentCheck() {
 
     }
-
-    public String SaveToFile() {
+    
+    @Override
+    public String toString() {
         return String.format("Line,%d,%d,%d,%s,%d,%s,%d", Id, MaxCarSpeed, MinCarSpeed, Direction == true ? "1" : "0", Position, CanCarOvertaking == true ? "1" : "0", CarId);
     }
 

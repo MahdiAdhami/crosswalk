@@ -111,9 +111,9 @@ public class SaveAndLoad {
 
         }
         for (Line tempLine : line) {
-            writerForLine.println(tempLine.SaveToFile());
+            writerForLine.println(tempLine.toString());
             for (Car tempCar : tempLine.getCars()) {
-                writerForCars.println(tempCar.SaveToFile());
+                writerForCars.println(tempCar.toString());
             }
         }
         if (writerForLine != null) {
@@ -131,7 +131,7 @@ public class SaveAndLoad {
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
 
         }
-        writerForSheep.println(InitGraphic.Sheep.SaveToFileForResume());
+        writerForSheep.println(InitGraphic.Sheep.toString());
         writerForSheep.close();
     }
 
