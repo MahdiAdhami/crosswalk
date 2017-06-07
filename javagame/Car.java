@@ -48,7 +48,8 @@ public abstract class Car {
         return Speed;
     }
 
-    public String SaveToFile() {
+    @Override
+    public String toString() {
         return String.format("Car,%d,%f,%f,%s,%d", Id, HeadPosition, Speed, CarType.getCarNameAndType(),Line.getId());
     }
 

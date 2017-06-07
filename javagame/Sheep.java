@@ -19,7 +19,8 @@ public final class Sheep {
 
     public static boolean AutoMove = false;
 
-    public String SaveToFileForResume() {
+    @Override
+    public String toString() {
         return String.format("Sheep,%f,%f,%d,%d,%d,%s", getXPosition(), getYPosition(), Rate[0], Rate[1], ImageStatus, ImageCode);
     }
 
@@ -42,13 +43,13 @@ public final class Sheep {
         try {
             ImageOfSheep = new BufferedImage[4];
 
-            ImageOfSheep[0] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "A-Up")));
-            ImageOfSheep[1] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "A-Down")));
-            ImageOfSheep[2] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "A-Right")));
-            ImageOfSheep[3] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "A-Left")));
+            ImageOfSheep[0] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Up")));
+            ImageOfSheep[1] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Down")));
+            ImageOfSheep[2] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Right")));
+            ImageOfSheep[3] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Left")));
 
             SheepSize = new float[]{ImageOfSheep[0].getWidth(), ImageOfSheep[0].getHeight()};
-            
+
         } catch (IOException ex) {
             System.err.println("Sheep Sheep() " + ex);
         }
@@ -64,10 +65,6 @@ public final class Sheep {
 
     public void setRate(int[] rate) {
         Rate = rate;
-    }
-
-    public void setPositionX(float x) {
-        PositionOfSheep[0] = x;
     }
 
     public int[] getRate() {
