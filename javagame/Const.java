@@ -48,7 +48,7 @@ public final class Const {
     public final static int DECREASE_SPEED_RATE = 20;
 
     // Sheep
-    public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\Sheep{0}.png";
+    public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\{0}.png";
     public final static int SHEEP_DISTANCE_LINE_WHEN_GAME_START = 30;
 
     // Change speed near other car 
@@ -58,6 +58,7 @@ public final class Const {
     // Save and load
     public final static String SAVE_FILE_ADDRESS_LINE = "\\src\\resources\\Resume\\Line.txt";
     public final static String SAVE_FILE_ADDRESS_SHEEP = "\\src\\resources\\Resume\\Sheep.txt";
+    public final static String SAVE_FILE_ADDRESS_CAR = "\\src\\resources\\Resume\\Cars.txt";
     public final static String SAVE_FILE_ADDRESS_SETTING = "\\src\\resources\\Resume\\Setting.xml";
 
 }

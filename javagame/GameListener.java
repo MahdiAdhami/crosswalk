@@ -47,7 +47,7 @@ public class GameListener {
                     InitGame.GameStop = !InitGame.GameStop;
                 } else if (e.getX() > 100 && e.getX() < 320 && e.getY() > 0 && e.getY() < 60) {
                     SaveAndLoad saveGame = new SaveAndLoad();
-                    saveGame.SaveGame(Lines);
+                    saveGame.SaveGameForResume(Lines);
                     InitGame.GameStop = !InitGame.GameStop;
                 }
             }

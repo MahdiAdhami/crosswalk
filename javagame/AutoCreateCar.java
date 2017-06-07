@@ -15,7 +15,7 @@ public class AutoCreateCar implements Runnable {
     }
 
     public void InitLine() {
-        boolean canCarTakeOver = false;
+        boolean canCarTakeOver;
         for (int i = 1; i <= RtlLineCount; i++) {
             canCarTakeOver = i != RtlLineCount;
             Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN, canCarTakeOver));

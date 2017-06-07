@@ -100,7 +100,12 @@ public class InitGraphic extends JPanel implements Runnable {
         // Draw cars
         try {
             Lines.stream().forEach((Linetemp) -> {
-                Linetemp.getCars().stream().forEach((carTemp) -> {
+                Linetemp.getCars().stream().forEach((carTemp)
+                        -> {
+                    g.setFont(new Font("tahoma", 0, 30));
+                    g.setColor(Color.red);
+                    g.drawString(String.format("%d", carTemp.getId()), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2);
+
                     g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2, this);
                 });
             });
@@ -136,6 +141,7 @@ public class InitGraphic extends JPanel implements Runnable {
                     });
                 });
 
+
                 // Repaint panel
                 repaint();
 
@@ -144,7 +150,7 @@ public class InitGraphic extends JPanel implements Runnable {
                     try {
                         Thread.sleep(1000);
                     } catch (Exception ex) {
-                        System.err.println("InitGraphic paintComponent() 1 " + ex.getMessage());
+                        System.err.println("InitGraphic paintComponent() 1 " + ex);
                     }
                     InitGame.RunAfterWait = false;
                 }
