@@ -32,7 +32,8 @@ public class MainMenu extends Menu {
             JButton loadLastGame = CreateButton("بارگذاری اخرین بازی",
                     (ActionEvent event) -> {
                         InitGame start = new InitGame();
-                        start.LoadResumeGame(load.LoadGame());
+                        load.LoadForResume();
+                        start.LoadResumeGame(load.LoadForResume());
                     }
             );
             controls.add(loadLastGame);
@@ -45,7 +46,7 @@ public class MainMenu extends Menu {
                 }
         );
         controls.add(startGame);//,BorderLayout.CENTER
-        
+
         JButton autoGame = CreateButton("حرکت خودکار ادمک",
                 (ActionEvent e) -> {
                     InitGame start = new InitGame();
@@ -58,7 +59,7 @@ public class MainMenu extends Menu {
                 (ActionEvent event) -> {
                     GameSetting.setDefaultSettingPath();
                     GameSetting.UpdateSettings();
-                    
+
                     SettingMenu settingMenu = new SettingMenu("تنظیمات", 200, 400);
                     settingMenu.Execute();
                 }

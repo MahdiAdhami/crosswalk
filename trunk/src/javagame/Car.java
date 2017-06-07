@@ -49,7 +49,7 @@ public abstract class Car {
     }
 
     public String SaveToFile() {
-        return String.format("Car,%d,%f,%f,%s", Id, HeadPosition, Speed, CarType.getCarNameAndType());
+        return String.format("Car,%d,%f,%f,%s,%d", Id, HeadPosition, Speed, CarType.getCarNameAndType(),Line.getId());
     }
 
     // Setter methods

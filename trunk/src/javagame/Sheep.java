@@ -2,6 +2,7 @@ package javagame;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javagame.Menu.GameSetting;
@@ -12,22 +13,42 @@ public final class Sheep {
     private float[] PositionOfSheep;
     private float[] SheepSize;
     private int[] Rate;
-    private Image[] ImageOfSheep;
+    private BufferedImage[] ImageOfSheep;
     private int ImageStatus;
+    private String ImageCode;
+
     public static boolean AutoMove = false;
 
-    public Sheep(int[] Rate, float PositionYOfSheep) {
+    public String SaveToFileForResume() {
+        return String.format("Sheep,%f,%f,%d,%d,%d,%s", getXPosition(), getYPosition(), Rate[0], Rate[1], ImageStatus, ImageCode);
+    }
+
+    public Sheep(float[] PositionOfSheep, int[] Rate, int ImageStatus, String ImageCode) {
+        this.PositionOfSheep = PositionOfSheep;
         this.Rate = Rate;
-        SheepSize = new float[]{50, 50};
+        this.ImageStatus = ImageStatus;
+        this.ImageCode = ImageCode;
+        initImage();
+    }
+
+    public Sheep(int[] Rate, float PositionYOfSheep) {
+        ImageCode = "A";
+        initImage();
+        this.Rate = Rate;
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
+    }
 
+    private void initImage() {
         try {
-            ImageOfSheep = new Image[4];
+            ImageOfSheep = new BufferedImage[4];
 
-            ImageOfSheep[0] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Up")));
-            ImageOfSheep[1] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Down")));
-            ImageOfSheep[2] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Right")));
-            ImageOfSheep[3] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "Left")));
+            ImageOfSheep[0] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "A-Up")));
+            ImageOfSheep[1] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "A-Down")));
+            ImageOfSheep[2] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "A-Right")));
+            ImageOfSheep[3] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "A-Left")));
+
+            SheepSize = new float[]{ImageOfSheep[0].getWidth(), ImageOfSheep[0].getHeight()};
+            
         } catch (IOException ex) {
             System.err.println("Sheep Sheep() " + ex);
         }
@@ -117,7 +138,7 @@ public final class Sheep {
             goLeft();
         }
         int line = (int) Math.floor((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) + 1;
-        System.out.println(getXPosition() + "  " + getYPosition() +" "+ line);
+        System.out.println(getXPosition() + "  " + getYPosition() + " " + line);
     }
 
     public void keyPressed(int keyCode) {
