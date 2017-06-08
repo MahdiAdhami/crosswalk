@@ -134,6 +134,11 @@ public final class Sheep {
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
             goLeft();
         }
+        else if (keyCode == 84) {
+                    SaveAndLoad saveGame = new SaveAndLoad();
+                    saveGame.SaveGameForResume(GameListener.Lines);
+                    InitGame.GameStop = !InitGame.GameStop;
+                }
         int line = (int) Math.floor((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) + 1;
         System.out.println(getXPosition() + "  " + getYPosition() + " " + line);
     }

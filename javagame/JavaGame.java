@@ -20,7 +20,7 @@ public class JavaGame {
         //Initialize main menu     
          MainMenu mainMenu = new MainMenu("شروع بازی", 200, 200);
          mainMenu.Execute();
-
+        //ReplyMovie obj = new ReplyMovie();
 //        SaveAndLoad LoadGame = new SaveAndLoad();
 //        LoadGame.LoadGame();
     }

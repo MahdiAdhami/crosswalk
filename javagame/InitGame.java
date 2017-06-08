@@ -29,9 +29,11 @@ public class InitGame {
     public void AutoCreateCar() {
         GameSetting.setDefaultSettingPath();
         GameSetting.UpdateSettings();
+        
+        ReplyMovie replySaving = new ReplyMovie(null,null);
 
         // Create instance an object for create cars in a thread
-        AutoCreateCar autoCreateCar = new AutoCreateCar();
+        AutoCreateCar autoCreateCar = new AutoCreateCar(replySaving);
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
@@ -41,6 +43,9 @@ public class InitGame {
         // Create instance an object for auto create car
         Thread threadAutoCreateCar = new Thread(autoCreateCar);
         autoCreateCar.InitLine();
+        
+        
+        
         threadAutoCreateCar.start();
 
     }
@@ -50,7 +55,7 @@ public class InitGame {
         GameSetting.UpdateSettings();
 
         // Create instance an object for create cars in a thread
-        AutoCreateCar autoCreateCar = new AutoCreateCar();
+        AutoCreateCar autoCreateCar = new AutoCreateCar(null);
         autoCreateCar.Lines = lines;
 
         // Create instance an object for game graphics
@@ -61,6 +66,21 @@ public class InitGame {
         // Create instance an object for auto create car
         Thread threadAutoCreateCar = new Thread(autoCreateCar);
         threadAutoCreateCar.start();
+    }
+    public void replyTheMovie(String path)
+    {
+        GameSetting.setSettingPath("\\src\\resources\\Replies\\" + path + "\\Setting.xml");
+        GameSetting.UpdateSettings();
+        
+        AutoCreateCar autoCreateCar = new AutoCreateCar(null);
+        autoCreateCar.InitLine();
+        
+        InitGraphic base = new InitGraphic(autoCreateCar.getLines());
+        Thread threadBase = new Thread(base);
+        threadBase.start();
+        
+        ReplyMovie reply = new ReplyMovie(Const.PATH + "\\src\\resources\\Replies\\" + path + "\\carFile.txt" , autoCreateCar.getLines());
+        
     }
 
 }
