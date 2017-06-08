@@ -80,7 +80,8 @@ public class InitGame {
         threadBase.start();
         
         ReplyMovie reply = new ReplyMovie(Const.PATH + "\\src\\resources\\Replies\\" + path + "\\carFile.txt" , autoCreateCar.getLines());
-        
+        Thread threadReply = new Thread(reply);
+        threadReply.start();
     }
 
 }

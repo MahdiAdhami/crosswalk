@@ -26,12 +26,15 @@ public class ReplyMovie implements Runnable{
     ArrayList<Line> Lines;
     
     Date nowTime = new Date();
-    SimpleDateFormat timeFormat = new SimpleDateFormat("HH-mm-ss");
+    SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
     
     public ReplyMovie(String path , ArrayList<Line> lines)
     {
         filePathForRun = path;
-        fileForRun = new File(path);
+        try {
+            fileForRun = new File(path);
+        } catch (Exception e) {
+        }
         Lines = lines;
         
         
