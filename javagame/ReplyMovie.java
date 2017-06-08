@@ -28,16 +28,9 @@ public class ReplyMovie implements Runnable{
     Date nowTime = new Date();
     SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
     
-    public ReplyMovie(String path , ArrayList<Line> lines)
+    
+    public ReplyMovie()
     {
-        filePathForRun = path;
-        try {
-            fileForRun = new File(path);
-        } catch (Exception e) {
-        }
-        Lines = lines;
-        
-        
         mainFolder = new File(Const.PATH + "\\src\\resources\\Replies");
         if(!mainFolder.exists())
         {
@@ -52,6 +45,18 @@ public class ReplyMovie implements Runnable{
         GameSetting.writeSetting("\\src\\resources\\Replies\\ReplyOf-" + timeFormat.format(nowTime) + "\\Setting.xml");
         
         carFile = new File(subFolder.toString() + "\\carFile.txt");
+    }
+    
+    public ReplyMovie(String path , ArrayList<Line> lines)
+    {
+        filePathForRun = path;
+        try {
+            fileForRun = new File(path);
+        } catch (Exception e) {
+        }
+        Lines = lines;
+        
+        
     }
     
     public void appendCarsToFile(Car tempCar)

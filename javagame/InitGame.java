@@ -30,7 +30,7 @@ public class InitGame {
         GameSetting.setDefaultSettingPath();
         GameSetting.UpdateSettings();
         
-        ReplyMovie replySaving = new ReplyMovie(null,null);
+        ReplyMovie replySaving = new ReplyMovie();
 
         // Create instance an object for create cars in a thread
         AutoCreateCar autoCreateCar = new AutoCreateCar(replySaving);

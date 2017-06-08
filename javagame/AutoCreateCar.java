@@ -10,6 +10,12 @@ public class AutoCreateCar implements Runnable {
     public int LtrLineCount;
     public ReplyMovie replySaving;
 
+    public AutoCreateCar() {
+        this.LtrLineCount = GameSetting.getLtrLineCount();
+        this.RtlLineCount = GameSetting.getRtlLineCount();
+       
+    }
+    
     public AutoCreateCar(ReplyMovie replySaving) {
         this.LtrLineCount = GameSetting.getLtrLineCount();
         this.RtlLineCount = GameSetting.getRtlLineCount();
