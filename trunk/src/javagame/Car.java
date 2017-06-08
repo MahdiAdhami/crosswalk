@@ -20,7 +20,7 @@ public abstract class Car {
         this.Id = Id;
         this.HeadPosition = HeadPosition;
         this.Speed = Speed;
-        this.CarType = new CarType(Line.getDirection());
+        this.CarType = new CarType(Line.getDirection(),CarType);
         this.Line = Line;
     }
 
