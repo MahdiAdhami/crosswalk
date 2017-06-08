@@ -71,7 +71,7 @@ public abstract class Car {
     }
 
     public void setLine(int index) {
-        AutoCreateCar acc = new AutoCreateCar();
+        AutoCreateCar acc = new AutoCreateCar(null);
         Line = acc.getLines().get(index);
         Line.getCars().add(this);
     }

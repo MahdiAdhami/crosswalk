@@ -15,7 +15,7 @@ public class GameListener {
 
     public KeyListener KeyListener;
     public MouseListener MouseListener;
-    public ArrayList<Line> Lines;
+    static public ArrayList<Line> Lines;
 
     public GameListener(ArrayList<Line> Lines) {
         this.Lines = Lines;

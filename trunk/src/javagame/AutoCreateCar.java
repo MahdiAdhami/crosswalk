@@ -8,10 +8,12 @@ public class AutoCreateCar implements Runnable {
     public ArrayList<Line> Lines = new ArrayList<>();
     public int RtlLineCount;
     public int LtrLineCount;
+    public ReplyMovie replySaving;
 
-    public AutoCreateCar() {
+    public AutoCreateCar(ReplyMovie replySaving) {
         this.LtrLineCount = GameSetting.getLtrLineCount();
         this.RtlLineCount = GameSetting.getRtlLineCount();
+        this.replySaving = replySaving;
     }
 
     public void InitLine() {
@@ -60,7 +62,8 @@ public class AutoCreateCar implements Runnable {
             }
             // Call create new car method of line 
             tempLine.CreateNewCar(newCar);
-
+            replySaving.appendCarsToFile(newCar);
+            
             // Sleep thread wait for create new car again
             try {
                 Thread.sleep(GameSetting.getAutoCreateCarRate());

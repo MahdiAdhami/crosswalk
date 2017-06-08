@@ -32,7 +32,6 @@ public class MainMenu extends Menu {
             JButton loadLastGame = CreateButton("بارگذاری اخرین بازی",
                     (ActionEvent event) -> {
                         InitGame start = new InitGame();
-                        load.LoadForResume();
                         start.LoadResumeGame(load.LoadForResume());
                     }
             );
@@ -46,6 +45,14 @@ public class MainMenu extends Menu {
                 }
         );
         controls.add(startGame);//,BorderLayout.CENTER
+        
+        JButton showRepliesButtons = CreateButton("مشاهده بازی ها",
+                (ActionEvent e) -> {
+                    ReplyButton replyButton = new ReplyButton("بازی های قابل مشاهده",800,800);
+                    replyButton.Execute();
+                }
+        );
+        controls.add(showRepliesButtons);
 
         JButton autoGame = CreateButton("حرکت خودکار ادمک",
                 (ActionEvent e) -> {
