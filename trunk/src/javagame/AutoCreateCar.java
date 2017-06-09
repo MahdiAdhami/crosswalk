@@ -8,7 +8,7 @@ public class AutoCreateCar implements Runnable {
     public ArrayList<Line> Lines = new ArrayList<>();
     public int RtlLineCount;
     public int LtrLineCount;
-    public ReplyMovie replySaving;
+    public ReplyMovie replySaving = null ;
 
     public AutoCreateCar() {
         this.LtrLineCount = GameSetting.getLtrLineCount();
@@ -17,8 +17,7 @@ public class AutoCreateCar implements Runnable {
     }
     
     public AutoCreateCar(ReplyMovie replySaving) {
-        this.LtrLineCount = GameSetting.getLtrLineCount();
-        this.RtlLineCount = GameSetting.getRtlLineCount();
+        this();
         this.replySaving = replySaving;
     }
 
@@ -67,8 +66,10 @@ public class AutoCreateCar implements Runnable {
                 newCar = new CarLtr(speed, carType, tempLine);
             }
             // Call create new car method of line 
-            tempLine.CreateNewCar(newCar);
-            replySaving.appendCarsToFile(newCar);
+            boolean temp = tempLine.CreateNewCar(newCar);
+            if(temp){
+                   replySaving.appendCarsToFile(newCar); 
+                }
             
             // Sleep thread wait for create new car again
             try {
@@ -76,6 +77,11 @@ public class AutoCreateCar implements Runnable {
             } catch (Exception ex) {
                 System.err.println("AutoCreateCar run() " + ex);
             }
+            
+//            if(replySaving != null)
+//            {
+//               
+//            }
         }
     }
 //  //  private float[] InitPostion(int carWidth){

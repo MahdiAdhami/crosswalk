@@ -36,9 +36,9 @@ public class ReplyButton extends Menu{
         for(int i = 1; i <= buttonsName.length ;i++)
         {
             JButton currentButton = CreateButton(buttonsName[i-1],(ActionEvent event) -> {
-                       InitGame replyTheMovie2 = new InitGame();
+                       InitGame initReply = new InitGame();
                         JButton temp = (JButton)event.getSource();
-                        replyTheMovie2.replyTheMovie(temp.getText());    // problem
+                        initReply.replyTheMovie(temp.getText());
                     });
             controls.add(currentButton);
         }

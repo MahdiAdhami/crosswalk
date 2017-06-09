@@ -1,11 +1,14 @@
 package javagame;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Timer {
+public class Timer implements Runnable{
    private final static Date StartedTime = new Date();   
    private static Date TempDate;
-
+   
+   public double timeForChange = 0 ;
    
    public static void setNow(){
        TempDate =  new Date();
@@ -30,5 +33,23 @@ public class Timer {
    public static long DifferenceTime(){
        return (new Date().getTime()-StartedTime.getTime())/1000;
    }
-   
+
+    @Override
+    public void run() {
+        
+       while(true)
+            {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            timeForChange += 0.1;
+       }
+       
+    }
+   public double getTimeForChange()
+   {
+       return timeForChange;
+   }
 }
