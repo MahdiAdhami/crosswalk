@@ -16,6 +16,7 @@ public final class Sheep {
     private BufferedImage[] ImageOfSheep;
     private int ImageStatus;
     private String ImageCode;
+    public static ReplyMovie replySaving = null;
 
     public static boolean AutoMove = false;
 
@@ -38,6 +39,8 @@ public final class Sheep {
         this.Rate = Rate;
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
     }
+    
+    
 
     private void initImage() {
         try {
@@ -63,10 +66,7 @@ public final class Sheep {
         return PositionOfSheep[1];
     }
 
-    public void setRate(int[] rate) {
-        Rate = rate;
-    }
-
+    
     public int[] getRate() {
         return Rate;
     }
@@ -126,13 +126,17 @@ public final class Sheep {
         if (keyCode == KeyEvent.VK_UP || keyCode == 87) {
             goUp();
             CheckLine();
+            replySaving.appendSheepToFile(this);
         } else if (keyCode == KeyEvent.VK_DOWN || keyCode == 83) {
             goDown();
             CheckLine();
+            replySaving.appendSheepToFile(this);
         } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == 68) {
             goRight();
+            replySaving.appendSheepToFile(this);
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
             goLeft();
+            replySaving.appendSheepToFile(this);
         }
         else if (keyCode == 84) {
                     SaveAndLoad saveGame = new SaveAndLoad();
@@ -147,13 +151,17 @@ public final class Sheep {
         if (keyCode == 87) {
             goUp();
             CheckLine();
+            
         } else if (keyCode == 83) {
             goDown();
             CheckLine();
+            replySaving.appendSheepToFile(this);
         } else if (keyCode == 68) {
             goRight();
+            replySaving.appendSheepToFile(this);
         } else if (keyCode == 65) {
             goLeft();
+            replySaving.appendSheepToFile(this);
         }
 
     }
@@ -161,7 +169,24 @@ public final class Sheep {
     public void CheckLine() {
         Line.SheepCurrentLine = (int) Math.floor((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) + 1;
     }
+    
+    public void setRate(int[] rate) {
+        Rate = rate;
+    }
+    
+    public void setPosFromReply(float[] pos)
+    {
+        PositionOfSheep = pos;
+    }
 
+    public void setImageStatus(int is)
+    {
+        ImageStatus = is;
+    }
+    public void setImageCode(String ic)
+    {
+        ImageCode = ic;
+    }
 //    public static int lineIdForCrash()
 //    {
 //        int check = (int) ((PositionOfSheep[1]+30)/100);

@@ -27,6 +27,7 @@ public class InitGraphic extends JPanel implements Runnable {
 
     // Line Image
     private Image LineImage;
+   
 
     // Sheep
     public static Sheep Sheep = new Sheep(new int[]{5, 25}, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
@@ -62,6 +63,7 @@ public class InitGraphic extends JPanel implements Runnable {
 
         //
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         int gameHeight = (GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT + 4 * Const.TOP_MARGIN;
         gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, gameHeight);
         gameFrame.setVisible(true);
@@ -104,7 +106,7 @@ public class InitGraphic extends JPanel implements Runnable {
                         -> {
                     g.setFont(new Font("tahoma", 0, 30));
                     g.setColor(Color.red);
-                    g.drawString(String.format("%d", carTemp.getId()), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2);
+                  //  g.drawString(String.format("%d", carTemp.getId()), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2);
 
                     g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2, this);
                 });

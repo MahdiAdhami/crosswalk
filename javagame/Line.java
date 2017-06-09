@@ -88,7 +88,7 @@ public final class Line {
         return Id;
     }
 
-    public void CreateNewCar(Car newCar) {
+    public boolean CreateNewCar(Car newCar) {
         if (Cars.size() > 0) {
             Car lastCar = Cars.get(Cars.size() - 1);
             if (lastCar.getLine().getDirection() == newCar.getLine().getDirection()) {
@@ -97,18 +97,22 @@ public final class Line {
                         newCar.setId(CarId);
                         Cars.add(newCar);
                         CarId++;
+                        return true;
                     }
                 } else if (lastCar.getEndPosition() <= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
                     newCar.setId(CarId);
                     Cars.add(newCar);
                     CarId++;
+                    return true;
                 }
             }
         } else {
             newCar.setId(CarId);
             Cars.add(newCar);
             CarId++;
+            return true;
         }
+        return false;
     }
 
     public void Dispose(Car car) {

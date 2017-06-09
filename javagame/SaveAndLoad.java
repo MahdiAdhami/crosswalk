@@ -87,7 +87,7 @@ public class SaveAndLoad {
                     new int[]{Integer.parseInt(sheepStringSplited[3]), Integer.parseInt(sheepStringSplited[4])},
                     Integer.parseInt(sheepStringSplited[5]), sheepStringSplited[6]
             );
-
+            
             SheepReader.close();
             LinesReader.close();
 
