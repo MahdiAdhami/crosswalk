@@ -39,7 +39,7 @@ public class AutoMoveSheepForReply implements Runnable{
             int wait2 = Integer.parseInt(timeReader.nextLine());
             
             try {
-                Thread.sleep((wait2-wait1)*1000);
+                Thread.sleep((wait2-wait1)*10);
             } catch (InterruptedException ex) {
                 Logger.getLogger(AutoMoveSheepForReply.class.getName()).log(Level.SEVERE, null, ex);
             }
