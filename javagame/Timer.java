@@ -8,7 +8,7 @@ public class Timer implements Runnable{
    private final static Date StartedTime = new Date();   
    private static Date TempDate;
    
-   public double timeForChange = 0 ;
+   public long timeForChange = 0 ;
    
    public static void setNow(){
        TempDate =  new Date();
@@ -44,11 +44,11 @@ public class Timer implements Runnable{
             } catch (InterruptedException ex) {
                 Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            timeForChange += 0.1;
+            timeForChange += 1;
        }
        
     }
-   public double getTimeForChange()
+   public long getTimeForChange()
    {
        return timeForChange;
    }
