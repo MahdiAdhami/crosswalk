@@ -31,15 +31,15 @@ public class AutoMoveSheepForReply implements Runnable{
             Logger.getLogger(AutoMoveSheepForReply.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-       
+        int wait1 = 0;
         while(sheepReader.hasNextLine())
         {
             
-            int wait1 = Integer.parseInt(timeReader.nextLine());
+            
             int wait2 = Integer.parseInt(timeReader.nextLine());
             
             try {
-                Thread.sleep((wait2-wait1)*10);
+                Thread.sleep((wait2-wait1));
             } catch (InterruptedException ex) {
                 Logger.getLogger(AutoMoveSheepForReply.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -48,7 +48,7 @@ public class AutoMoveSheepForReply implements Runnable{
             InitGraphic.Sheep.setPosFromReply(new float[]{Float.parseFloat(argsForSheep[1]), Float.parseFloat(argsForSheep[2])});
             InitGraphic.Sheep.setImageStatus(Integer.parseInt(argsForSheep[5]));
             InitGraphic.Sheep.setImageCode(argsForSheep[6]);
-            
+            wait1=wait2;
 //            InitGraphic.Sheep = new Sheep(new float[]{Float.parseFloat(argsForSheep2[1]), Float.parseFloat(argsForSheep2[2])},
 //                    new int[]{Integer.parseInt(argsForSheep2[3]), Integer.parseInt(argsForSheep2[4])},
 //                    Integer.parseInt(argsForSheep2[5]), argsForSheep2[6]

@@ -28,6 +28,7 @@ public class ReplyMovie implements Runnable{
     ArrayList<Line> Lines;
     private Timer timer;
     
+    
     Date nowTime = new Date();
     SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
     
@@ -61,8 +62,6 @@ public class ReplyMovie implements Runnable{
         } catch (Exception e) {
         }
         Lines = lines;
-        
-        
     }
     
     public void appendCarsToFile(Car tempCar)
@@ -108,6 +107,7 @@ public class ReplyMovie implements Runnable{
         
         sheepWriter = new BufferedWriter(temp);
         timeWriter = new BufferedWriter(temp2);
+
         
         try {
             sheepWriter.append(tempSheep.toString());

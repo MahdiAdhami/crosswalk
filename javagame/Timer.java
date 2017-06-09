@@ -44,7 +44,7 @@ public class Timer implements Runnable{
             } catch (InterruptedException ex) {
                 Logger.getLogger(Timer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            timeForChange += 1;
+            timeForChange += 10;
        }
        
     }
