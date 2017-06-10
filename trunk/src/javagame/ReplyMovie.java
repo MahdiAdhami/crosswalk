@@ -143,11 +143,11 @@ public class ReplyMovie implements Runnable{
             Line tempLine = Lines.get(Integer.parseInt((temp[5]))-1);
             
             if(tempLine.getDirection() == Const.LINE_DIRECTION_LTR){
-                tempLine.getCars().add(new CarLtr(Integer.parseInt(temp[1]), Float.parseFloat(temp[2]), Float.parseFloat(temp[3]), temp[4], tempLine));
-            }
+                tempLine.getCars().add(new CarLtr(Integer.parseInt(temp[1]),Float.parseFloat(temp[3]), temp[4], tempLine));
+            } 
             else
             {
-                tempLine.getCars().add(new CarRtl(Integer.parseInt(temp[1]), Float.parseFloat(temp[2]), Float.parseFloat(temp[3]), temp[4], tempLine));
+                tempLine.getCars().add(new CarRtl(Integer.parseInt(temp[1]), Float.parseFloat(temp[3]), temp[4], tempLine));
             }
             
             

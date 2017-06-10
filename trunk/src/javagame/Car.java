@@ -23,6 +23,8 @@ public abstract class Car {
         this.CarType = new CarType(Line.getDirection(),CarType);
         this.Line = Line;
     }
+    
+   
 
     // Getter methods
     public int getId() {
