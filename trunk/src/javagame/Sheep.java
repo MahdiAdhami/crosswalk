@@ -39,8 +39,6 @@ public final class Sheep {
         this.Rate = Rate;
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
     }
-    
-    
 
     private void initImage() {
         try {
@@ -66,7 +64,6 @@ public final class Sheep {
         return PositionOfSheep[1];
     }
 
-    
     public int[] getRate() {
         return Rate;
     }
@@ -117,74 +114,66 @@ public final class Sheep {
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (keyCode == 13) {
-            // Stop Game Code
+        if (keyCode == 84) {
+            InitGame.GameStop = !InitGame.GameStop;
+            SaveAndLoad saveGame = new SaveAndLoad();
+            saveGame.SaveGameForResume(GameListener.Lines);
         }
         if (Sheep.AutoMove) {
+            keyPressed(keyCode);
             return;
         }
         if (keyCode == KeyEvent.VK_UP || keyCode == 87) {
-            goUp();
-            CheckLine();
-            replySaving.appendSheepToFile(this);
+            keyPressed(87);
+            replySaving.appendSheepToFile(87);
         } else if (keyCode == KeyEvent.VK_DOWN || keyCode == 83) {
-            goDown();
-            CheckLine();
-            replySaving.appendSheepToFile(this);
+            keyPressed(83);
+            replySaving.appendSheepToFile(83);
+
         } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == 68) {
-            goRight();
-            replySaving.appendSheepToFile(this);
+            keyPressed(68);
+            replySaving.appendSheepToFile(68);
+
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
-            goLeft();
-            replySaving.appendSheepToFile(this);
+            keyPressed(65);
+            replySaving.appendSheepToFile(65);
         }
-        else if (keyCode == 84) {
-                    SaveAndLoad saveGame = new SaveAndLoad();
-                    saveGame.SaveGameForResume(GameListener.Lines);
-                    InitGame.GameStop = !InitGame.GameStop;
-                }
-        int line = (int) Math.floor((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) + 1;
-        System.out.println(getXPosition() + "  " + getYPosition() + " " + line);
+
+//        int line = (int) Math.floor((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) + 1;
+//        System.out.println(getXPosition() + "  " + getYPosition() + " " + line);
     }
 
     public void keyPressed(int keyCode) {
         if (keyCode == 87) {
             goUp();
             CheckLine();
-            replySaving.appendSheepToFile(this);
         } else if (keyCode == 83) {
             goDown();
             CheckLine();
-            replySaving.appendSheepToFile(this);
         } else if (keyCode == 68) {
             goRight();
-            replySaving.appendSheepToFile(this);
         } else if (keyCode == 65) {
             goLeft();
-            replySaving.appendSheepToFile(this);
         }
-
     }
 
     public void CheckLine() {
         Line.SheepCurrentLine = (int) Math.floor((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) + 1;
     }
-    
+
     public void setRate(int[] rate) {
         Rate = rate;
     }
-    
-    public void setPosFromReply(float[] pos)
-    {
+
+    public void setPosFromReply(float[] pos) {
         PositionOfSheep = pos;
     }
 
-    public void setImageStatus(int is)
-    {
+    public void setImageStatus(int is) {
         ImageStatus = is;
     }
-    public void setImageCode(String ic)
-    {
+
+    public void setImageCode(String ic) {
         ImageCode = ic;
     }
 //    public static int lineIdForCrash()
