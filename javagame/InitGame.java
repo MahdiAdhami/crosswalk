@@ -46,8 +46,7 @@ public class InitGame {
         Thread threadBase = new Thread(base);
         threadBase.start();
         
-        Thread threadTimer = new Thread(timer);
-        threadTimer.start();
+       
 
         // Create instance an object for auto create car
         Thread threadAutoCreateCar = new Thread(autoCreateCar);
@@ -77,8 +76,7 @@ public class InitGame {
         Thread threadBase = new Thread(base);
         threadBase.start();
         
-        Thread threadTimer = new Thread(timer);
-        threadTimer.start();
+        
 
         // Create instance an object for auto create car
         Thread threadAutoCreateCar = new Thread(autoCreateCar);

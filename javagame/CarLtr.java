@@ -16,6 +16,10 @@ public class CarLtr extends Car {
     public CarLtr(int Id, float HeadPosition, float Speed, String CarType, Line Line) {
         super(Id, HeadPosition, Speed, CarType, Line);
     }
+    
+    public CarLtr(int Id, float Speed, String CarType, Line Line) {
+        super(Id, 0, Speed, CarType, Line);
+    }
 
     @Override
     public float getEndPosition() {

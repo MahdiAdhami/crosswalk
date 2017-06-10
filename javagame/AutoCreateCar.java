@@ -67,9 +67,7 @@ public class AutoCreateCar implements Runnable {
             }
             // Call create new car method of line 
             boolean temp = tempLine.CreateNewCar(newCar);
-            if(temp){
-                   replySaving.appendCarsToFile(newCar); 
-                }
+            
             
             // Sleep thread wait for create new car again
             try {
@@ -77,6 +75,9 @@ public class AutoCreateCar implements Runnable {
             } catch (Exception ex) {
                 System.err.println("AutoCreateCar run() " + ex);
             }
+            if(temp){
+                   replySaving.appendCarsToFile(newCar); 
+                }
             
 //            if(replySaving != null)
 //            {
