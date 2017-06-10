@@ -24,7 +24,7 @@ public class InitGraphic extends JPanel implements Runnable {
 
     // Crosswalk Image
     private Image CrosswalkImage;
-
+    
     // Line Image
     private Image LineImage;
    
@@ -48,7 +48,7 @@ public class InitGraphic extends JPanel implements Runnable {
 
         try {
             CrosswalkImage = ImageIO.read(new File(Const.PATH + Const.CROSSWALK_IMAGE));
-            LineImage = ImageIO.read(new File(Const.PATH + Const.LINE_IMAGE));
+            LineImage = ImageIO.read(new File(Const.PATH + Const.LINE_IMAGE.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
             gameFrame.setIconImage(ImageIO.read(new File(Const.PATH + Const.GAME_ICON)));
 
         } catch (IOException ex) {

@@ -33,6 +33,7 @@ public class GameSetting {
     private static int LtrLineCount;
     private static int CrosswalkMiddlePosition;
     private static int AutoCreateCarRate;
+    private static int LineImageNumber;
     private static String SettingPath = Const.SETTING_FILE;
 
     /// Getter Methods
@@ -50,6 +51,10 @@ public class GameSetting {
 
     public static int getCrosswalkMiddlePosition() {
         return CrosswalkMiddlePosition;
+    }
+    
+    public static int getLineImageNumber() {
+        return LineImageNumber;
     }
 
     /// Setter Methods
@@ -87,8 +92,21 @@ public class GameSetting {
 
     public static boolean setAutoCreateCarRate(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
-        AutoCreateCarRate = valueAsInt;
-        return true;
+        if (valueAsInt >= MenuConst.MIN_CREATE_CAR_RATE && valueAsInt <= MenuConst.MAX_CREATE_CAR_RATE) {
+            AutoCreateCarRate = valueAsInt;
+            return true;
+        }
+        return false;
+                
+    }
+    
+    public static boolean setLineImageNumber(Object value) {
+        int valueAsInt = Integer.parseInt(value.toString().trim());
+        if (valueAsInt >= MenuConst.MIN_LINE_IMAGE && valueAsInt <= MenuConst.MAX_LINE_IMAGE) {
+            LineImageNumber = valueAsInt;
+            return true;
+        }
+        return false;
     }
 
     public static void SaveChanges() {
@@ -131,6 +149,8 @@ public class GameSetting {
                         setCrosswalkMiddlePosition(eElement.getTextContent());
                     } else if (SettingConst.AutoCreateCarRate.equals(eElement.getNodeName())) {
                         setAutoCreateCarRate(eElement.getTextContent());
+                    } else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
+                        setLineImageNumber(eElement.getTextContent());
                     }
                 }
             }
@@ -168,6 +188,10 @@ public class GameSetting {
             
             firstname = doc.createElement(SettingConst.CrosswalkMiddlePosition);
             firstname.appendChild(doc.createTextNode(String.format("%d", getCrosswalkMiddlePosition())));
+            staff.appendChild(firstname);
+            
+            firstname = doc.createElement(SettingConst.LineImageNumber);
+            firstname.appendChild(doc.createTextNode(String.format("%d", getLineImageNumber())));
             staff.appendChild(firstname);
 
 

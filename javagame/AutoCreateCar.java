@@ -73,7 +73,7 @@ public class AutoCreateCar implements Runnable {
             
             // Sleep thread wait for create new car again
             try {
-                Thread.sleep(GameSetting.getAutoCreateCarRate());
+                Thread.sleep(1000 - GameSetting.getAutoCreateCarRate());
             } catch (Exception ex) {
                 System.err.println("AutoCreateCar run() " + ex);
             }
