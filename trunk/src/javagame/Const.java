@@ -18,7 +18,7 @@ public final class Const {
     public final static String GAME_ICON = "\\src\\resources\\Line\\Line2.png";
 
     // Line
-    public final static String LINE_IMAGE = "\\src\\resources\\Line\\Line2.png";
+    public final static String LINE_IMAGE = "\\src\\resources\\Line\\Line{0}.png";
     public final static int LINE_HEIGHT = 100;
     public final static int LINE_WIDTH = 87;
 
