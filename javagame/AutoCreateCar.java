@@ -8,14 +8,13 @@ public class AutoCreateCar implements Runnable {
     public ArrayList<Line> Lines = new ArrayList<>();
     public int RtlLineCount;
     public int LtrLineCount;
-    public ReplyMovie replySaving = null ;
+    public ReplyMovie replySaving;
 
     public AutoCreateCar() {
         this.LtrLineCount = GameSetting.getLtrLineCount();
         this.RtlLineCount = GameSetting.getRtlLineCount();
-       
     }
-    
+
     public AutoCreateCar(ReplyMovie replySaving) {
         this();
         this.replySaving = replySaving;
@@ -27,10 +26,22 @@ public class AutoCreateCar implements Runnable {
             canCarTakeOver = i != RtlLineCount;
             Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN, canCarTakeOver));
         }
+        
         for (int i = RtlLineCount + 1, j = LtrLineCount; i <= RtlLineCount + LtrLineCount; i++, j--) {
             canCarTakeOver = i != RtlLineCount + 1;
             Lines.add(new Line(i, (j + 1), (j), Const.LINE_DIRECTION_LTR, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN, canCarTakeOver));
         }
+    }
+
+    public void InitLine(ArrayList<Line> line) {
+        InitLine();
+        
+        line.stream().forEach((tempLine) -> {
+            tempLine.getCars().stream().forEach((car) -> {
+                Lines.get(car.Line.getId() - 1 ).getCars().add(car);
+            });
+        });
+            
     }
 
     // Query method for all lines
@@ -67,18 +78,17 @@ public class AutoCreateCar implements Runnable {
             }
             // Call create new car method of line 
             boolean temp = tempLine.CreateNewCar(newCar);
-            
-            
+
             // Sleep thread wait for create new car again
             try {
                 Thread.sleep(1000 - GameSetting.getAutoCreateCarRate());
             } catch (Exception ex) {
                 System.err.println("AutoCreateCar run() " + ex);
             }
-            if(temp){
-                   replySaving.appendCarsToFile(newCar); 
-                }
-            
+            if (temp) {
+                replySaving.appendCarsToFile(newCar);
+            }
+
 //            if(replySaving != null)
 //            {
 //               

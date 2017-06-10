@@ -3,10 +3,13 @@ package javagame.Menu;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import javagame.Const;
 import javagame.InitGame;
 import javagame.Line;
 import javagame.SaveAndLoad;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -27,29 +30,38 @@ public class MainMenu extends Menu {
 
         panel.add(controls, BorderLayout.CENTER);
 
-        SaveAndLoad load = new SaveAndLoad();
-        if (load.isExistResumeFile()) {
-            JButton loadLastGame = CreateButton("بارگذاری اخرین بازی",
-                    (ActionEvent event) -> {
+        JButton loadLastGame = CreateButton("بارگذاری اخرین بازی",
+                (ActionEvent event) -> {
+                    SaveAndLoad load = new SaveAndLoad();
+                    if (load.isExistResumeFile()) {
                         InitGame start = new InitGame();
                         start.LoadResumeGame(load.LoadForResume());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "اول باید یک بازی را دخیره کنید", "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                     }
-            );
-            controls.add(loadLastGame);
-        }
+                }
+        );
+
+        controls.add(loadLastGame);
 
         JButton startGame = CreateButton("شروع بازی",
                 (ActionEvent e) -> {
+
                     InitGame start = new InitGame();
                     start.AutoCreateCar();
                 }
         );
         controls.add(startGame);//,BorderLayout.CENTER
-        
+
         JButton showRepliesButtons = CreateButton("مشاهده بازی ها",
                 (ActionEvent e) -> {
-                    ReplyButton replyButton = new ReplyButton("بازی های قابل مشاهده",800,800);
-                    replyButton.Execute();
+                    if (new File(Const.PATH + "\\src\\resources\\Replies").list().length > 0) {
+                        ReplyButton replyButton = new ReplyButton("بازی های قابل مشاهده", 500, 500);
+                        replyButton.Execute();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "اول باید یک بازی انجام دهید", "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 }
         );
         controls.add(showRepliesButtons);
