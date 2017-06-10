@@ -9,7 +9,7 @@ public class AutoMoveSheep implements Runnable {
 
     public AutoMoveSheep(long SleepInMilliSecond, int RandRate) {
         this.SleepInMilliSecond = SleepInMilliSecond;
-        this.RandRate = (RandRate > 5) ? RandRate : 5 ;
+        this.RandRate = (RandRate > 5) ? RandRate : 5;
     }
 
     @Override
@@ -22,12 +22,18 @@ public class AutoMoveSheep implements Runnable {
             int key = Const.RAND.nextInt(RandRate);
             if (key == 1 || key == 2) {
                 InitGraphic.Sheep.keyPressed(83);
+                InitGraphic.Sheep.replySaving.appendSheepToFile(83);
             } else if (key == 3) {
                 InitGraphic.Sheep.keyPressed(68);
+                InitGraphic.Sheep.replySaving.appendSheepToFile(68);
+
             } else if (key == 4) {
                 InitGraphic.Sheep.keyPressed(65);
+                InitGraphic.Sheep.replySaving.appendSheepToFile(65);
+
             } else {
                 InitGraphic.Sheep.keyPressed(87);
+                InitGraphic.Sheep.replySaving.appendSheepToFile(87);
             }
             try {
                 Thread.sleep(SleepInMilliSecond);
