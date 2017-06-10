@@ -32,7 +32,7 @@ public class ReplyMovie implements Runnable {
 
     LocalDateTime StartedDateTime = LocalDateTime.now();
 
-    public ReplyMovie(Timer timer) {
+    public ReplyMovie() {
         mainFolder = new File(Const.PATH + "\\src\\resources\\Replies");
         if (!mainFolder.exists()) {
             mainFolder.mkdir();
@@ -47,7 +47,7 @@ public class ReplyMovie implements Runnable {
         carFile = new File(subFolder.toString() + "\\carFile.txt");
         sheepFile = new File(subFolder.toString() + "\\sheepFile.txt");
         timerFile = new File(subFolder.toString() + "\\timerFile.txt");
-        this.timer = timer;
+        this.timer = new Timer();
     }
 
     public ReplyMovie(String path, ArrayList<Line> lines) {

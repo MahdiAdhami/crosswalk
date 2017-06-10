@@ -16,7 +16,7 @@ public final class Sheep {
     private BufferedImage[] ImageOfSheep;
     private int ImageStatus;
     private String ImageCode;
-    public static ReplyMovie replySaving = null;
+    public ReplyMovie replySaving;
 
     public static boolean AutoMove = false;
 
@@ -80,7 +80,7 @@ public final class Sheep {
         return ImageOfSheep[ImageStatus];
     }
 
-    public void goUp() {
+    private void goUp() {
         if (Const.TOP_MARGIN - getSheepWidth() >= getYPosition()) {
             return;
         }
@@ -88,7 +88,7 @@ public final class Sheep {
         PositionOfSheep[1] -= Rate[1];
     }
 
-    public void goDown() {
+    private void goDown() {
         if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT) + Const.TOP_MARGIN <= getYPosition()) {
             return;
         }
@@ -96,7 +96,7 @@ public final class Sheep {
         PositionOfSheep[1] += Rate[1];
     }
 
-    public void goRight() {
+    private void goRight() {
         if (GameSetting.getCrosswalkMiddlePosition() + Const.CROSSWALK_WIDTH / 2 <= PositionOfSheep[0] + getSheepWidth()) {
             return;
         }
@@ -104,7 +104,7 @@ public final class Sheep {
         PositionOfSheep[0] += Rate[0];
     }
 
-    public void goLeft() {
+    private void goLeft() {
         if (GameSetting.getCrosswalkMiddlePosition() - Const.CROSSWALK_WIDTH / 2 >= PositionOfSheep[0]) {
             return;
         }
@@ -138,9 +138,6 @@ public final class Sheep {
             keyPressed(65);
             replySaving.appendSheepToFile(65);
         }
-
-//        int line = (int) Math.floor((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) + 1;
-//        System.out.println(getXPosition() + "  " + getYPosition() + " " + line);
     }
 
     public void keyPressed(int keyCode) {

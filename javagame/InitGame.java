@@ -12,12 +12,10 @@ public class InitGame {
         InitGame.GameStop = false;
         InitGame.RunAfterWait = true;
     }
-
+    
     public void AutoMoveSheep(long sleepInMilliSecond, int randRate) {
-        GameSetting.setDefaultSettingPath();
-        GameSetting.UpdateSettings();
-
         Sheep.AutoMove = true;
+        
         AutoCreateCar();
 
         // Create instance an object for auto move sheep
@@ -30,8 +28,7 @@ public class InitGame {
         GameSetting.setDefaultSettingPath();
         GameSetting.UpdateSettings();
 
-        Timer timer = new Timer();
-        ReplyMovie replySaving = new ReplyMovie(timer);
+        ReplyMovie replySaving = new ReplyMovie();
 
         // Create instance an object for create cars in a thread
         AutoCreateCar autoCreateCar = new AutoCreateCar(replySaving);
@@ -54,8 +51,7 @@ public class InitGame {
         GameSetting.setSettingPath(Const.SAVE_FILE_ADDRESS_SETTING);
         GameSetting.UpdateSettings();
 
-        Timer timer = new Timer();
-        ReplyMovie replySaving = new ReplyMovie(timer);
+        ReplyMovie replySaving = new ReplyMovie();
 
         // Create instance an object for create cars in a thread
         AutoCreateCar autoCreateCar = new AutoCreateCar(replySaving);
@@ -74,6 +70,8 @@ public class InitGame {
     }
 
     public void replyTheMovie(String path) {
+        Sheep.AutoMove = true;
+
         GameSetting.setSettingPath("\\src\\resources\\Replies\\" + path + "\\Setting.xml");
         GameSetting.UpdateSettings();
 

@@ -24,8 +24,6 @@ public abstract class Car {
         this.Line = Line;
     }
     
-   
-
     // Getter methods
     public int getId() {
         return Id;
@@ -70,12 +68,6 @@ public abstract class Car {
 
     public float getHeadPosition() {
         return HeadPosition;
-    }
-
-    public void setLine(int index) {
-        AutoCreateCar acc = new AutoCreateCar(null);
-        Line = acc.getLines().get(index);
-        Line.getCars().add(this);
     }
 
     // Check for sheep accident with car
