@@ -42,16 +42,19 @@ public class InitGame {
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
         InitGraphic.Sheep.replySaving = replySaving;
         
+        
         Thread threadBase = new Thread(base);
         threadBase.start();
+        
+        Thread threadTimer = new Thread(timer);
+        threadTimer.start();
 
         // Create instance an object for auto create car
         Thread threadAutoCreateCar = new Thread(autoCreateCar);
         autoCreateCar.InitLine();
         threadAutoCreateCar.start();
         
-        Thread threadTimer = new Thread(timer);
-        threadTimer.start();
+        
 
     }
 
@@ -59,7 +62,8 @@ public class InitGame {
         GameSetting.setSettingPath(Const.SAVE_FILE_ADDRESS_SETTING);
         GameSetting.UpdateSettings();
          
-        ReplyMovie replySaving = new ReplyMovie(null);
+        Timer timer = new Timer();
+        ReplyMovie replySaving = new ReplyMovie(timer);
         
         
         // Create instance an object for create cars in a thread
@@ -68,8 +72,13 @@ public class InitGame {
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
+        InitGraphic.Sheep.replySaving = replySaving;
+        
         Thread threadBase = new Thread(base);
         threadBase.start();
+        
+        Thread threadTimer = new Thread(timer);
+        threadTimer.start();
 
         // Create instance an object for auto create car
         Thread threadAutoCreateCar = new Thread(autoCreateCar);
