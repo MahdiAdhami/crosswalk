@@ -81,15 +81,22 @@ public class SaveAndLoad {
 
             }
 
-            String sheepString = SheepReader.nextLine();
-            String[] sheepStringSplited = sheepString.split(",");
-            InitGraphic.Sheep = new Sheep(new float[]{Float.parseFloat(sheepStringSplited[1]), Float.parseFloat(sheepStringSplited[2])},
-                    new int[]{Integer.parseInt(sheepStringSplited[3]), Integer.parseInt(sheepStringSplited[4])},
-                    Integer.parseInt(sheepStringSplited[5]), sheepStringSplited[6]
-            );
+//            String sheepString = SheepReader.nextLine();
+//            String[] sheepStringSplited = sheepString.split(",");
+//            InitGraphic.Sheep = new Sheep(new float[]{Float.parseFloat(sheepStringSplited[1]), Float.parseFloat(sheepStringSplited[2])},
+//                    new int[]{Integer.parseInt(sheepStringSplited[3]), Integer.parseInt(sheepStringSplited[4])},
+//                    Integer.parseInt(sheepStringSplited[5]), sheepStringSplited[6]
+//            );s
+            String[] argsForSheep = SheepReader.nextLine().split(",");
+                
+            InitGraphic.Sheep.setPosFromReply(new float[]{Float.parseFloat(argsForSheep[1]), Float.parseFloat(argsForSheep[2])});
+            InitGraphic.Sheep.setImageStatus(Integer.parseInt(argsForSheep[5]));
+            InitGraphic.Sheep.setImageCode(argsForSheep[6]);
+            InitGraphic.Sheep.CheckLine();
             
             SheepReader.close();
             LinesReader.close();
+            CarReader.close();
 
             return lines;
         }

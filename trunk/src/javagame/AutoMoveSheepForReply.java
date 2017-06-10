@@ -48,6 +48,7 @@ public class AutoMoveSheepForReply implements Runnable{
             InitGraphic.Sheep.setPosFromReply(new float[]{Float.parseFloat(argsForSheep[1]), Float.parseFloat(argsForSheep[2])});
             InitGraphic.Sheep.setImageStatus(Integer.parseInt(argsForSheep[5]));
             InitGraphic.Sheep.setImageCode(argsForSheep[6]);
+            InitGraphic.Sheep.CheckLine();
             wait1=wait2;
 //            InitGraphic.Sheep = new Sheep(new float[]{Float.parseFloat(argsForSheep2[1]), Float.parseFloat(argsForSheep2[2])},
 //                    new int[]{Integer.parseInt(argsForSheep2[3]), Integer.parseInt(argsForSheep2[4])},

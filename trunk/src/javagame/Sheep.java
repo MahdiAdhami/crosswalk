@@ -151,7 +151,7 @@ public final class Sheep {
         if (keyCode == 87) {
             goUp();
             CheckLine();
-            
+            replySaving.appendSheepToFile(this);
         } else if (keyCode == 83) {
             goDown();
             CheckLine();
