@@ -34,7 +34,7 @@ public class GameSetting {
     private static int CrosswalkMiddlePosition;
     private static int AutoCreateCarRate;
     private static int LineImageNumber;
-    private static String SettingPath = Const.SETTING_FILE;
+    private static String SettingPath = Const.MAIN_SETTING_FILE;
 
     /// Getter Methods
     public static int getAutoCreateCarRate() {
@@ -63,7 +63,7 @@ public class GameSetting {
     }
 
     public static void setDefaultSettingPath() {
-        SettingPath = Const.SETTING_FILE;
+        SettingPath = Const.MAIN_SETTING_FILE;
     }
 
     public static boolean setRtlLineCount(Object value) {
@@ -119,7 +119,7 @@ public class GameSetting {
 
     public static void readSetting(String pathAddress) {
         try {
-            String path = Const.PATH + pathAddress;
+            String path = Const.ROOT_PATH + pathAddress;
             File inputFile = new File(path);
 
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -199,7 +199,7 @@ public class GameSetting {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(Const.PATH + path));
+            StreamResult result = new StreamResult(new File(Const.ROOT_PATH + path));
 
             transformer.transform(source, result);
 

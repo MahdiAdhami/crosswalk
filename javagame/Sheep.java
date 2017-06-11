@@ -16,8 +16,8 @@ public final class Sheep {
     private BufferedImage[] ImageOfSheep;
     private int ImageStatus;
     private String ImageCode;
-    public ReplyMovie replySaving;
-
+    public WriteReplyData WriteReplyData;
+    public boolean SaveChanges;
     public static boolean AutoMove = false;
 
     @Override
@@ -44,10 +44,10 @@ public final class Sheep {
         try {
             ImageOfSheep = new BufferedImage[4];
 
-            ImageOfSheep[0] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Up")));
-            ImageOfSheep[1] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Down")));
-            ImageOfSheep[2] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Right")));
-            ImageOfSheep[3] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Left")));
+            ImageOfSheep[0] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Up")));
+            ImageOfSheep[1] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Down")));
+            ImageOfSheep[2] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Right")));
+            ImageOfSheep[3] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Left")));
 
             SheepSize = new float[]{ImageOfSheep[0].getWidth(), ImageOfSheep[0].getHeight()};
 
@@ -114,6 +114,7 @@ public final class Sheep {
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
+        
         if (keyCode == 84) {
             InitGame.GameStop = !InitGame.GameStop;
             SaveAndLoad saveGame = new SaveAndLoad();
@@ -125,22 +126,21 @@ public final class Sheep {
         }
         if (keyCode == KeyEvent.VK_UP || keyCode == 87) {
             keyPressed(87);
-            replySaving.appendSheepToFile(87);
         } else if (keyCode == KeyEvent.VK_DOWN || keyCode == 83) {
             keyPressed(83);
-            replySaving.appendSheepToFile(83);
 
         } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == 68) {
             keyPressed(68);
-            replySaving.appendSheepToFile(68);
 
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
             keyPressed(65);
-            replySaving.appendSheepToFile(65);
         }
     }
 
     public void keyPressed(int keyCode) {
+        if (SaveChanges) {
+            WriteReplyData.appendSheepToFile(keyCode);
+        }
         if (keyCode == 87) {
             goUp();
             CheckLine();
@@ -162,20 +162,4 @@ public final class Sheep {
         Rate = rate;
     }
 
-    public void setPosFromReply(float[] pos) {
-        PositionOfSheep = pos;
-    }
-
-    public void setImageStatus(int is) {
-        ImageStatus = is;
-    }
-
-    public void setImageCode(String ic) {
-        ImageCode = ic;
-    }
-//    public static int lineIdForCrash()
-//    {
-//        int check = (int) ((PositionOfSheep[1]+30)/100);
-//        return check+1;
-//    }
 }

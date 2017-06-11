@@ -125,14 +125,14 @@ public final class Line {
 
         if (Direction == Const.LINE_DIRECTION_LTR) {
 
-            result[0] = middle - Const.CROSSWALK_WIDTH / 2 - Const.CROSSWALK_CHANGE_SPEED_DISTANCE;
+            result[0] = middle - Const.CROSSWALK_WIDTH / 2 - Const.CAR_DISTANCE_TO_CROSSWALK_FOR_DECREASE_SPEED;
             result[1] = middle + Const.CROSSWALK_WIDTH / 2;
 
             return result;
 
         } else {
             result[0] = middle - Const.CROSSWALK_WIDTH / 2;
-            result[1] = middle + Const.CROSSWALK_WIDTH / 2 + Const.CROSSWALK_CHANGE_SPEED_DISTANCE;
+            result[1] = middle + Const.CROSSWALK_WIDTH / 2 + Const.CAR_DISTANCE_TO_CROSSWALK_FOR_DECREASE_SPEED;
 
             return result;
         }

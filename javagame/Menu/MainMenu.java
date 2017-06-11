@@ -46,7 +46,6 @@ public class MainMenu extends Menu {
 
         JButton startGame = CreateButton("شروع بازی",
                 (ActionEvent e) -> {
-
                     InitGame start = new InitGame();
                     start.AutoCreateCar();
                 }
@@ -55,7 +54,7 @@ public class MainMenu extends Menu {
 
         JButton showRepliesButtons = CreateButton("مشاهده بازی ها",
                 (ActionEvent e) -> {
-                    if (new File(Const.PATH + "\\src\\resources\\Replies").list().length > 0) {
+                    if (new File(Const.ROOT_PATH + "\\src\\resources\\Replies").list().length > 0) {
                         ReplyButton replyButton = new ReplyButton("بازی های قابل مشاهده", 500, 500);
                         replyButton.Execute();
                     } else {
