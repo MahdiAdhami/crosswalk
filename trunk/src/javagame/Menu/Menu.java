@@ -7,6 +7,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javagame.Const;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -46,6 +52,11 @@ public abstract class Menu {
         frame.setSize(Width, Height);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
+        try {
+            frame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
+        } catch (IOException ex) {
+            System.err.println("Menu SetInit() " + ex);
+        }
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation((dimension.width / 2) - (Width / 2), (dimension.height / 2) - (Height / 2));
     }
