@@ -2,12 +2,12 @@ package javagame;
 
 import javagame.Menu.GameSetting;
 
-public class AutoCreateCarForCreateNew extends AutoCreateCar implements Runnable {
+public class AutoCreateCarForCreateNewCar extends AutoCreateCar implements Runnable {
 
     public boolean SaveReply;
     public WriteReplyData WriteReplyData;
 
-    public AutoCreateCarForCreateNew(boolean SaveReply) {
+    public AutoCreateCarForCreateNewCar(boolean SaveReply) {
         super();
 
         this.SaveReply = SaveReply;
