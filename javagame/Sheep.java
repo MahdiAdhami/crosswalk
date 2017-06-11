@@ -114,7 +114,7 @@ public final class Sheep {
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        
+
         if (keyCode == 84) {
             InitGame.GameStop = !InitGame.GameStop;
             SaveAndLoad saveGame = new SaveAndLoad();

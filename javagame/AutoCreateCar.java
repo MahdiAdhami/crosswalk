@@ -23,7 +23,7 @@ public class AutoCreateCar {
 
         for (int i = RtlLineCount + 1, j = LtrLineCount; i <= RtlLineCount + LtrLineCount; i++, j--) {
             canCarTakeOver = i != RtlLineCount + 1;
-            Lines.add(new Line(i, (j + 1), (j), Const.LINE_DIRECTION_LTR, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN, canCarTakeOver));
+            Lines.add(new Line(i, (j + 1), (j), Const.LINE_DIRECTION_LTR, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT, canCarTakeOver));
         }
     }
 

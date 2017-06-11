@@ -17,7 +17,7 @@ public class CarType {
 
     public CarType(boolean LineDirection) {
         this.LineDirection = LineDirection;
-        CarNameAndType = (char) (65 + Const.RAND.nextInt(Const.CAR_COUNT)) + "-" + ((LineDirection == Const.LINE_DIRECTION_LTR) ? "1" : "2");
+        CarNameAndType = (char) (65 + Const.RAND.nextInt(Const.CAR_COUNT)) + ((LineDirection == Const.LINE_DIRECTION_LTR) ? "1" : "2");
         InitialCarImage();
     }
 

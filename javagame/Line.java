@@ -78,7 +78,20 @@ public final class Line {
     public void AccidentCheck() {
 
     }
-    
+
+    public boolean isEmptyForTakover(Car newCar) {
+//        for (Car car : Cars) {
+//            if (car.getHeadPosition() >= newCar.getEndPosition() || newCar.getHeadPosition() >= car.getEndPosition()) {
+//                return false;
+//            }
+//        }
+        return true;
+    }
+
+    public void addCar(Car newCar) {
+        Cars.add(newCar);
+    }
+
     @Override
     public String toString() {
         return String.format("Line,%d,%d,%d,%s,%d,%s,%d", Id, MaxCarSpeed, MinCarSpeed, Direction == true ? "1" : "0", Position, CanCarOvertaking == true ? "1" : "0", CarId);

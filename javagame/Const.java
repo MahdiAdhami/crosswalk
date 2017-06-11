@@ -13,31 +13,35 @@ public final class Const {
 
     // Game name
     public final static String GAME_NAME = "نام بازی";
-    public final static String GAME_ICON = "\\src\\resources\\Line\\Line2.png";
+    public final static String GAME_ICON = "\\src\\resources\\Game\\Icon.jpg";
 
     // Line
-    public final static String LINE_IMAGE = "\\src\\resources\\Line\\Line{0}.png";
+    public final static String LINE_IMAGE = "\\src\\resources\\Line\\Line1.png";
     public final static int LINE_HEIGHT = 100;
     public final static int LINE_WIDTH = 87;
     public final static boolean LINE_DIRECTION_RTL = true;
     public final static boolean LINE_DIRECTION_LTR = false;
 
+    // Middle Line
+    public final static String MIDDLE_LINE_IMAGE = "\\src\\resources\\Line\\MiddleLine.png";
+    public final static int MIDDLE_LINE_WIDTH = 50;
+    public final static int MIDDLE_LINE_HEIGHT = 50;
+
     // Crosswalk
-    public final static String CROSSWALK_IMAGE = "\\src\\resources\\Line\\Crosswalk2.png";
+    public final static String CROSSWALK_IMAGE = "\\src\\resources\\Line\\Crosswalk.png";
     public final static int CROSSWALK_WIDTH = 100;
     public final static int CROSSWALK_HEIGHT = 20;
 
     // Car 
     public final static int CAR_DISTANCE_TO_CROSSWALK_FOR_DECREASE_SPEED = 110;
     public final static float CAR_SPEED_RATE_NEAR_CROSSWALK_CHANGE = .4f;
-    public final static int CAR_COUNT = 2;
+    public final static int CAR_COUNT = 4;
 
     // Cars Speed Rate
-    public final static int CREATE_CAR_SPEED_RATE =  150;
+    public final static int CREATE_CAR_SPEED_RATE = 150;
     public final static int CREATE_CAR_SLEEP_TIME = 10000;
 //    public final static int DECREASE_SPEED_RATE = 20;
-    
-    
+
     //Setting File
     public final static String MAIN_SETTING_FILE = "\\src\\resources\\Setting\\Setting.xml";
 
@@ -48,11 +52,10 @@ public final class Const {
     // Repaint time
     public final static long SLEEP_TIME_RE_PAINTING = 5;
 
-    
-
     // Sheep
     public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\{0}.png";
     public final static int SHEEP_DISTANCE_LINE_WHEN_GAME_START = 30;
+    public final static int SHEEP_IGONORE_DISTANCE_IN_CROSSWALK = 30;
 
     // Change speed near other car 
     public final static int CHANGE_SPEED_DISTANCE_FOR_REACH = 100;
