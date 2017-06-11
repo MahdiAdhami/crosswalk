@@ -57,7 +57,7 @@ public class SettingMenu extends Menu {
         labels.add(lblLineImage);
         labels.add(CreateMargin(10, 0, 10, 0));
         
-        JSpinner createCarRate = CreateSpinner("سرعت تولید ماشین", GameSetting.getAutoCreateCarRate(), MenuConst.MIN_CREATE_CAR_RATE - 20, MenuConst.MAX_CREATE_CAR_RATE + 10, 10, null);
+        JSpinner createCarRate = CreateSpinner("سرعت تولید ماشین", GameSetting.getAutoCreateCarRate(), MenuConst.MIN_CREATE_CAR_RATE - 200, MenuConst.MAX_CREATE_CAR_RATE + 100, 100, null);
         controls.add(createCarRate);
         controls.add(CreateMargin(10, 0, 10, 0));
 

@@ -11,7 +11,7 @@ public abstract class Car {
     // Constructors
     public Car(float HeadPosition, int Speed, CarType CarType, Line Line) {
         this.HeadPosition = HeadPosition;
-        this.Speed = Speed + Const.CREATE_CAR_SPEED_RATE;
+        this.Speed = Speed;
         this.CarType = CarType;
         this.Line = Line;
     }
@@ -38,7 +38,7 @@ public abstract class Car {
     }
 
     private float getSpeedInCrosswalk() {
-        return Speed * Const.CROSSWALK_CHANGE_SPEED_RATE;
+        return Speed * Const.CAR_SPEED_RATE_NEAR_CROSSWALK_CHANGE;
     }
 
     public float getSpeed() {
@@ -56,6 +56,10 @@ public abstract class Car {
     // Setter methods
     public void setId(int id) {
         Id = id;
+    }
+    
+     public void setLine(Line line) {
+        Line = line;
     }
 
     public void setSpeedFromLoad(float speed) {

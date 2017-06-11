@@ -10,7 +10,8 @@ public class JavaGame {
         MainMenu mainMenu = new MainMenu("شروع بازی", 200, 200);
         mainMenu.Execute();
 
-        
+//WriteReplyData WriteReplyData = new WriteReplyData();
+
         // Remove
         ////////////////////////////
         //  SettingMenuResult x = new SettingMenuResult(2,13,12);

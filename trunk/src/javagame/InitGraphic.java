@@ -44,9 +44,9 @@ public class InitGraphic extends JPanel implements Runnable {
         JFrame gameFrame = new JFrame(Const.GAME_NAME);
 
         try {
-            CrosswalkImage = ImageIO.read(new File(Const.PATH + Const.CROSSWALK_IMAGE));
-            LineImage = ImageIO.read(new File(Const.PATH + Const.LINE_IMAGE.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
-            gameFrame.setIconImage(ImageIO.read(new File(Const.PATH + Const.GAME_ICON)));
+            CrosswalkImage = ImageIO.read(new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE));
+            LineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.LINE_IMAGE.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
+            gameFrame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
         } catch (IOException ex) {
             System.err.println("InitGraphic SetInit() " + ex);
         }
@@ -140,18 +140,28 @@ public class InitGraphic extends JPanel implements Runnable {
                     });
                 });
 
+                Lines.stream().forEach((Line Linetemp) -> {
+                    Linetemp.getCars().stream().forEach((Car carTemp) -> {
+                        Linetemp.getCars().stream().forEach((Car carTemp2) -> {
+                            if (Linetemp.getDirection() == Const.LINE_DIRECTION_LTR) {
+                                if (carTemp.getId() - 1 == carTemp2.getId()) {
+                                    if (carTemp.getHeadPosition() >= carTemp2.getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+                                        carTemp.Speed = carTemp2.getSpeed();
+                                    }
+                                }
+                            } else{
+                                if (carTemp.getId() - 1 == carTemp2.getId()) {
+                                    if (carTemp.getHeadPosition() <= carTemp2.getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+                                        carTemp.Speed = carTemp2.getSpeed();
+                                    }
+                                }
+                            }
+                        });
+                    });
+                });
+
                 // Repaint panel
                 repaint();
-
-                // Run after wait
-                if (InitGame.RunAfterWait) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception ex) {
-                        System.err.println("InitGraphic paintComponent() 1 " + ex);
-                    }
-                    InitGame.RunAfterWait = false;
-                }
 
                 // Sleep time for repaint again
                 Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);

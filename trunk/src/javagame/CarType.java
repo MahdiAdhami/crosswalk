@@ -28,7 +28,7 @@ public class CarType {
     }
 
     private void InitialCarImage() {
-        File CarImage = new File(Const.PATH + "\\src\\resources\\Cars\\" + CarNameAndType + ".png");
+        File CarImage = new File(Const.ROOT_PATH + "\\src\\resources\\Cars\\" + CarNameAndType + ".png");
         try {
             Image = ImageIO.read(CarImage);
             CarWidth = Image.getWidth();

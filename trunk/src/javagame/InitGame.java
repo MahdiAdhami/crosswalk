@@ -12,11 +12,11 @@ public class InitGame {
         InitGame.GameStop = false;
         InitGame.RunAfterWait = true;
     }
-    
+
     public void AutoMoveSheep(long sleepInMilliSecond, int randRate) {
-        Sheep.AutoMove = true;
-        
         AutoCreateCar();
+
+        Sheep.AutoMove = true;
 
         // Create instance an object for auto move sheep
         Thread threadAutoMoveSheep = new Thread(new AutoMoveSheep(sleepInMilliSecond, randRate));
@@ -25,18 +25,19 @@ public class InitGame {
 
     // Auto create Cars Method
     public void AutoCreateCar() {
+        boolean CreateReply = true;
+
         GameSetting.setDefaultSettingPath();
         GameSetting.UpdateSettings();
 
-        ReplyMovie replySaving = new ReplyMovie();
+        Sheep.AutoMove = false;
+        InitGraphic.Sheep.SaveChanges = CreateReply;
 
         // Create instance an object for create cars in a thread
-        AutoCreateCar autoCreateCar = new AutoCreateCar(replySaving);
+        AutoCreateCarForCreateNew autoCreateCar = new AutoCreateCarForCreateNew(CreateReply);
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
-        InitGraphic.Sheep.replySaving = replySaving;
-
         Thread threadBase = new Thread(base);
         threadBase.start();
 
@@ -44,21 +45,22 @@ public class InitGame {
         Thread threadAutoCreateCar = new Thread(autoCreateCar);
         autoCreateCar.InitLine();
         threadAutoCreateCar.start();
-
     }
 
     public void LoadResumeGame(ArrayList<Line> lines) {
+        boolean CreateReply = false;
+
         GameSetting.setSettingPath(Const.SAVE_FILE_ADDRESS_SETTING);
         GameSetting.UpdateSettings();
 
-        ReplyMovie replySaving = new ReplyMovie();
+        InitGraphic.Sheep.SaveChanges = CreateReply;
+        Sheep.AutoMove = false;
 
         // Create instance an object for create cars in a thread
-        AutoCreateCar autoCreateCar = new AutoCreateCar(replySaving);
+        AutoCreateCarForCreateNew autoCreateCar = new AutoCreateCarForCreateNew(CreateReply);
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
-        InitGraphic.Sheep.replySaving = replySaving;
         autoCreateCar.InitLine(lines);
 
         Thread threadBase = new Thread(base);
@@ -70,26 +72,26 @@ public class InitGame {
     }
 
     public void replyTheMovie(String path) {
-        Sheep.AutoMove = true;
+        boolean CreateReply = false;
 
-        GameSetting.setSettingPath("\\src\\resources\\Replies\\" + path + "\\Setting.xml");
+        GameSetting.setSettingPath(Const.REPLY_ROOT_ADDRESS + path + Const.REPLY_SETTING_ADDRESS);
         GameSetting.UpdateSettings();
 
-        AutoCreateCar autoCreateCar = new AutoCreateCar();
-        autoCreateCar.InitLine();
+        InitGraphic.Sheep.SaveChanges = CreateReply;
+        Sheep.AutoMove = false;
 
-        InitGraphic base = new InitGraphic(autoCreateCar.getLines());
-        Thread threadBase = new Thread(base);
-        threadBase.start();
-
-        ReplyMovie reply = new ReplyMovie(Const.PATH + "\\src\\resources\\Replies\\" + path + "\\carFile.txt", autoCreateCar.getLines());
+        AutoCreateCarForReply reply = new AutoCreateCarForReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path + Const.REPLY_CAR_ADDRESS);
+        reply.InitLine();
         Thread threadReply = new Thread(reply);
         threadReply.start();
 
-        AutoMoveSheepForReply sheepReply = new AutoMoveSheepForReply(Const.PATH + "\\src\\resources\\Replies\\" + path);
+        InitGraphic base = new InitGraphic(reply.getLines());
+        Thread threadBase = new Thread(base);
+        threadBase.start();
+
+        AutoMoveSheepForReply sheepReply = new AutoMoveSheepForReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path);
         Thread threadReplySheep = new Thread(sheepReply);
         threadReplySheep.start();
-
     }
 
 }
