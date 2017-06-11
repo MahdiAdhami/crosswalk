@@ -34,7 +34,7 @@ public class InitGame {
         InitGraphic.Sheep.SaveChanges = CreateReply;
 
         // Create instance an object for create cars in a thread
-        AutoCreateCarForCreateNew autoCreateCar = new AutoCreateCarForCreateNew(CreateReply);
+        AutoCreateCarForCreateNewCar autoCreateCar = new AutoCreateCarForCreateNewCar(CreateReply);
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
@@ -57,7 +57,7 @@ public class InitGame {
         Sheep.AutoMove = false;
 
         // Create instance an object for create cars in a thread
-        AutoCreateCarForCreateNew autoCreateCar = new AutoCreateCarForCreateNew(CreateReply);
+        AutoCreateCarForCreateNewCar autoCreateCar = new AutoCreateCarForCreateNewCar(CreateReply);
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
