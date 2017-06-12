@@ -34,7 +34,7 @@ public final class Sheep {
     }
 
     public Sheep(int[] Rate, float PositionYOfSheep) {
-        ImageCode = "A";
+        ImageCode = "A"; //String.valueOf(GameSetting.getSheepImageNumber());
         initImage();
         this.Rate = Rate;
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};

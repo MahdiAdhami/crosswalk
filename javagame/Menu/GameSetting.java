@@ -34,6 +34,7 @@ public class GameSetting {
     private static int CrosswalkMiddlePosition;
     private static int AutoCreateCarRate;
     private static int LineImageNumber;
+    private static int SheepImageNumber;
     private static String SettingPath = Const.MAIN_SETTING_FILE;
 
     /// Getter Methods
@@ -55,6 +56,10 @@ public class GameSetting {
     
     public static int getLineImageNumber() {
         return LineImageNumber;
+    }
+    
+    public static int getSheepImageNumber() {
+        return SheepImageNumber;
     }
 
     /// Setter Methods
@@ -108,6 +113,12 @@ public class GameSetting {
         }
         return false;
     }
+    
+    public static boolean setSheepImageNumber(Object value) {
+        int valueAsInt = Integer.parseInt(value.toString().trim());
+        SheepImageNumber = valueAsInt + 65;
+        return true;
+    }
 
     public static void SaveChanges() {
         writeSetting(SettingPath);
@@ -151,6 +162,8 @@ public class GameSetting {
                         setAutoCreateCarRate(eElement.getTextContent());
                     } else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
                         setLineImageNumber(eElement.getTextContent());
+                    } else if (SettingConst.SheepImageNumber.equals(eElement.getNodeName())) {
+                        setSheepImageNumber(eElement.getTextContent());
                     }
                 }
             }
@@ -192,6 +205,10 @@ public class GameSetting {
             
             firstname = doc.createElement(SettingConst.LineImageNumber);
             firstname.appendChild(doc.createTextNode(String.format("%d", getLineImageNumber())));
+            staff.appendChild(firstname);
+            
+            firstname = doc.createElement(SettingConst.SheepImageNumber);
+            firstname.appendChild(doc.createTextNode(String.format("%d", getSheepImageNumber())));
             staff.appendChild(firstname);
 
 
