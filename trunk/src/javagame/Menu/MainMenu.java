@@ -54,7 +54,7 @@ public class MainMenu extends Menu {
 
         JButton showRepliesButtons = CreateButton("مشاهده بازی ها",
                 (ActionEvent e) -> {
-                    if (new File(Const.ROOT_PATH + "\\src\\resources\\Replies").list().length > 0) {
+                    if (new File(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS).exists()) {
                         ReplyButton replyButton = new ReplyButton("بازی های قابل مشاهده", 500, 500);
                         replyButton.Execute();
                     } else {

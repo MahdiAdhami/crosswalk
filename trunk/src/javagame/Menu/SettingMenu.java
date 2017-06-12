@@ -64,7 +64,14 @@ public class SettingMenu extends Menu {
         JLabel lblcreateCarRate = CreateLabel(String.format("%s %s(%d-%d)", "سرعت تولید ماشین", "بین", MenuConst.MIN_CREATE_CAR_RATE, MenuConst.MAX_CREATE_CAR_RATE));
         labels.add(lblcreateCarRate);
         labels.add(CreateMargin(10, 0, 10, 0));
-
+        
+        JButton goToSheepSelectMenu = CreateButton("انتخاب آدمک",(e) -> {
+            SheepMenu sheepSelectMenu = new SheepMenu("انتخاب نوع آدمک",400,400);
+            sheepSelectMenu.Execute();
+        });
+        labels.add(goToSheepSelectMenu);
+        
+        
         JButton saveChanges = CreateButton("ذخیره",
                 (ActionEvent e) -> {
                     boolean error = false;
@@ -87,6 +94,7 @@ public class SettingMenu extends Menu {
                         frame.dispose();
                     }
                 });
+        
         submit.add(saveChanges);
     }
 }
