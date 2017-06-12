@@ -91,8 +91,12 @@ public class GameSetting {
 
     public static boolean setCrosswalkMiddlePosition(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
-        CrosswalkMiddlePosition = valueAsInt;
-        return true;
+        if (valueAsInt >= MenuConst.MIN_CROSSWALK_POS && valueAsInt <= MenuConst.MAX_CROSSWALK_POS)
+        {
+            CrosswalkMiddlePosition = valueAsInt;
+            return true;
+        }
+        return false;
     }
 
     public static boolean setAutoCreateCarRate(Object value) {
@@ -105,18 +109,18 @@ public class GameSetting {
                 
     }
     
-    public static boolean setLineImageNumber(Object value) {
-        int valueAsInt = Integer.parseInt(value.toString().trim());
-        if (valueAsInt >= MenuConst.MIN_LINE_IMAGE && valueAsInt <= MenuConst.MAX_LINE_IMAGE) {
-            LineImageNumber = valueAsInt;
-            return true;
-        }
-        return false;
-    }
+//    public static boolean setLineImageNumber(Object value) {
+//        int valueAsInt = Integer.parseInt(value.toString().trim());
+//        if (valueAsInt >= MenuConst.MIN_LINE_IMAGE && valueAsInt <= MenuConst.MAX_LINE_IMAGE) {
+//            LineImageNumber = valueAsInt;
+//            return true;
+//        }
+//        return false;
+//    }
     
     public static boolean setSheepImageNumber(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
-        SheepImageNumber = valueAsInt + 65;
+        SheepImageNumber = valueAsInt;
         return true;
     }
 
@@ -160,11 +164,13 @@ public class GameSetting {
                         setCrosswalkMiddlePosition(eElement.getTextContent());
                     } else if (SettingConst.AutoCreateCarRate.equals(eElement.getNodeName())) {
                         setAutoCreateCarRate(eElement.getTextContent());
-                    } else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
-                        setLineImageNumber(eElement.getTextContent());
-                    } else if (SettingConst.SheepImageNumber.equals(eElement.getNodeName())) {
+                    }  else if (SettingConst.SheepImageNumber.equals(eElement.getNodeName())) {
                         setSheepImageNumber(eElement.getTextContent());
                     }
+                    
+//                    else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
+//                        setLineImageNumber(eElement.getTextContent());
+//                    }
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException ex) {
