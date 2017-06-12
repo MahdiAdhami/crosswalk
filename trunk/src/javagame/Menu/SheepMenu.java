@@ -37,11 +37,11 @@ public class SheepMenu extends Menu{
         panel.add(labels, BorderLayout.EAST);
         panel.add(submit, BorderLayout.SOUTH);
         
-        Object[] items = new Object[4];
-        items[0] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "A-Down"));
-        items[1] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "B-Down"));
-        items[2] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "C-Down"));
-        items[3] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "D-Down"));
+        Object[] items = new Object[3];
+        items[0] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "1-Down"));
+        items[1] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "2-Down"));
+        items[2] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "3-Down"));
+       // items[3] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "4-Down"));
         JComboBox combo = new JComboBox(items);
         
         JLabel comboLabel = CreateLabel("نوع آدمک را انتخاب کنید:");
@@ -54,7 +54,7 @@ public class SheepMenu extends Menu{
         JButton saveChanges = CreateButton("ذخیره",
                 (ActionEvent e) -> {
                         GameSetting.setSheepImageNumber(combo.getSelectedIndex());
-                        GameSetting.SaveChanges();
+                        
                         frame.dispose();
                 });
         

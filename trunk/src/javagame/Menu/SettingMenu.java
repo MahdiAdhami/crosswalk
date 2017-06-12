@@ -48,13 +48,14 @@ public class SettingMenu extends Menu {
         JLabel lblbottomLineCount = CreateLabel(String.format("%s %s(%d-%d)", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT));
         labels.add(lblbottomLineCount);
         labels.add(CreateMargin(10, 0, 10, 0));
-        
-        JSpinner lineImage = CreateSpinner("نوع خط کشی جاده ها", GameSetting.getLineImageNumber(), MenuConst.MIN_LINE_IMAGE - 2, MenuConst.MAX_LINE_IMAGE + 2, 1, null);
-        controls.add(lineImage);
+       
+
+        JSpinner crosswalkPosition = CreateSpinner("موقعیت خط عابر پیاده", GameSetting.getLineImageNumber(), MenuConst.MIN_CROSSWALK_POS - 60, MenuConst.MAX_CROSSWALK_POS + 60, 50, null);
+        controls.add(crosswalkPosition);
         controls.add(CreateMargin(10, 0, 10, 0));
 
-        JLabel lblLineImage = CreateLabel(String.format("%s %s(%d-%d)", "نوع خط کشی جاده ها", "بین", MenuConst.MIN_LINE_IMAGE, MenuConst.MAX_LINE_IMAGE));
-        labels.add(lblLineImage);
+        JLabel lblcrosswalkPosition = CreateLabel(String.format("%s %s(%d-%d)", "موقعیت خط عابر پیاده", "بین", MenuConst.MIN_CROSSWALK_POS, MenuConst.MAX_CROSSWALK_POS));
+        labels.add(lblcrosswalkPosition);
         labels.add(CreateMargin(10, 0, 10, 0));
         
         JSpinner createCarRate = CreateSpinner("سرعت تولید ماشین", GameSetting.getAutoCreateCarRate(), MenuConst.MIN_CREATE_CAR_RATE - 200, MenuConst.MAX_CREATE_CAR_RATE + 100, 100, null);
@@ -81,8 +82,8 @@ public class SettingMenu extends Menu {
                     } else if (!GameSetting.setLtrLineCount(bottomLineCount.getValue())) {
                         JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار لاین پایینی غیر معتبر", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_BOTTOM_LINE_COUNT, MenuConst.MAX_BOTTOM_LINE_COUNT), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                         error = true;
-                    } else if (!GameSetting.setLineImageNumber(lineImage.getValue())) {
-                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار نوع خط کشی نا معتبر", "نوع خط کشی", "بین", MenuConst.MIN_LINE_IMAGE, MenuConst.MAX_LINE_IMAGE), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                    } else if (!GameSetting.setCrosswalkMiddlePosition(crosswalkPosition.getValue())) {
+                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", " موقعیت خط عابر پیاده نامعتبر", "موقعیت خط عابر پیاده", "بین", MenuConst.MIN_CROSSWALK_POS, MenuConst.MAX_CROSSWALK_POS), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                         error = true;
                     }
                      else if (!GameSetting.setAutoCreateCarRate(createCarRate.getValue())) {
