@@ -87,7 +87,7 @@ public class SaveAndLoad {
                     new int[]{Integer.parseInt(sheepStringSplited[3]), Integer.parseInt(sheepStringSplited[4])},
                     Integer.parseInt(sheepStringSplited[5]), sheepStringSplited[6]
             );
-
+            InitGraphic.Sheep.CheckLine();
 //            String[] argsForSheep = SheepReader.nextLine().split(",");
                 
 //            InitGraphic.Sheep.setPosFromReply(new float[]{Float.parseFloat(argsForSheep[1]), Float.parseFloat(argsForSheep[2])});

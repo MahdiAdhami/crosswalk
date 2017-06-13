@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javagame.Const;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -101,6 +102,12 @@ public abstract class Menu {
         JLabel label = new JLabel();
         label.setBorder(new EmptyBorder(top, left, bottom, right));
         return label;
+    }
+    
+    protected JCheckBox CreateCheckBox(String title,boolean isSelected)
+    {
+        JCheckBox checkBox = new JCheckBox(title,isSelected);
+        return checkBox;
     }
 
     protected abstract void CreatePanel();

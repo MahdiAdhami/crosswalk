@@ -16,14 +16,29 @@ public class AutoCreateCar {
 
     public void InitLine() {
         boolean canCarTakeOver;
-        for (int i = 1; i <= RtlLineCount; i++) {
-            canCarTakeOver = i != RtlLineCount;
-            Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN, canCarTakeOver));
-        }
+        if(GameSetting.getChangedLinesDirections() == 0)
+        {
+            for (int i = 1; i <= RtlLineCount; i++) {
+                canCarTakeOver = i != RtlLineCount;
+                Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN, canCarTakeOver));
+            }
 
-        for (int i = RtlLineCount + 1, j = LtrLineCount; i <= RtlLineCount + LtrLineCount; i++, j--) {
-            canCarTakeOver = i != RtlLineCount + 1;
-            Lines.add(new Line(i, (j + 1), (j), Const.LINE_DIRECTION_LTR, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT, canCarTakeOver));
+            for (int i = RtlLineCount + 1, j = LtrLineCount; i <= RtlLineCount + LtrLineCount; i++, j--) {
+                canCarTakeOver = i != RtlLineCount + 1;
+                Lines.add(new Line(i, (j + 1), (j), Const.LINE_DIRECTION_LTR, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT, canCarTakeOver));
+            }
+        }
+        else
+        {
+            for (int i = 1; i <= LtrLineCount; i++) {
+                canCarTakeOver = i != RtlLineCount;
+                Lines.add(new Line(i, (i + 1), (i), Const.LINE_DIRECTION_LTR, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN, canCarTakeOver));
+            }
+
+            for (int i = LtrLineCount + 1, j = RtlLineCount; i <= RtlLineCount + LtrLineCount; i++, j--) {
+                canCarTakeOver = i != RtlLineCount + 1;
+                Lines.add(new Line(i, (j + 1), (j), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT, canCarTakeOver));
+            }
         }
     }
 

@@ -35,6 +35,7 @@ public class GameSetting {
     private static int AutoCreateCarRate;
     private static int LineImageNumber;
     private static int SheepImageNumber;
+    private static int ChangedLinesDirections;
     private static String SettingPath = Const.MAIN_SETTING_FILE;
 
     /// Getter Methods
@@ -60,6 +61,10 @@ public class GameSetting {
     
     public static int getSheepImageNumber() {
         return SheepImageNumber;
+    }
+    
+    public static int getChangedLinesDirections() {
+        return ChangedLinesDirections;
     }
 
     /// Setter Methods
@@ -105,9 +110,17 @@ public class GameSetting {
             AutoCreateCarRate = valueAsInt;
             return true;
         }
-        return false;
-                
+        return false;  
     }
+    public static boolean setChangedLinesDirections(Object value) {
+        int valueAsInt = Integer.parseInt(value.toString().trim());
+        if (valueAsInt >= MenuConst.MIN_LINE_DIRECTION && valueAsInt <= MenuConst.MAX_LINE_DIRECTION) {
+            ChangedLinesDirections = valueAsInt;
+            return true;
+        }
+        return false;  
+    }
+    
     
 //    public static boolean setLineImageNumber(Object value) {
 //        int valueAsInt = Integer.parseInt(value.toString().trim());
@@ -166,6 +179,8 @@ public class GameSetting {
                         setAutoCreateCarRate(eElement.getTextContent());
                     }  else if (SettingConst.SheepImageNumber.equals(eElement.getNodeName())) {
                         setSheepImageNumber(eElement.getTextContent());
+                    }  else if (SettingConst.LineDirection.equals(eElement.getNodeName())) {
+                        setChangedLinesDirections(eElement.getTextContent());
                     }
                     
 //                    else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
@@ -217,6 +232,9 @@ public class GameSetting {
             firstname.appendChild(doc.createTextNode(String.format("%d", getSheepImageNumber())));
             staff.appendChild(firstname);
 
+            firstname = doc.createElement(SettingConst.LineDirection);
+            firstname.appendChild(doc.createTextNode(String.format("%d", getChangedLinesDirections())));
+            staff.appendChild(firstname);
 
             // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
