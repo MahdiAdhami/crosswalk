@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -66,10 +67,20 @@ public class SettingMenu extends Menu {
         labels.add(lblcreateCarRate);
         labels.add(CreateMargin(10, 0, 10, 0));
         
+        JCheckBox changeDirection = CreateCheckBox("خیابان های برعکس",(GameSetting.getChangedLinesDirections()==1)?true:false);
+        labels.add(changeDirection);
+        labels.add(CreateMargin(10, 0, 10, 0));
+        
+        
         JButton goToSheepSelectMenu = CreateButton("انتخاب آدمک",(e) -> {
             SheepMenu sheepSelectMenu = new SheepMenu("انتخاب نوع آدمک",400,400);
             sheepSelectMenu.Execute();
         });
+        
+        JButton goToCarSelectMenu = CreateButton("انتخاب ماشین ها",(e) -> {
+            
+        });
+        labels.add(goToCarSelectMenu);
         labels.add(goToSheepSelectMenu);
         
         
@@ -89,7 +100,12 @@ public class SettingMenu extends Menu {
                      else if (!GameSetting.setAutoCreateCarRate(createCarRate.getValue())) {
                         JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "سرعت تولید ماشین نامعتبر", "سرعت تولید ماشین", "بین", MenuConst.MIN_CREATE_CAR_RATE, MenuConst.MAX_CREATE_CAR_RATE), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                         error = true;
-                     }else  {
+                     }
+                     else if (!GameSetting.setChangedLinesDirections((changeDirection.isSelected())? 1 : 0)) {
+                        JOptionPane.showMessageDialog(null, "جهت لاین نا معتبر است",  "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                        error = true;
+                     }
+                     else  {
                         GameSetting.setDefaultSettingPath();
                         GameSetting.SaveChanges();
                         frame.dispose();

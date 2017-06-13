@@ -10,6 +10,8 @@ public final class MenuConst {
     public final static int DEDAULT_LINE_COUNT = 3;
     public final static int MAX_CROSSWALK_POS = 800;
     public final static int MIN_CROSSWALK_POS = 0;
+    public final static int MAX_LINE_DIRECTION = 1;
+    public final static int MIN_LINE_DIRECTION = 0;
     
     public final static int MAX_CREATE_CAR_RATE = Const.CREATE_CAR_SLEEP_TIME - 1;
     public final static int MIN_CREATE_CAR_RATE = 1;
