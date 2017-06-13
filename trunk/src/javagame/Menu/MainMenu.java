@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javagame.Const;
 import javagame.InitGame;
-import javagame.Line;
 import javagame.SaveAndLoad;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;

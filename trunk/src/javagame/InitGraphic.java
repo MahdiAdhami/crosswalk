@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javagame.Menu.GameSetting;
-import javagame.Menu.SettingConst;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -56,7 +55,7 @@ public class InitGraphic extends JPanel implements Runnable {
             System.err.println("InitGraphic SetInit() " + ex);
         }
 
-        // Add listeners for mouse and keyboard event
+        // Add listeners for mouse and keyboard events
         GameListener gameListener = new GameListener(this.Lines);
 
         gameFrame.addKeyListener(gameListener.KeyListener);

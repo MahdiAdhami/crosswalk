@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import javagame.Menu.GameSetting;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public final class Sheep {
 
@@ -134,6 +135,12 @@ public final class Sheep {
 
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
             keyPressed(65);
+        }
+        if(PositionOfSheep[1]==-30)
+        {
+            InitGame.GameStop = !InitGame.GameStop;
+            JOptionPane.showMessageDialog(null, "بردی دیگه !",  "اینجا آخر خطه!", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
         }
     }
 
