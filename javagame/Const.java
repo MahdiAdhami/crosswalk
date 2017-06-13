@@ -33,6 +33,7 @@ public final class Const {
     public final static int CROSSWALK_HEIGHT = 20;
 
     // Car 
+    public final static String CAR_ROOT_IMAGE = "\\src\\resources\\Cars";
     public final static int CAR_DISTANCE_TO_CROSSWALK_FOR_DECREASE_SPEED = 110;
     public final static float CAR_SPEED_RATE_NEAR_CROSSWALK_CHANGE = .4f;
     public final static int CAR_COUNT = 4;
@@ -54,6 +55,7 @@ public final class Const {
 
     // Sheep
     public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\{0}.png";
+    public final static String SHEEP_ROOT_IMAGE = "\\src\\resources\\Sheep";
     public final static int SHEEP_DISTANCE_LINE_WHEN_GAME_START = 30;
     public final static int SHEEP_IGONORE_DISTANCE_IN_CROSSWALK = 30;
 

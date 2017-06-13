@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javagame.Menu.GameSetting;
 import javax.imageio.ImageIO;
 
 public class CarType {
@@ -17,7 +18,8 @@ public class CarType {
 
     public CarType(boolean LineDirection) {
         this.LineDirection = LineDirection;
-        CarNameAndType = (char) (49 + Const.RAND.nextInt(Const.CAR_COUNT)) + ((LineDirection == Const.LINE_DIRECTION_LTR) ? "1" : "2");
+        char[] tempCharForGetImage = GameSetting.getCarsNumbers().toCharArray();
+        CarNameAndType = (tempCharForGetImage [Const.RAND.nextInt( tempCharForGetImage.length )] ) + ((LineDirection == Const.LINE_DIRECTION_LTR) ? "1" : "2");
         InitialCarImage();
     }
 

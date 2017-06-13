@@ -4,6 +4,7 @@ package javagame.Menu;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import javagame.Const;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,11 +38,14 @@ public class SheepMenu extends Menu{
         panel.add(labels, BorderLayout.EAST);
         panel.add(submit, BorderLayout.SOUTH);
         
-        Object[] items = new Object[3];
-        items[0] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "1-Down"));
-        items[1] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "2-Down"));
-        items[2] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "3-Down"));
-       // items[3] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", "4-Down"));
+        String[] sheepImages = new File(Const.ROOT_PATH + Const.SHEEP_ROOT_IMAGE).list();
+        
+        Object[] items = new Object[sheepImages.length/4];
+        for(int i = 0  , j = 1 ; j <= items.length; i+=4 , j++)
+        {
+            items[j - 1] = new ImageIcon(Const.ROOT_PATH + Const.SHEEP_ROOT_IMAGE + "\\" + sheepImages[i]);
+        }
+        
         JComboBox combo = new JComboBox(items);
         
         JLabel comboLabel = CreateLabel("نوع آدمک را انتخاب کنید:");
@@ -54,7 +58,6 @@ public class SheepMenu extends Menu{
         JButton saveChanges = CreateButton("ذخیره",
                 (ActionEvent e) -> {
                         GameSetting.setSheepImageNumber(combo.getSelectedIndex());
-                        
                         frame.dispose();
                 });
         

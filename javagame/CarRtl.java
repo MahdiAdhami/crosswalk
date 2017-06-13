@@ -1,5 +1,7 @@
 package javagame;
 
+import javax.swing.JOptionPane;
+
 public class CarRtl extends Car {
 
     public CarRtl(int Speed, CarType CarType, Line Line) {
@@ -26,6 +28,8 @@ public class CarRtl extends Car {
 //       System.out.println(getHeadPosition()+"  " + InitGraphic.Sheep.getXPosition() + "   "+InitGraphic.Sheep.getSheepWidth()/2);
         if (this.getHeadPosition() <= InitGraphic.Sheep.getXPosition() + InitGraphic.Sheep.getSheepWidth()) {
             InitGame.GameStop = true;
+            JOptionPane.showMessageDialog(null,"باختی جیگر!", "له شدی عزیزم", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
         }
 
     }
