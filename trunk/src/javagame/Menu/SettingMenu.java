@@ -78,7 +78,8 @@ public class SettingMenu extends Menu {
         });
         
         JButton goToCarSelectMenu = CreateButton("انتخاب ماشین ها",(e) -> {
-            
+            CarMenu carSelectMenu = new CarMenu("نوع ماشین ها را انتخاب کنید",400,400);
+            carSelectMenu.Execute();
         });
         labels.add(goToCarSelectMenu);
         labels.add(goToSheepSelectMenu);

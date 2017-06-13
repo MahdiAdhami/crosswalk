@@ -31,6 +31,7 @@ public class GameSetting {
     private static int LineImageNumber;
     private static int SheepImageNumber;
     private static int ChangedLinesDirections;
+    private static String CarsNumbers;
     private static String SettingPath = Const.MAIN_SETTING_FILE;
 
     /// Getter Methods
@@ -61,7 +62,11 @@ public class GameSetting {
     public static int getChangedLinesDirections() {
         return ChangedLinesDirections;
     }
-
+    
+    public static String getCarsNumbers() {
+        return CarsNumbers;
+    }
+    
     /// Setter Methods
     public static void setSettingPath(String path) {
         SettingPath = path;
@@ -114,6 +119,12 @@ public class GameSetting {
             return true;
         }
         return false;  
+    }
+    
+    public static boolean setCarsNumbers(Object value) {
+        String valueAsString = value.toString().trim();
+        CarsNumbers = valueAsString;
+        return true;
     }
     
     
@@ -176,6 +187,8 @@ public class GameSetting {
                         setSheepImageNumber(eElement.getTextContent());
                     }  else if (SettingConst.LineDirection.equals(eElement.getNodeName())) {
                         setChangedLinesDirections(eElement.getTextContent());
+                    }  else if (SettingConst.CarsNumbers.equals(eElement.getNodeName())) {
+                        setCarsNumbers(eElement.getTextContent());
                     }
                     
 //                    else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
@@ -229,6 +242,10 @@ public class GameSetting {
 
             firstname = doc.createElement(SettingConst.LineDirection);
             firstname.appendChild(doc.createTextNode(String.format("%d", getChangedLinesDirections())));
+            staff.appendChild(firstname);
+            
+            firstname = doc.createElement(SettingConst.CarsNumbers);
+            firstname.appendChild(doc.createTextNode(String.format("%s", getCarsNumbers())));
             staff.appendChild(firstname);
 
             // write the content into xml file
