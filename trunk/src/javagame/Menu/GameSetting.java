@@ -128,14 +128,11 @@ public class GameSetting {
     }
     
     
-//    public static boolean setLineImageNumber(Object value) {
-//        int valueAsInt = Integer.parseInt(value.toString().trim());
-//        if (valueAsInt >= MenuConst.MIN_LINE_IMAGE && valueAsInt <= MenuConst.MAX_LINE_IMAGE) {
-//            LineImageNumber = valueAsInt;
-//            return true;
-//        }
-//        return false;
-//    }
+    public static boolean setLineImageNumber(Object value) {
+        int valueAsInt = Integer.parseInt(value.toString().trim());
+        LineImageNumber = valueAsInt;
+        return true;
+    }
     
     public static boolean setSheepImageNumber(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
@@ -177,11 +174,11 @@ public class GameSetting {
                     Element eElement = (Element) node;
                     if (SettingConst.RtlLineCount.equals(eElement.getNodeName())) {
                         setRtlLineCount(eElement.getTextContent());
-                    } else if (SettingConst.LtrLineCount.equals(eElement.getNodeName())) {
+                    }  else if (SettingConst.LtrLineCount.equals(eElement.getNodeName())) {
                         setLtrLineCount(eElement.getTextContent());
-                    } else if (SettingConst.CrosswalkMiddlePosition.equals(eElement.getNodeName())) {
+                    }  else if (SettingConst.CrosswalkMiddlePosition.equals(eElement.getNodeName())) {
                         setCrosswalkMiddlePosition(eElement.getTextContent());
-                    } else if (SettingConst.AutoCreateCarRate.equals(eElement.getNodeName())) {
+                    }  else if (SettingConst.AutoCreateCarRate.equals(eElement.getNodeName())) {
                         setAutoCreateCarRate(eElement.getTextContent());
                     }  else if (SettingConst.SheepImageNumber.equals(eElement.getNodeName())) {
                         setSheepImageNumber(eElement.getTextContent());
@@ -189,11 +186,9 @@ public class GameSetting {
                         setChangedLinesDirections(eElement.getTextContent());
                     }  else if (SettingConst.CarsNumbers.equals(eElement.getNodeName())) {
                         setCarsNumbers(eElement.getTextContent());
+                    }  else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
+                        setLineImageNumber(eElement.getTextContent());
                     }
-                    
-//                    else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
-//                        setLineImageNumber(eElement.getTextContent());
-//                    }
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException ex) {

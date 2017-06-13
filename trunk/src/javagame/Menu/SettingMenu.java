@@ -51,7 +51,7 @@ public class SettingMenu extends Menu {
         labels.add(CreateMargin(10, 0, 10, 0));
        
 
-        JSpinner crosswalkPosition = CreateSpinner("موقعیت خط عابر پیاده", GameSetting.getLineImageNumber(), MenuConst.MIN_CROSSWALK_POS - 60, MenuConst.MAX_CROSSWALK_POS + 60, 50, null);
+        JSpinner crosswalkPosition = CreateSpinner("موقعیت خط عابر پیاده", GameSetting.getCrosswalkMiddlePosition(), MenuConst.MIN_CROSSWALK_POS - 60, MenuConst.MAX_CROSSWALK_POS + 60, 50, null);
         controls.add(crosswalkPosition);
         controls.add(CreateMargin(10, 0, 10, 0));
 
@@ -81,8 +81,15 @@ public class SettingMenu extends Menu {
             CarMenu carSelectMenu = new CarMenu("نوع ماشین ها را انتخاب کنید",400,400);
             carSelectMenu.Execute();
         });
-        labels.add(goToCarSelectMenu);
-        labels.add(goToSheepSelectMenu);
+        
+        JButton goToLineSelectMenu = CreateButton("انتخاب خط کشی ها",(e) -> {
+             LineMenu lineSelectMenu = new LineMenu("نوع خط کشی را انتخاب کنید",400,400);
+            lineSelectMenu.Execute();
+        });
+        
+        submit.add(goToCarSelectMenu);
+        submit.add(goToSheepSelectMenu);
+        submit.add(goToLineSelectMenu);
         
         
         JButton saveChanges = CreateButton("ذخیره",

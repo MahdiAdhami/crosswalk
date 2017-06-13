@@ -33,15 +33,20 @@ public class CarMenu extends Menu{
         panel.add(controls, BorderLayout.CENTER); 
         panel.add(submit, BorderLayout.SOUTH);
         
-        String[] carImages = new File(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Selected").list();
+        String[] carImages = new File(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE ).list();
         ArrayList<JCheckBox> checkBoxesArrayList = new ArrayList<JCheckBox>();
         
         for(int i = 0 ; i < carImages.length ; i+=2 )
         {
             JCheckBox currentCheckBox = new JCheckBox(new ImageIcon(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\" + carImages[i]));
-            currentCheckBox.setSelectedIcon(new ImageIcon(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Selected\\" + carImages[i]));
             checkBoxesArrayList.add(currentCheckBox);
             controls.add(currentCheckBox);
+        }
+        
+        String[] carImagesSelected = new File(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Selected" ).list();
+        for(int i = 0 ; i < carImagesSelected.length ; i++)
+        {
+            checkBoxesArrayList.get(i).setSelectedIcon(new ImageIcon(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Selected\\" + carImagesSelected[i]));
         }
         
         JButton submitButton = CreateButton("ذخیره", (e) -> {
