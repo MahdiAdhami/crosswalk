@@ -35,6 +35,7 @@ public class CarType {
             Image = ImageIO.read(CarImage);
             CarWidth = Image.getWidth();
             CarHeight = Image.getHeight();
+            //System.out.println(CarWidth);
         } catch (IOException ex) {
             System.err.println("CarType InitialCarImage() " + ex);
         }
