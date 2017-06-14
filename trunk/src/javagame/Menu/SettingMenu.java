@@ -67,6 +67,14 @@ public class SettingMenu extends Menu {
         labels.add(lblcreateCarRate);
         labels.add(CreateMargin(10, 0, 10, 0));
         
+        JSpinner carsSpeed = CreateSpinner("سرعت ماشین ها ",(int) GameSetting.getCarsSpeed(), MenuConst.MIN_CARS_SPEED - 2, MenuConst.MAX_CARS_SPEED + 2, 1, null);
+        controls.add(carsSpeed);
+        controls.add(CreateMargin(10, 0, 10, 0));
+
+        JLabel lblcarsSpeed = CreateLabel(String.format("%s %s(%d-%d)", "سرعت ماشین ها", "بین", MenuConst.MIN_CARS_SPEED , MenuConst.MAX_CARS_SPEED ));
+        labels.add(lblcarsSpeed);
+        labels.add(CreateMargin(10, 0, 10, 0));
+        
         JCheckBox changeDirection = CreateCheckBox("خیابان های برعکس",(GameSetting.getChangedLinesDirections()==1)?true:false);
         labels.add(changeDirection);
         labels.add(CreateMargin(10, 0, 10, 0));
@@ -111,6 +119,10 @@ public class SettingMenu extends Menu {
                      }
                      else if (!GameSetting.setChangedLinesDirections((changeDirection.isSelected())? 1 : 0)) {
                         JOptionPane.showMessageDialog(null, "جهت لاین نا معتبر است",  "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                        error = true;
+                     }
+                     else if (!GameSetting.setCarsSpeed(carsSpeed.getValue())) {
+                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "سرعت ماشین نامعتبر ها", "سرعت ماشین ها", "بین", MenuConst.MIN_CARS_SPEED , MenuConst.MAX_CARS_SPEED ), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                         error = true;
                      }
                      else  {

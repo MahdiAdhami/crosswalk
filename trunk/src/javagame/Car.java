@@ -1,5 +1,7 @@
 package javagame;
 
+import javagame.Menu.GameSetting;
+
 public abstract class Car {
 
     protected int Id;
@@ -11,7 +13,7 @@ public abstract class Car {
     // Constructors
     public Car(float HeadPosition, int Speed, CarType CarType, Line Line) {
         this.HeadPosition = HeadPosition;
-        this.Speed = Speed;
+        this.Speed = Speed * GameSetting.getCarsSpeed()/10;
         this.CarType = CarType;
         this.Line = Line;
     }

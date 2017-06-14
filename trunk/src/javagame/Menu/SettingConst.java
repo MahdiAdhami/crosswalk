@@ -10,5 +10,6 @@ public class SettingConst {
     public static final String SheepImageNumber = "SheepImageNumber";
     public static final String LineDirection = "LineDirection";
     public static final String CarsNumbers = "CarsNumbers";
+    public static final String CarsSpeed = "CarsSpeed";
 
 }

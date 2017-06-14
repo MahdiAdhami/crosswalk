@@ -31,6 +31,7 @@ public class GameSetting {
     private static int LineImageNumber;
     private static int SheepImageNumber;
     private static int ChangedLinesDirections;
+    private static float CarsSpeedFromUser;
     private static String CarsNumbers;
     private static String SettingPath = Const.MAIN_SETTING_FILE;
 
@@ -67,6 +68,9 @@ public class GameSetting {
         return CarsNumbers;
     }
     
+    public static float getCarsSpeed() {
+        return CarsSpeedFromUser;
+    }
     /// Setter Methods
     public static void setSettingPath(String path) {
         SettingPath = path;
@@ -139,6 +143,15 @@ public class GameSetting {
         SheepImageNumber = valueAsInt;
         return true;
     }
+    
+    public static boolean setCarsSpeed(Object value) {
+        Float valueAsFloat = Float.parseFloat(value.toString().trim());
+        if (valueAsFloat >= MenuConst.MIN_CARS_SPEED && valueAsFloat <= MenuConst.MAX_CARS_SPEED) {
+            CarsSpeedFromUser = valueAsFloat;
+            return true;
+        }
+        return false;  
+    }
 
     public static void SaveChanges() {
         writeSetting(SettingPath);
@@ -188,6 +201,8 @@ public class GameSetting {
                         setCarsNumbers(eElement.getTextContent());
                     }  else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
                         setLineImageNumber(eElement.getTextContent());
+                    }  else if (SettingConst.CarsSpeed.equals(eElement.getNodeName())) {
+                        setCarsSpeed(eElement.getTextContent());
                     }
                 }
             }
@@ -241,6 +256,10 @@ public class GameSetting {
             
             firstname = doc.createElement(SettingConst.CarsNumbers);
             firstname.appendChild(doc.createTextNode(String.format("%s", getCarsNumbers())));
+            staff.appendChild(firstname);
+            
+            firstname = doc.createElement(SettingConst.CarsSpeed);
+            firstname.appendChild(doc.createTextNode(String.format("%f", getCarsSpeed())));
             staff.appendChild(firstname);
 
             // write the content into xml file
