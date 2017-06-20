@@ -7,13 +7,15 @@ public class JavaGame {
     public static void main(String[] args) {
 
         //Initialize main menu     
-        MainMenu mainMenu = new MainMenu("شروع بازی", 200, 200);
+        MainMenu mainMenu = new MainMenu("شروع بازی", 300, 300);
         mainMenu.Execute();
-
-//WriteReplyData WriteReplyData = new WriteReplyData();
 
         // Remove
         ////////////////////////////
+//        LineMenu map = new LineMenu("asd", 400, 600);
+//        map.Execute();
+
+        //WriteReplyData WriteReplyData = new WriteReplyData();
         //  SettingMenuResult x = new SettingMenuResult(2,13,12);
         //  x.SaveChanges();
 //        InitGame init = new InitGame();

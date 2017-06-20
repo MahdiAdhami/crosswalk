@@ -1,9 +1,8 @@
-
 package javagame.Menu;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
 import javagame.Const;
@@ -13,8 +12,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
-public class CarMenu extends Menu{
+public class CarMenu extends Menu {
 
     public CarMenu(String Title, int Height, int Width) {
         super(Title, Height, Width);
@@ -30,55 +28,35 @@ public class CarMenu extends Menu{
         JPanel controls = new JPanel(new GridLayout(3, 0));
         JPanel submit = new JPanel(new GridLayout(1, 0));
 
-        panel.add(controls, BorderLayout.CENTER); 
+        panel.add(controls, BorderLayout.CENTER);
         panel.add(submit, BorderLayout.SOUTH);
-        
-        String[] carImages = new File(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE ).list();
-        ArrayList<JCheckBox> checkBoxesArrayList = new ArrayList<JCheckBox>();
-        
-        for(int i = 0 ; i < carImages.length ; i+=2 )
-        {
-            JCheckBox currentCheckBox = new JCheckBox(new ImageIcon(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\" + carImages[i]));
+
+        String[] carImages = new File(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Setting\\Show").list();
+        ArrayList<JCheckBox> checkBoxesArrayList = new ArrayList<>();
+
+        for (String carName : carImages) {
+            JCheckBox currentCheckBox = new JCheckBox(new ImageIcon(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Setting\\Show\\" + carName));
             checkBoxesArrayList.add(currentCheckBox);
             controls.add(currentCheckBox);
         }
-        
-        String[] carImagesSelected = new File(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Selected" ).list();
-        for(int i = 0 ; i < carImagesSelected.length ; i++)
-        {
-            checkBoxesArrayList.get(i).setSelectedIcon(new ImageIcon(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Selected\\" + carImagesSelected[i]));
-        }
-        
-        JButton submitButton = CreateButton("ذخیره", (e) -> {
-            
-            int[] tempNumbers = null ;
-            String temp ="";
-            for(int i = 0 ;i < checkBoxesArrayList.size() ; i++)
-            {
-                //tempNumbers = new int[checkBoxesArrayList.size()];
-                if(checkBoxesArrayList.get(i).isSelected())
-                {
-                   temp += (char) (49 + i) ;
-                }
-                //else {
-                //    tempNumbers[i] = 0;
-                //}
-                
-            }
-            
-//            for(int i = 0 ; i < tempNumbers.length ; i++)
-//            {   
-//                
-//                temp += tempNumbers[i] ;
-//            }
 
+        String[] carImagesSelected = new File(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Setting\\Select").list();
+
+        for (int i = 0; i < carImagesSelected.length; i++) {
+            checkBoxesArrayList.get(i).setSelectedIcon(new ImageIcon(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Setting\\Select\\" + carImagesSelected[i]));
+        }
+
+        JButton submitButton = CreateButton("ذخیره", (ActionEvent e) -> {
+            String temp = "";
+            for (int i = 0; i < checkBoxesArrayList.size(); i++) {
+                if (checkBoxesArrayList.get(i).isSelected()) {
+                    temp += (char) (49 + i);
+                }
+            }
             GameSetting.setCarsNumbers(temp);
             frame.dispose();
         });
-        
         submit.add(submitButton);
-        
-        
     }
-    
+
 }

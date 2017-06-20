@@ -40,9 +40,9 @@ public final class Const {
     public final static int CAR_COUNT = 4;
 
     // Cars Speed Rate
-    public final static int CREATE_CAR_SPEED_RATE = 150;
-    public final static int CREATE_CAR_SLEEP_TIME = 10000;
-//    public final static int DECREASE_SPEED_RATE = 20;
+    public final static int CREATE_CAR_SPEED_RATE = 100;
+    public final static int CREATE_CAR_SLEEP_TIME = 3000;
+    public final static int CREATE_CAR_MAX_SLEEP_TIME = 200;
 
     //Setting File
     public final static String MAIN_SETTING_FILE = "\\src\\resources\\Setting\\Setting.xml";
@@ -52,7 +52,7 @@ public final class Const {
     public final static int TOP_MARGIN = 40;
 
     // Repaint time
-    public final static long SLEEP_TIME_RE_PAINTING = 5;
+    public final static long SLEEP_TIME_RE_PAINTING = 30;
 
     // Sheep
     public final static String SHEEP_PATH_IMAGE = "\\src\\resources\\Sheep\\{0}.png";
