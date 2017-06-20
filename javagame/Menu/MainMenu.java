@@ -77,7 +77,7 @@ public class MainMenu extends Menu {
                     GameSetting.setDefaultSettingPath();
                     GameSetting.UpdateSettings();
 
-                    SettingMenu settingMenu = new SettingMenu("تنظیمات", 300, 500);
+                    SettingMenu settingMenu = new SettingMenu("تنظیمات", 300, 600);
                     settingMenu.Execute();
                 }
         );

@@ -75,7 +75,7 @@ public abstract class Menu {
         SpinnerModel model = new SpinnerNumberModel(defaultValue, minValue, maxValue, step);
         //SpinnerModel model = new SpinnerNumberModel(defaultValue, -100, 100, step);
         JSpinner spinner = new JSpinner(model);
-        
+
         spinner.setName(Title);
         spinner.setToolTipText(Title);
 
@@ -91,15 +91,14 @@ public abstract class Menu {
         return label;
     }
 
-    protected JLabel CreateMargin(int top,int right,int bottom,int left) {
+    protected JLabel CreateMargin(int top, int right, int bottom, int left) {
         JLabel label = new JLabel();
         label.setBorder(new EmptyBorder(top, left, bottom, right));
         return label;
     }
-    
-    protected JCheckBox CreateCheckBox(String title,boolean isSelected)
-    {
-        JCheckBox checkBox = new JCheckBox(title,isSelected);
+
+    protected JCheckBox CreateCheckBox(String title, boolean isSelected) {
+        JCheckBox checkBox = new JCheckBox(title, isSelected);
         return checkBox;
     }
 
