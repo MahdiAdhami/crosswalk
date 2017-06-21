@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javagame.Menu.GameSetting;
 
 public final class Line {
-
+    // Line Id
     private int Id;
     private int MaxCarSpeed;
     private int MinCarSpeed;
@@ -153,6 +153,14 @@ public final class Line {
 
     public void setCarId(int id) {
         CarId = id;
+    }
+
+    public void rtlTakeOver() {
+
+    }
+
+    public void ltrTakeOver(int lineId) {
+
     }
 
 }

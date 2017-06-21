@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class CarLtr extends Car {
 
-    public float OtherCarSpeed;
+    private float OtherCarSpeed;
 
     // Constructor
     public CarLtr(int Speed, CarType CarType, Line Line) {
@@ -39,14 +39,13 @@ public class CarLtr extends Car {
             return;
         }
         if (getHeadPosition() >= InitGraphic.Sheep.getXPosition() && getEndPosition() <= InitGraphic.Sheep.getXPosition() + InitGraphic.Sheep.getSheepWidth()) {
-            InitGame.GameStop = true;
-            JOptionPane.showMessageDialog(null,"باختی جیگر!", "له شدی عزیزم", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+            InitGraphic.Sheep.gameOver();
         }
     }
-
+    
+    // Car mover  method
     @Override
-    public void MoveInLine() {
+    public void Move() {
         float tempSpeed = getSpeed();
 
         if (HeadPosition - CarType.getCarWidth() > Const.GAME_WINDOWS_WIDTH) {

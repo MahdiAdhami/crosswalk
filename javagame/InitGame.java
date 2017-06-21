@@ -6,11 +6,11 @@ import javagame.Menu.GameSetting;
 public class InitGame {
 
     public static boolean GameStop;
-    public static boolean RunAfterWait;
+    public static boolean GameEnd;
 
     public InitGame() {
         InitGame.GameStop = false;
-        InitGame.RunAfterWait = true;
+        InitGame.GameEnd = false;
     }
 
     public void AutoMoveSheep(long sleepInMilliSecond, int randRate) {
@@ -34,7 +34,7 @@ public class InitGame {
         InitGraphic.Sheep.SaveChanges = CreateReply;
 
         // Create instance an object for create cars in a thread
-        AutoCreateCarForCreateNewCar autoCreateCar = new AutoCreateCarForCreateNewCar(CreateReply);
+        CreateCarInNewGame autoCreateCar = new CreateCarInNewGame(CreateReply);
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
@@ -57,7 +57,7 @@ public class InitGame {
         Sheep.AutoMove = false;
 
         // Create instance an object for create cars in a thread
-        AutoCreateCarForCreateNewCar autoCreateCar = new AutoCreateCarForCreateNewCar(CreateReply);
+        CreateCarInNewGame autoCreateCar = new CreateCarInNewGame(CreateReply);
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
@@ -80,7 +80,7 @@ public class InitGame {
         InitGraphic.Sheep.SaveChanges = CreateReply;
         Sheep.AutoMove = false;
 
-        AutoCreateCarForReply reply = new AutoCreateCarForReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path + Const.REPLY_CAR_ADDRESS);
+        CreateCarInReply reply = new CreateCarInReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path + Const.REPLY_CAR_ADDRESS);
         reply.InitLine();
         Thread threadReply = new Thread(reply);
         threadReply.start();
@@ -89,7 +89,7 @@ public class InitGame {
         Thread threadBase = new Thread(base);
         threadBase.start();
 
-        AutoMoveSheepForReply sheepReply = new AutoMoveSheepForReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path);
+        AutoMoveSheepInReply sheepReply = new AutoMoveSheepInReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path);
         Thread threadReplySheep = new Thread(sheepReply);
         threadReplySheep.start();
     }

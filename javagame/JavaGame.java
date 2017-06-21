@@ -1,16 +1,24 @@
+/*
+Create Game
+*/
 package javagame;
 
 import javagame.Menu.MainMenu;
+import javagame.Menu.SelectMapMenu;
 
 public class JavaGame {
-
+    
+    // start program 
     public static void main(String[] args) {
 
         //Initialize main menu     
-        MainMenu mainMenu = new MainMenu("شروع بازی", 300, 300);
+        SelectMapMenu mainMenu = new SelectMapMenu();
         mainMenu.Execute();
+    }
+}
 
-        // Remove
+
+// Remove
         ////////////////////////////
 //        LineMenu map = new LineMenu("asd", 400, 600);
 //        map.Execute();
@@ -26,6 +34,3 @@ public class JavaGame {
 //        LoadGame.LoadGame();
         // Remove
         ////////////////////////////
-    }
-
-}

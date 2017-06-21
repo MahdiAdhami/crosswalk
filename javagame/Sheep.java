@@ -35,7 +35,7 @@ public final class Sheep {
     }
 
     public Sheep(int[] Rate, float PositionYOfSheep) {
-        this.ImageCode = String.valueOf(GameSetting.getSheepImageNumber() + 1) ;
+        this.ImageCode = String.valueOf(GameSetting.getSheepImageNumber() + 1);
         initImage();
         this.Rate = Rate;
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
@@ -136,11 +136,8 @@ public final class Sheep {
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
             keyPressed(65);
         }
-        if(PositionOfSheep[1]==-30)
-        {
-            InitGame.GameStop = !InitGame.GameStop;
-            JOptionPane.showMessageDialog(null, "بردی دیگه !",  "اینجا آخر خطه!", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+        if (PositionOfSheep[1] == -30) {
+            win();
         }
     }
 
@@ -167,6 +164,18 @@ public final class Sheep {
 
     public void setRate(int[] rate) {
         Rate = rate;
+    }
+
+    public void win() {
+        InitGame.GameEnd = true;
+        JOptionPane.showMessageDialog(null, "بردی دیگه !", "اینجا آخر خطه!", JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0);
+    }
+
+    public void gameOver() {
+        InitGame.GameEnd = true;
+        JOptionPane.showMessageDialog(null, "باختی جیگر!", "له شدی عزیزم", JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0);
     }
 
 }

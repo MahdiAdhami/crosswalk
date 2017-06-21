@@ -15,9 +15,9 @@ public class CarRtl extends Car {
     public CarRtl(int Id, float HeadPosition, float Speed, String CarType, Line Line) {
         super(Id, HeadPosition, Speed, CarType, Line);
     }
-    
+
     public CarRtl(int Id, float Speed, String CarType, Line Line) {
-        super(Id,Const.GAME_WINDOWS_WIDTH ,Speed, CarType, Line);
+        super(Id, Const.GAME_WINDOWS_WIDTH, Speed, CarType, Line);
     }
 
     @Override
@@ -25,28 +25,23 @@ public class CarRtl extends Car {
         if (!isNearToSheepAccident()) {
             return;
         }
-//       System.out.println(getHeadPosition()+"  " + InitGraphic.Sheep.getXPosition() + "   "+InitGraphic.Sheep.getSheepWidth()/2);
         if (this.getHeadPosition() <= InitGraphic.Sheep.getXPosition() + InitGraphic.Sheep.getSheepWidth()) {
-            InitGame.GameStop = true;
-            JOptionPane.showMessageDialog(null,"باختی جیگر!", "له شدی عزیزم", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+            InitGraphic.Sheep.gameOver();
         }
 
     }
 
     @Override
-    public void MoveInLine() {
-        int i = this.getId();
-
+    public void Move() {
         float tempSpeed = getSpeed();
 
         if (getEndPosition() < (-1) * CarType.getCarWidth()) {
             Line.Dispose(this);
             return;
         }
-
+        
         HeadPosition -= tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000;
-
+        
         checkSheepAccident();
     }
 

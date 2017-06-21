@@ -33,6 +33,7 @@ public class GameSetting {
     private static int ChangedLinesDirections;
     private static float CarsSpeedFromUser;
     private static String CarsNumbers;
+    
     private static String SettingPath = Const.MAIN_SETTING_FILE;
 
     /// Getter Methods
