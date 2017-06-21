@@ -76,5 +76,8 @@ public final class Const {
     public final static String REPLY_CAR_ADDRESS = "\\Cars.txt";
     public final static String REPLY_SHEEP_ADDRESS = "\\Sheep.txt";
     public final static String REPLY_SETTING_ADDRESS = "\\Setting.xml";
+    
+    // Map
+    public final static String MAP_ROOT_ADDRESS = "\\src\\resources\\Map";
 
 }

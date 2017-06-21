@@ -34,8 +34,34 @@ public class CarMenu extends Menu {
         String[] carImages = new File(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Setting\\Show").list();
         ArrayList<JCheckBox> checkBoxesArrayList = new ArrayList<>();
 
+        String selectedCar = GameSetting.getCarsNumbers();
+        String[] selectedCarType = new String[selectedCar.length()];
+        int j = 0;
+        for (int i = 0; i < selectedCar.length(); i++) {
+            selectedCarType[j++] = selectedCar.substring(i, i + 1);
+        }
+
+        boolean isSelected;
         for (String carName : carImages) {
-            JCheckBox currentCheckBox = new JCheckBox(new ImageIcon(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Setting\\Show\\" + carName));
+            JCheckBox currentCheckBox;
+            String carType = carName.substring(0, 1);
+
+            isSelected = false;
+
+            for (String selectedCarTemp : selectedCarType) {
+                if (carType.equals(selectedCarTemp)) {
+                    isSelected = true;
+                    break;
+                }
+            }
+
+            currentCheckBox = new JCheckBox(new ImageIcon(Const.ROOT_PATH + Const.CAR_ROOT_IMAGE + "\\Setting\\Show\\" + carName));
+
+            if (!isSelected) {
+                currentCheckBox.setSelected(false);
+            } else {
+                currentCheckBox.setSelected(true);
+            }
             checkBoxesArrayList.add(currentCheckBox);
             controls.add(currentCheckBox);
         }
