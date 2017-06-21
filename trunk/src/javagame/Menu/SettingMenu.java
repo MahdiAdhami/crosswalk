@@ -27,8 +27,8 @@ public class SettingMenu extends Menu {
         frame.setContentPane(panel);
 
         JPanel controls = new JPanel(new GridLayout(6, 0));
-        JPanel labels = new JPanel(new GridLayout(6, 0));
-        JPanel submit = new JPanel(new GridLayout(1, 0));
+        JPanel labels = new JPanel(new GridLayout(7, 0));
+        JPanel submit = new JPanel(new GridLayout(2, 0));
         JPanel otherSetting = new JPanel(new GridLayout(1, 0));
 
         panel.add(controls, BorderLayout.WEST);
@@ -99,6 +99,7 @@ public class SettingMenu extends Menu {
         otherSetting.add(goToSheepSelectMenu);
         otherSetting.add(goToLineSelectMenu);
 
+        
         JButton saveChanges = CreateButton("ذخیره",
                 (ActionEvent e) -> {
                     boolean error = false;
@@ -128,7 +129,7 @@ public class SettingMenu extends Menu {
                 });
 
         submit.add(saveChanges);
-
+        
         JButton saveMap = CreateButton("ذخیره به عنوان مپ",
                 (ActionEvent e) -> {
                     boolean error = false;
@@ -170,6 +171,5 @@ public class SettingMenu extends Menu {
                 });
 
         submit.add(saveMap);
-
     }
 }
