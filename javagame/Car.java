@@ -18,7 +18,7 @@ public abstract class Car {
     // Create new random car
     public Car(float HeadPosition, int Speed, CarType CarType, Line Line) {
         this.HeadPosition = HeadPosition;
-        this.Speed = Speed * GameSetting.getCarsSpeed()/10;
+        this.Speed = Speed * GameSetting.getCarsSpeed();
         this.CarType = CarType;
         this.Line = Line;
     }

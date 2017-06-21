@@ -6,6 +6,7 @@ package javagame.Menu;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import javagame.Const;
 import javagame.InitGame;
@@ -40,6 +41,23 @@ public class SelectMapMenu extends Menu {
         }
 
         String[] buttonsName = buttons.list();
+
+        controls.add(CreateButton("بازی با تنظیمات ذخیره شده", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                GameSetting.SetDefaultSettingPath();
+                GameSetting.UpdateSettings();
+
+                if (AutoSheepMover) {
+                    InitGame start = new InitGame();
+                    start.AutoMoveSheep(250, 10);
+                } else {
+                    InitGame start = new InitGame();
+                    start.AutoCreateCar();
+                }
+            }
+        }));
 
         for (int i = 1; i <= buttonsName.length; i++) {
             JButton currentButton = CreateButton(buttonsName[i - 1], (ActionEvent event) -> {

@@ -40,7 +40,7 @@ public final class Const {
     public final static int CAR_COUNT = 4;
 
     // Cars Speed Rate
-    public final static int CREATE_CAR_SPEED_RATE = 100;
+    public final static int CREATE_CAR_SPEED_RATE = 30;
     public final static int CREATE_CAR_SLEEP_TIME = 3000;
     public final static int CREATE_CAR_MAX_SLEEP_TIME = 200;
 
