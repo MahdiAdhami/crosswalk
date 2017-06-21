@@ -1,10 +1,8 @@
 package javagame;
 
-import javax.swing.JOptionPane;
-
 public class CarLtr extends Car {
 
-    private float OtherCarSpeed;
+    public float OtherCarSpeed;
 
     // Constructor
     public CarLtr(int Speed, CarType CarType, Line Line) {
@@ -39,13 +37,12 @@ public class CarLtr extends Car {
             return;
         }
         if (getHeadPosition() >= InitGraphic.Sheep.getXPosition() && getEndPosition() <= InitGraphic.Sheep.getXPosition() + InitGraphic.Sheep.getSheepWidth()) {
-            InitGraphic.Sheep.gameOver();
+            InitGame.GameStop = true;
         }
     }
-    
-    // Car mover  method
+
     @Override
-    public void Move() {
+    public void MoveInLine() {
         float tempSpeed = getSpeed();
 
         if (HeadPosition - CarType.getCarWidth() > Const.GAME_WINDOWS_WIDTH) {

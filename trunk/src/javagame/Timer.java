@@ -2,6 +2,8 @@ package javagame;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Timer{
    private final static Date StartedTime = new Date();   
