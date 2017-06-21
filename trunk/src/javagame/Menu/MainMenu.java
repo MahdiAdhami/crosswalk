@@ -14,8 +14,8 @@ import javax.swing.border.EmptyBorder;
 
 public class MainMenu extends Menu {
 
-    public MainMenu(String Title, int Height, int Width) {
-        super(Title, Height, Width);
+    public MainMenu() {
+        super("شروع", 400, 300);
     }
 
     @Override
@@ -45,8 +45,8 @@ public class MainMenu extends Menu {
 
         JButton startGame = CreateButton("شروع بازی",
                 (ActionEvent e) -> {
-                    InitGame start = new InitGame();
-                    start.AutoCreateCar();
+                    SelectMapMenu selectMapMenu = new SelectMapMenu(false);
+                    selectMapMenu.Execute();
                 }
         );
         controls.add(startGame);//,BorderLayout.CENTER
@@ -66,15 +66,15 @@ public class MainMenu extends Menu {
 
         JButton autoGame = CreateButton("حرکت خودکار ادمک",
                 (ActionEvent e) -> {
-                    InitGame start = new InitGame();
-                    start.AutoMoveSheep(250, 10);
+                    SelectMapMenu selectMapMenu = new SelectMapMenu(true);
+                    selectMapMenu.Execute();
                 }
         );
         controls.add(autoGame);//,BorderLayout.CENTER
 
         JButton Setting = CreateButton("تنظیمات بازی",
                 (ActionEvent event) -> {
-                    GameSetting.setDefaultSettingPath();
+                    GameSetting.SetDefaultSettingPath();
                     GameSetting.UpdateSettings();
 
                     SettingMenu settingMenu = new SettingMenu("تنظیمات", 300, 600);
