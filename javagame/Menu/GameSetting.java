@@ -24,6 +24,8 @@ import org.xml.sax.SAXException;
 
 public class GameSetting {
 
+    private static String SettingPath = Const.MAIN_SETTING_FILE;
+
     private static int RtlLineCount;
     private static int LtrLineCount;
     private static int CrosswalkMiddlePosition;
@@ -33,8 +35,6 @@ public class GameSetting {
     private static int ChangedLinesDirections;
     private static float CarsSpeedFromUser;
     private static String CarsNumbers;
-    
-    private static String SettingPath = Const.MAIN_SETTING_FILE;
 
     /// Getter Methods
     public static int getAutoCreateCarRate() {
@@ -77,8 +77,8 @@ public class GameSetting {
     public static void setSettingPath(String path) {
         SettingPath = path;
     }
-
-    public static void setDefaultSettingPath() {
+//
+    public static void SetDefaultSettingPath() {
         SettingPath = Const.MAIN_SETTING_FILE;
     }
 

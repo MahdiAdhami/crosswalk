@@ -27,9 +27,6 @@ public class InitGame {
     public void AutoCreateCar() {
         boolean CreateReply = true;
 
-        GameSetting.setDefaultSettingPath();
-        GameSetting.UpdateSettings();
-
         Sheep.AutoMove = false;
         InitGraphic.Sheep.SaveChanges = CreateReply;
 

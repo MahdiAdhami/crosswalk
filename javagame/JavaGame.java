@@ -5,6 +5,7 @@ package javagame;
 
 import javagame.Menu.MainMenu;
 import javagame.Menu.SelectMapMenu;
+import javagame.Menu.SettingMenu;
 
 public class JavaGame {
     
@@ -12,8 +13,9 @@ public class JavaGame {
     public static void main(String[] args) {
 
         //Initialize main menu     
-        SelectMapMenu mainMenu = new SelectMapMenu();
+        MainMenu mainMenu = new MainMenu();
         mainMenu.Execute();
+
     }
 }
 

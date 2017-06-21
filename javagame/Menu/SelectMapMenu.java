@@ -15,8 +15,11 @@ import javax.swing.border.EmptyBorder;
 
 public class SelectMapMenu extends Menu {
 
-    public SelectMapMenu() {
+    private boolean AutoSheepMover;
+
+    public SelectMapMenu(boolean AutoSheepMover) {
         super("انتخاب مپ بازی", 500, 500);
+        this.AutoSheepMover = AutoSheepMover;
     }
 
     @Override
@@ -41,10 +44,20 @@ public class SelectMapMenu extends Menu {
         for (int i = 1; i <= buttonsName.length; i++) {
             JButton currentButton = CreateButton(buttonsName[i - 1], (ActionEvent event) -> {
                 JButton temp = (JButton) event.getSource();
-                System.out.println(temp.getText());
+
+                GameSetting.setSettingPath(Const.MAP_ROOT_ADDRESS + "\\" + temp.getText() + "\\Setting.xml");
+                GameSetting.UpdateSettings();
+
+                if (AutoSheepMover) {
+                    InitGame start = new InitGame();
+                    start.AutoMoveSheep(250, 10);
+                } else {
+                    InitGame start = new InitGame();
+                    start.AutoCreateCar();
+                }
+
             });
             controls.add(currentButton);
         }
     }
-
 }

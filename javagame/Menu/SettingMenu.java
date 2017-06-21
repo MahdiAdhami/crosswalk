@@ -3,6 +3,8 @@ package javagame.Menu;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import javagame.Const;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -119,12 +121,55 @@ public class SettingMenu extends Menu {
                         JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "سرعت ماشین نامعتبر ها", "سرعت ماشین ها", "بین", MenuConst.MIN_CARS_SPEED, MenuConst.MAX_CARS_SPEED), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                         error = true;
                     } else {
-                        GameSetting.setDefaultSettingPath();
+                        GameSetting.SetDefaultSettingPath();
                         GameSetting.SaveChanges();
                         frame.dispose();
                     }
                 });
 
         submit.add(saveChanges);
+
+        JButton saveMap = CreateButton("ذخیره به عنوان مپ",
+                (ActionEvent e) -> {
+                    boolean error = false;
+                    if (!GameSetting.setRtlLineCount(topLineCount.getValue())) {
+                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار لاین بالایی غیر معتبر", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_TOP_LINE_COUNT, MenuConst.MAX_TOP_LINE_COUNT), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                        error = true;
+                    } else if (!GameSetting.setLtrLineCount(bottomLineCount.getValue())) {
+                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "مقدار لاین پایینی غیر معتبر", "تعداد لاین چپ به راست", "بین", MenuConst.MIN_BOTTOM_LINE_COUNT, MenuConst.MAX_BOTTOM_LINE_COUNT), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                        error = true;
+                    } else if (!GameSetting.setCrosswalkMiddlePosition(crosswalkPosition.getValue())) {
+                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", " موقعیت خط عابر پیاده نامعتبر", "موقعیت خط عابر پیاده", "بین", MenuConst.MIN_CROSSWALK_POS, MenuConst.MAX_CROSSWALK_POS), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                        error = true;
+                    } else if (!GameSetting.setAutoCreateCarRate(createCarRate.getValue())) {
+                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "سرعت تولید ماشین نامعتبر", "سرعت تولید ماشین", "بین", MenuConst.MIN_CREATE_CAR_RATE, MenuConst.MAX_CREATE_CAR_RATE), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                        error = true;
+                    } else if (!GameSetting.setChangedLinesDirections((changeDirection.isSelected()) ? 1 : 0)) {
+                        JOptionPane.showMessageDialog(null, "جهت لاین نا معتبر است", "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                        error = true;
+                    } else if (!GameSetting.setCarsSpeed(carsSpeed.getValue())) {
+                        JOptionPane.showMessageDialog(null, String.format("%s %s %s(%d-%d)", "سرعت ماشین نامعتبر ها", "سرعت ماشین ها", "بین", MenuConst.MIN_CARS_SPEED, MenuConst.MAX_CARS_SPEED), "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
+                        error = true;
+                    } else {
+                        String name;
+                        while (true) {
+                            name = JOptionPane.showInputDialog("نامی برای مپ انتخاب کنید");
+                            if ("".equals(name.trim())) {
+                                JOptionPane.showMessageDialog(null, "یک نام معتبر وارد کنید", "خطا", JOptionPane.INFORMATION_MESSAGE);
+                            } else if (new File(Const.ROOT_PATH + Const.MAP_ROOT_ADDRESS + "\\" + name).exists()) {
+                                JOptionPane.showMessageDialog(null, "این نام قبلا ثبت شده", "خطا", JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                break;
+                            }
+                        }
+                        new File(Const.ROOT_PATH + Const.MAP_ROOT_ADDRESS + "\\" + name).mkdir();
+                        GameSetting.setSettingPath(Const.MAP_ROOT_ADDRESS + "\\" + name + "\\Setting.xml");
+                        GameSetting.SaveChanges();
+                        frame.dispose();
+                    }
+                });
+
+        submit.add(saveMap);
+
     }
 }
