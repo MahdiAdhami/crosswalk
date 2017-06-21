@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import javagame.Menu.GameSetting;
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 public final class Sheep {
 
@@ -17,8 +16,8 @@ public final class Sheep {
     private BufferedImage[] ImageOfSheep;
     private int ImageStatus;
     private String ImageCode;
-    public WriteReplyData WriteReplyData;
-    public boolean SaveChanges;
+    public ReplyMovie replySaving;
+
     public static boolean AutoMove = false;
 
     @Override
@@ -35,7 +34,7 @@ public final class Sheep {
     }
 
     public Sheep(int[] Rate, float PositionYOfSheep) {
-        this.ImageCode = String.valueOf(GameSetting.getSheepImageNumber() + 1);
+        ImageCode = "A";
         initImage();
         this.Rate = Rate;
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
@@ -45,10 +44,10 @@ public final class Sheep {
         try {
             ImageOfSheep = new BufferedImage[4];
 
-            ImageOfSheep[0] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Up")));
-            ImageOfSheep[1] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Down")));
-            ImageOfSheep[2] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Right")));
-            ImageOfSheep[3] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Left")));
+            ImageOfSheep[0] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Up")));
+            ImageOfSheep[1] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Down")));
+            ImageOfSheep[2] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Right")));
+            ImageOfSheep[3] = ImageIO.read(new File(Const.PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Left")));
 
             SheepSize = new float[]{ImageOfSheep[0].getWidth(), ImageOfSheep[0].getHeight()};
 
@@ -115,7 +114,6 @@ public final class Sheep {
 
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-
         if (keyCode == 84) {
             InitGame.GameStop = !InitGame.GameStop;
             SaveAndLoad saveGame = new SaveAndLoad();
@@ -127,24 +125,22 @@ public final class Sheep {
         }
         if (keyCode == KeyEvent.VK_UP || keyCode == 87) {
             keyPressed(87);
+            replySaving.appendSheepToFile(87);
         } else if (keyCode == KeyEvent.VK_DOWN || keyCode == 83) {
             keyPressed(83);
+            replySaving.appendSheepToFile(83);
 
         } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == 68) {
             keyPressed(68);
+            replySaving.appendSheepToFile(68);
 
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
             keyPressed(65);
-        }
-        if (PositionOfSheep[1] == -30) {
-            win();
+            replySaving.appendSheepToFile(65);
         }
     }
 
     public void keyPressed(int keyCode) {
-        if (SaveChanges) {
-            WriteReplyData.appendSheepToFile(keyCode);
-        }
         if (keyCode == 87) {
             goUp();
             CheckLine();
@@ -166,16 +162,20 @@ public final class Sheep {
         Rate = rate;
     }
 
-    public void win() {
-        InitGame.GameEnd = true;
-        JOptionPane.showMessageDialog(null, "بردی دیگه !", "اینجا آخر خطه!", JOptionPane.INFORMATION_MESSAGE);
-        System.exit(0);
+    public void setPosFromReply(float[] pos) {
+        PositionOfSheep = pos;
     }
 
-    public void gameOver() {
-        InitGame.GameEnd = true;
-        JOptionPane.showMessageDialog(null, "باختی جیگر!", "له شدی عزیزم", JOptionPane.INFORMATION_MESSAGE);
-        System.exit(0);
+    public void setImageStatus(int is) {
+        ImageStatus = is;
     }
 
+    public void setImageCode(String ic) {
+        ImageCode = ic;
+    }
+//    public static int lineIdForCrash()
+//    {
+//        int check = (int) ((PositionOfSheep[1]+30)/100);
+//        return check+1;
+//    }
 }

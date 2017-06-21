@@ -8,44 +8,32 @@ import java.util.logging.Logger;
 
 public class AutoMoveSheepForReply implements Runnable {
 
-    private String Path;
+    File sheepFile;
+    File timeFile;
 
-    public AutoMoveSheepForReply(String Path) {
-        this.Path = Path;
+    public AutoMoveSheepForReply(String path) {
+        sheepFile = new File(path + "\\sheepFile.txt");
+        timeFile = new File(path + "\\timerFile.txt");
     }
 
     @Override
     public void run() {
+
         Scanner sheepReader = null;
         try {
-            sheepReader = new Scanner(new File(Path + Const.REPLY_SHEEP_ADDRESS));
+            sheepReader = new Scanner(sheepFile);
         } catch (FileNotFoundException ex) {
-            System.out.println("AutoMoveSheepForReply run()" + ex);
+            Logger.getLogger(AutoMoveSheepForReply.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        if (sheepReader != null) {
-            Sheep.AutoMove = true;
-
-            while (sheepReader.hasNextLine()) {
-                String[] split = sheepReader.nextLine().split(",");
-                InitGraphic.Sheep.keyPressed(Integer.parseInt(split[0]));
-
-                try {
-                    long sleepTime = Long.parseLong(split[1]);
-//                    if (sleepTime > 15) {
-//                        sleepTime -= 15;
-//                    }
-                    Thread.sleep(sleepTime);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(AutoMoveSheepForReply.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+        Sheep.AutoMove = true;
+        while (sheepReader.hasNextLine()) {
+            String[] split = sheepReader.nextLine().split(",");
+            try {
+                Thread.sleep(Long.parseLong(split[1]));
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AutoMoveSheepForReply.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            sheepReader.close();
-        }
-    }
-}
+            InitGraphic.Sheep.keyPressed(Integer.parseInt(split[0]));
 
 //            String[] argsForSheep = sheepReader.nextLine().split(",");
 //
@@ -58,3 +46,8 @@ public class AutoMoveSheepForReply implements Runnable {
 //                    new int[]{Integer.parseInt(argsForSheep2[3]), Integer.parseInt(argsForSheep2[4])},
 //                    Integer.parseInt(argsForSheep2[5]), argsForSheep2[6]
 //            );
+        }
+        sheepReader.close();
+    }
+
+}

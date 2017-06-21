@@ -26,7 +26,7 @@ public class SaveAndLoad {
     }
 
     public final void initForSaveGame() {
-        File resumeFolder = new File(Const.ROOT_PATH);
+        File resumeFolder = new File(Const.PATH);
         if (!resumeFolder.exists()) {
             resumeFolder.mkdir();
         }
@@ -37,7 +37,7 @@ public class SaveAndLoad {
     }
 
     public boolean isExistResumeFile() {
-        return (new File(Const.ROOT_PATH + Const.SAVE_FILE_ADDRESS_LINE).exists() && new File(Const.ROOT_PATH + Const.SAVE_FILE_ADDRESS_SHEEP).exists());
+        return (new File(Const.PATH + Const.SAVE_FILE_ADDRESS_LINE).exists() && new File(Const.PATH + Const.SAVE_FILE_ADDRESS_SHEEP).exists());
     }
 
     public ArrayList<Line> LoadGame() {
@@ -46,9 +46,9 @@ public class SaveAndLoad {
         Scanner CarReader = null;
 
         try {
-            LinesReader = new Scanner(new File(Const.ROOT_PATH + LineFile));
-            CarReader = new Scanner(new File(Const.ROOT_PATH + CarFile));
-            SheepReader = new Scanner(new File(Const.ROOT_PATH + SheepFile));
+            LinesReader = new Scanner(new File(Const.PATH + LineFile));
+            CarReader = new Scanner(new File(Const.PATH + CarFile));
+            SheepReader = new Scanner(new File(Const.PATH + SheepFile));
 
             GameSetting.setSettingPath(SettingPathFile);
 
@@ -87,7 +87,7 @@ public class SaveAndLoad {
                     new int[]{Integer.parseInt(sheepStringSplited[3]), Integer.parseInt(sheepStringSplited[4])},
                     Integer.parseInt(sheepStringSplited[5]), sheepStringSplited[6]
             );
-            InitGraphic.Sheep.CheckLine();
+
 //            String[] argsForSheep = SheepReader.nextLine().split(",");
                 
 //            InitGraphic.Sheep.setPosFromReply(new float[]{Float.parseFloat(argsForSheep[1]), Float.parseFloat(argsForSheep[2])});
@@ -110,8 +110,8 @@ public class SaveAndLoad {
         PrintWriter writerForCars = null;
 
         try {
-            writerForCars = new PrintWriter(Const.ROOT_PATH + CarFile, "UTF-8");
-            writerForLine = new PrintWriter(Const.ROOT_PATH + LineFile, "UTF-8");
+            writerForCars = new PrintWriter(Const.PATH + CarFile, "UTF-8");
+            writerForLine = new PrintWriter(Const.PATH + LineFile, "UTF-8");
 
             GameSetting.writeSetting(SettingPathFile);
 
@@ -135,7 +135,7 @@ public class SaveAndLoad {
     private void SaveSheepForResume() {
         PrintWriter writerForSheep = null;
         try {
-            writerForSheep = new PrintWriter(Const.ROOT_PATH + SheepFile, "UTF-8");
+            writerForSheep = new PrintWriter(Const.PATH + SheepFile, "UTF-8");
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
 
         }

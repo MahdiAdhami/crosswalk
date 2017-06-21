@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javagame.Const;
 import javagame.InitGame;
+import javagame.Line;
 import javagame.SaveAndLoad;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -45,6 +46,7 @@ public class MainMenu extends Menu {
 
         JButton startGame = CreateButton("شروع بازی",
                 (ActionEvent e) -> {
+
                     InitGame start = new InitGame();
                     start.AutoCreateCar();
                 }
@@ -53,7 +55,7 @@ public class MainMenu extends Menu {
 
         JButton showRepliesButtons = CreateButton("مشاهده بازی ها",
                 (ActionEvent e) -> {
-                    if (new File(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS).exists()) {
+                    if (new File(Const.PATH + "\\src\\resources\\Replies").list().length > 0) {
                         ReplyButton replyButton = new ReplyButton("بازی های قابل مشاهده", 500, 500);
                         replyButton.Execute();
                     } else {
@@ -77,7 +79,7 @@ public class MainMenu extends Menu {
                     GameSetting.setDefaultSettingPath();
                     GameSetting.UpdateSettings();
 
-                    SettingMenu settingMenu = new SettingMenu("تنظیمات", 300, 600);
+                    SettingMenu settingMenu = new SettingMenu("تنظیمات", 300, 500);
                     settingMenu.Execute();
                 }
         );

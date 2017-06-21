@@ -6,17 +6,17 @@ import javagame.Menu.GameSetting;
 public class InitGame {
 
     public static boolean GameStop;
-    public static boolean GameEnd;
+    public static boolean RunAfterWait;
 
     public InitGame() {
         InitGame.GameStop = false;
-        InitGame.GameEnd = false;
+        InitGame.RunAfterWait = true;
     }
-
+    
     public void AutoMoveSheep(long sleepInMilliSecond, int randRate) {
-        AutoCreateCar();
-
         Sheep.AutoMove = true;
+        
+        AutoCreateCar();
 
         // Create instance an object for auto move sheep
         Thread threadAutoMoveSheep = new Thread(new AutoMoveSheep(sleepInMilliSecond, randRate));
@@ -25,19 +25,18 @@ public class InitGame {
 
     // Auto create Cars Method
     public void AutoCreateCar() {
-        boolean CreateReply = true;
-
         GameSetting.setDefaultSettingPath();
         GameSetting.UpdateSettings();
 
-        Sheep.AutoMove = false;
-        InitGraphic.Sheep.SaveChanges = CreateReply;
+        ReplyMovie replySaving = new ReplyMovie();
 
         // Create instance an object for create cars in a thread
-        CreateCarInNewGame autoCreateCar = new CreateCarInNewGame(CreateReply);
+        AutoCreateCar autoCreateCar = new AutoCreateCar(replySaving);
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
+        InitGraphic.Sheep.replySaving = replySaving;
+
         Thread threadBase = new Thread(base);
         threadBase.start();
 
@@ -45,22 +44,21 @@ public class InitGame {
         Thread threadAutoCreateCar = new Thread(autoCreateCar);
         autoCreateCar.InitLine();
         threadAutoCreateCar.start();
+
     }
 
     public void LoadResumeGame(ArrayList<Line> lines) {
-        boolean CreateReply = false;
-
         GameSetting.setSettingPath(Const.SAVE_FILE_ADDRESS_SETTING);
         GameSetting.UpdateSettings();
 
-        InitGraphic.Sheep.SaveChanges = CreateReply;
-        Sheep.AutoMove = false;
+        ReplyMovie replySaving = new ReplyMovie();
 
         // Create instance an object for create cars in a thread
-        CreateCarInNewGame autoCreateCar = new CreateCarInNewGame(CreateReply);
+        AutoCreateCar autoCreateCar = new AutoCreateCar(replySaving);
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLines());
+        InitGraphic.Sheep.replySaving = replySaving;
         autoCreateCar.InitLine(lines);
 
         Thread threadBase = new Thread(base);
@@ -72,26 +70,26 @@ public class InitGame {
     }
 
     public void replyTheMovie(String path) {
-        boolean CreateReply = false;
+        Sheep.AutoMove = true;
 
-        GameSetting.setSettingPath(Const.REPLY_ROOT_ADDRESS + path + Const.REPLY_SETTING_ADDRESS);
+        GameSetting.setSettingPath("\\src\\resources\\Replies\\" + path + "\\Setting.xml");
         GameSetting.UpdateSettings();
 
-        InitGraphic.Sheep.SaveChanges = CreateReply;
-        Sheep.AutoMove = false;
+        AutoCreateCar autoCreateCar = new AutoCreateCar();
+        autoCreateCar.InitLine();
 
-        CreateCarInReply reply = new CreateCarInReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path + Const.REPLY_CAR_ADDRESS);
-        reply.InitLine();
-        Thread threadReply = new Thread(reply);
-        threadReply.start();
-
-        InitGraphic base = new InitGraphic(reply.getLines());
+        InitGraphic base = new InitGraphic(autoCreateCar.getLines());
         Thread threadBase = new Thread(base);
         threadBase.start();
 
-        AutoMoveSheepInReply sheepReply = new AutoMoveSheepInReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path);
+        ReplyMovie reply = new ReplyMovie(Const.PATH + "\\src\\resources\\Replies\\" + path + "\\carFile.txt", autoCreateCar.getLines());
+        Thread threadReply = new Thread(reply);
+        threadReply.start();
+
+        AutoMoveSheepForReply sheepReply = new AutoMoveSheepForReply(Const.PATH + "\\src\\resources\\Replies\\" + path);
         Thread threadReplySheep = new Thread(sheepReply);
         threadReplySheep.start();
+
     }
 
 }
