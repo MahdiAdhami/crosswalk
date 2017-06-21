@@ -1,19 +1,19 @@
 package javagame.Menu;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import javagame.Const;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
@@ -46,6 +46,11 @@ public abstract class Menu {
         frame.setSize(Width, Height);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
+        try {
+            frame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
+        } catch (IOException ex) {
+            System.err.println("Menu SetInit() " + ex);
+        }
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation((dimension.width / 2) - (Width / 2), (dimension.height / 2) - (Height / 2));
     }
@@ -70,7 +75,7 @@ public abstract class Menu {
         SpinnerModel model = new SpinnerNumberModel(defaultValue, minValue, maxValue, step);
         //SpinnerModel model = new SpinnerNumberModel(defaultValue, -100, 100, step);
         JSpinner spinner = new JSpinner(model);
-        
+
         spinner.setName(Title);
         spinner.setToolTipText(Title);
 
@@ -86,10 +91,15 @@ public abstract class Menu {
         return label;
     }
 
-    protected JLabel CreateMargin(int top,int right,int bottom,int left) {
+    protected JLabel CreateMargin(int top, int right, int bottom, int left) {
         JLabel label = new JLabel();
         label.setBorder(new EmptyBorder(top, left, bottom, right));
         return label;
+    }
+
+    protected JCheckBox CreateCheckBox(String title, boolean isSelected) {
+        JCheckBox checkBox = new JCheckBox(title, isSelected);
+        return checkBox;
     }
 
     protected abstract void CreatePanel();

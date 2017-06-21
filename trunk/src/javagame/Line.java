@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javagame.Menu.GameSetting;
 
 public final class Line {
-
+    // Line Id
     private int Id;
     private int MaxCarSpeed;
     private int MinCarSpeed;
@@ -78,7 +78,20 @@ public final class Line {
     public void AccidentCheck() {
 
     }
-    
+
+    public boolean isEmptyForTakover(Car newCar) {
+//        for (Car car : Cars) {
+//            if (car.getHeadPosition() >= newCar.getEndPosition() || newCar.getHeadPosition() >= car.getEndPosition()) {
+//                return false;
+//            }
+//        }
+        return true;
+    }
+
+    public void addCar(Car newCar) {
+        Cars.add(newCar);
+    }
+
     @Override
     public String toString() {
         return String.format("Line,%d,%d,%d,%s,%d,%s,%d", Id, MaxCarSpeed, MinCarSpeed, Direction == true ? "1" : "0", Position, CanCarOvertaking == true ? "1" : "0", CarId);
@@ -125,14 +138,14 @@ public final class Line {
 
         if (Direction == Const.LINE_DIRECTION_LTR) {
 
-            result[0] = middle - Const.CROSSWALK_WIDTH / 2 - Const.CROSSWALK_CHANGE_SPEED_DISTANCE;
+            result[0] = middle - Const.CROSSWALK_WIDTH / 2 - Const.CAR_DISTANCE_TO_CROSSWALK_FOR_DECREASE_SPEED;
             result[1] = middle + Const.CROSSWALK_WIDTH / 2;
 
             return result;
 
         } else {
             result[0] = middle - Const.CROSSWALK_WIDTH / 2;
-            result[1] = middle + Const.CROSSWALK_WIDTH / 2 + Const.CROSSWALK_CHANGE_SPEED_DISTANCE;
+            result[1] = middle + Const.CROSSWALK_WIDTH / 2 + Const.CAR_DISTANCE_TO_CROSSWALK_FOR_DECREASE_SPEED;
 
             return result;
         }
@@ -140,6 +153,14 @@ public final class Line {
 
     public void setCarId(int id) {
         CarId = id;
+    }
+
+    public void rtlTakeOver() {
+
+    }
+
+    public void ltrTakeOver(int lineId) {
+
     }
 
 }
