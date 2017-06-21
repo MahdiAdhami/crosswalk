@@ -1,3 +1,6 @@
+/*
+Setting For Auto Sheep Move
+ */
 package javagame.Menu;
 
 import java.awt.BorderLayout;
@@ -11,10 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.border.EmptyBorder;
 
-public class SettingMenu extends Menu {
+/**
+ *
+ * @author MahdiAdhami
+ */
+public class AutoSheepMoveSetting extends Menu {
 
-    public SettingMenu(String Title, int Height, int Width) {
-        super(Title, Height, Width);
+    public AutoSheepMoveSetting(int Height, int Width) {
+        super("تنظیمات حرکت خودکار ادمک", Height, Width);
     }
 
     @Override

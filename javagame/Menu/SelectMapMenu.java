@@ -1,3 +1,6 @@
+/*
+Select Game Map 
+ */
 package javagame.Menu;
 
 import java.awt.BorderLayout;
@@ -10,10 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class ReplyButton extends Menu {
+public class SelectMapMenu extends Menu {
 
-    public ReplyButton(String Title, int Height, int Width) {
-        super(Title, Height, Width);
+    public SelectMapMenu() {
+        super("انتخاب مپ بازی", 500, 500);
     }
 
     @Override
@@ -28,15 +31,17 @@ public class ReplyButton extends Menu {
         JPanel controls = new JPanel(new GridLayout(6, 0));
         panel.add(controls, BorderLayout.CENTER);
 
-        buttons = new File(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS);
+        buttons = new File(Const.ROOT_PATH + Const.MAP_ROOT_ADDRESS);
+        if (!buttons.exists()) {
+            buttons.mkdir();
+        }
+
         String[] buttonsName = buttons.list();
 
         for (int i = 1; i <= buttonsName.length; i++) {
             JButton currentButton = CreateButton(buttonsName[i - 1], (ActionEvent event) -> {
                 JButton temp = (JButton) event.getSource();
-
-                InitGame initReply = new InitGame();
-                initReply.replyTheMovie("\\" + temp.getText());
+                System.out.println(temp.getText());
             });
             controls.add(currentButton);
         }

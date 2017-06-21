@@ -6,11 +6,7 @@
 package javagame.Menu;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javagame.Const;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,7 +18,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -34,7 +29,12 @@ public class GameSetting {
     private static int CrosswalkMiddlePosition;
     private static int AutoCreateCarRate;
     private static int LineImageNumber;
-    private static String SettingPath = Const.SETTING_FILE;
+    private static int SheepImageNumber;
+    private static int ChangedLinesDirections;
+    private static float CarsSpeedFromUser;
+    private static String CarsNumbers;
+    
+    private static String SettingPath = Const.MAIN_SETTING_FILE;
 
     /// Getter Methods
     public static int getAutoCreateCarRate() {
@@ -52,9 +52,25 @@ public class GameSetting {
     public static int getCrosswalkMiddlePosition() {
         return CrosswalkMiddlePosition;
     }
-    
+
     public static int getLineImageNumber() {
         return LineImageNumber;
+    }
+
+    public static int getSheepImageNumber() {
+        return SheepImageNumber;
+    }
+
+    public static int getChangedLinesDirections() {
+        return ChangedLinesDirections;
+    }
+
+    public static String getCarsNumbers() {
+        return CarsNumbers;
+    }
+
+    public static float getCarsSpeed() {
+        return CarsSpeedFromUser;
     }
 
     /// Setter Methods
@@ -63,7 +79,7 @@ public class GameSetting {
     }
 
     public static void setDefaultSettingPath() {
-        SettingPath = Const.SETTING_FILE;
+        SettingPath = Const.MAIN_SETTING_FILE;
     }
 
     public static boolean setRtlLineCount(Object value) {
@@ -86,8 +102,11 @@ public class GameSetting {
 
     public static boolean setCrosswalkMiddlePosition(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
-        CrosswalkMiddlePosition = valueAsInt;
-        return true;
+        if (valueAsInt >= MenuConst.MIN_CROSSWALK_POS && valueAsInt <= MenuConst.MAX_CROSSWALK_POS) {
+            CrosswalkMiddlePosition = valueAsInt;
+            return true;
+        }
+        return false;
     }
 
     public static boolean setAutoCreateCarRate(Object value) {
@@ -97,13 +116,39 @@ public class GameSetting {
             return true;
         }
         return false;
-                
     }
-    
+
+    public static boolean setChangedLinesDirections(Object value) {
+        int valueAsInt = Integer.parseInt(value.toString().trim());
+        if (valueAsInt >= MenuConst.MIN_LINE_DIRECTION && valueAsInt <= MenuConst.MAX_LINE_DIRECTION) {
+            ChangedLinesDirections = valueAsInt;
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean setCarsNumbers(Object value) {
+        String valueAsString = value.toString().trim();
+        CarsNumbers = valueAsString;
+        return true;
+    }
+
     public static boolean setLineImageNumber(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
-        if (valueAsInt >= MenuConst.MIN_LINE_IMAGE && valueAsInt <= MenuConst.MAX_LINE_IMAGE) {
-            LineImageNumber = valueAsInt;
+        LineImageNumber = valueAsInt;
+        return true;
+    }
+
+    public static boolean setSheepImageNumber(Object value) {
+        int valueAsInt = Integer.parseInt(value.toString().trim());
+        SheepImageNumber = valueAsInt;
+        return true;
+    }
+
+    public static boolean setCarsSpeed(Object value) {
+        Float valueAsFloat = Float.parseFloat(value.toString().trim());
+        if (valueAsFloat >= MenuConst.MIN_CARS_SPEED && valueAsFloat <= MenuConst.MAX_CARS_SPEED) {
+            CarsSpeedFromUser = valueAsFloat;
             return true;
         }
         return false;
@@ -119,7 +164,7 @@ public class GameSetting {
 
     public static void readSetting(String pathAddress) {
         try {
-            String path = Const.PATH + pathAddress;
+            String path = Const.ROOT_PATH + pathAddress;
             File inputFile = new File(path);
 
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -149,8 +194,16 @@ public class GameSetting {
                         setCrosswalkMiddlePosition(eElement.getTextContent());
                     } else if (SettingConst.AutoCreateCarRate.equals(eElement.getNodeName())) {
                         setAutoCreateCarRate(eElement.getTextContent());
+                    } else if (SettingConst.SheepImageNumber.equals(eElement.getNodeName())) {
+                        setSheepImageNumber(eElement.getTextContent());
+                    } else if (SettingConst.LineDirection.equals(eElement.getNodeName())) {
+                        setChangedLinesDirections(eElement.getTextContent());
+                    } else if (SettingConst.CarsNumbers.equals(eElement.getNodeName())) {
+                        setCarsNumbers(eElement.getTextContent());
                     } else if (SettingConst.LineImageNumber.equals(eElement.getNodeName())) {
                         setLineImageNumber(eElement.getTextContent());
+                    } else if (SettingConst.CarsSpeed.equals(eElement.getNodeName())) {
+                        setCarsSpeed(eElement.getTextContent());
                     }
                 }
             }
@@ -177,33 +230,48 @@ public class GameSetting {
             Element firstname = doc.createElement(SettingConst.RtlLineCount);
             firstname.appendChild(doc.createTextNode(String.format("%d", getRtlLineCount())));
             staff.appendChild(firstname);
-            
+
             firstname = doc.createElement(SettingConst.LtrLineCount);
             firstname.appendChild(doc.createTextNode(String.format("%d", getLtrLineCount())));
             staff.appendChild(firstname);
-            
+
             firstname = doc.createElement(SettingConst.AutoCreateCarRate);
             firstname.appendChild(doc.createTextNode(String.format("%d", getAutoCreateCarRate())));
             staff.appendChild(firstname);
-            
+
             firstname = doc.createElement(SettingConst.CrosswalkMiddlePosition);
             firstname.appendChild(doc.createTextNode(String.format("%d", getCrosswalkMiddlePosition())));
             staff.appendChild(firstname);
-            
+
             firstname = doc.createElement(SettingConst.LineImageNumber);
             firstname.appendChild(doc.createTextNode(String.format("%d", getLineImageNumber())));
             staff.appendChild(firstname);
 
+            firstname = doc.createElement(SettingConst.SheepImageNumber);
+            firstname.appendChild(doc.createTextNode(String.format("%d", getSheepImageNumber())));
+            staff.appendChild(firstname);
+
+            firstname = doc.createElement(SettingConst.LineDirection);
+            firstname.appendChild(doc.createTextNode(String.format("%d", getChangedLinesDirections())));
+            staff.appendChild(firstname);
+
+            firstname = doc.createElement(SettingConst.CarsNumbers);
+            firstname.appendChild(doc.createTextNode(String.format("%s", getCarsNumbers())));
+            staff.appendChild(firstname);
+
+            firstname = doc.createElement(SettingConst.CarsSpeed);
+            firstname.appendChild(doc.createTextNode(String.format("%f", getCarsSpeed())));
+            staff.appendChild(firstname);
 
             // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(Const.PATH + path));
+            StreamResult result = new StreamResult(new File(Const.ROOT_PATH + path));
 
             transformer.transform(source, result);
 
-        }catch (ParserConfigurationException | TransformerException ex) {
+        } catch (ParserConfigurationException | TransformerException ex) {
             System.err.println("Setting writeSetting() " + ex);
         }
 
@@ -256,7 +324,6 @@ public class GameSetting {
 //            System.err.println("Setting writeSetting() " + ex);
 //        }
 //    }
-
 }
 
 // try {

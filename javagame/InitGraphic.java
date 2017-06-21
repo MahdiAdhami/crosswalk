@@ -28,30 +28,38 @@ public class InitGraphic extends JPanel implements Runnable {
     // Line Image
     private Image LineImage;
 
+    // Middle line Image
+    private Image MiddleLineImage;
+
+    // Top line count
+    private final int TopLineCount;
+
     // Sheep
-    public static Sheep Sheep = new Sheep(new int[]{5, 25}, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
+    public static Sheep Sheep = new Sheep(new int[]{5, 25}, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
 
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
         super();
         this.Lines = Lines;
-        SetInit();
+        setInit();
         this.MiddleOfCrosswalkPosition = GameSetting.getCrosswalkMiddlePosition();
+        TopLineCount = (GameSetting.getChangedLinesDirections() == 0) ? GameSetting.getRtlLineCount() : GameSetting.getLtrLineCount();
     }
 
     // Initialize game window
-    private void SetInit() {
+    private void setInit() {
         JFrame gameFrame = new JFrame(Const.GAME_NAME);
 
         try {
-            CrosswalkImage = ImageIO.read(new File(Const.PATH + Const.CROSSWALK_IMAGE));
-            LineImage = ImageIO.read(new File(Const.PATH + Const.LINE_IMAGE.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
-            gameFrame.setIconImage(ImageIO.read(new File(Const.PATH + Const.GAME_ICON)));
+            CrosswalkImage = ImageIO.read(new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE));
+            LineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.LINE_IMAGE.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
+            MiddleLineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE));
+            gameFrame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
         } catch (IOException ex) {
             System.err.println("InitGraphic SetInit() " + ex);
         }
 
-        // Add listeners for mouse and keyboard event
+        // Add listeners for mouse and keyboard events
         GameListener gameListener = new GameListener(this.Lines);
 
         gameFrame.addKeyListener(gameListener.KeyListener);
@@ -60,7 +68,7 @@ public class InitGraphic extends JPanel implements Runnable {
         //
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        int gameHeight = (GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT + 4 * Const.TOP_MARGIN;
+        int gameHeight = (GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT + 4 * Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT;
         gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, gameHeight);
         gameFrame.setVisible(true);
 //        gameFrame.setAlwaysOnTop(true);
@@ -75,6 +83,7 @@ public class InitGraphic extends JPanel implements Runnable {
         gameFrame.add(this);
     }
 
+    // Over ride paint method for draw object 
     @Override
     public void paintComponent(Graphics g) {
 
@@ -88,8 +97,13 @@ public class InitGraphic extends JPanel implements Runnable {
             }
         });
 
+        // Draw Midde lines
+        for (int i = 1; i < (Const.GAME_WINDOWS_WIDTH); i += Const.MIDDLE_LINE_WIDTH) {
+            g.drawImage(MiddleLineImage, i, Const.TOP_MARGIN + (Const.LINE_HEIGHT * TopLineCount), this);
+        }
+
         // Draw crosswalk
-        for (int i = 0; i < (Const.LINE_HEIGHT * (Lines.size())) / Const.CROSSWALK_HEIGHT; i++) {
+        for (int i = 0; i < (Const.LINE_HEIGHT * (Lines.size()) + Const.MIDDLE_LINE_WIDTH) / Const.CROSSWALK_HEIGHT; i++) {
             g.drawImage(CrosswalkImage, MiddleOfCrosswalkPosition - Const.CROSSWALK_WIDTH / 2, (i * Const.CROSSWALK_HEIGHT) + Const.TOP_MARGIN, this);
         }
 
@@ -103,9 +117,8 @@ public class InitGraphic extends JPanel implements Runnable {
                         -> {
                     g.setFont(new Font("tahoma", 0, 30));
                     g.setColor(Color.red);
-                    //  g.drawString(String.format("%d", carTemp.getId()), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2);
-
-                    g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + carTemp.getCarType().getCarHeight() / 2, this);
+                    g.drawString(String.format("%d", carTemp.getId()), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
+                    g.drawImage(carTemp.getCarType().getImage(), (int) carTemp.getPositionForDraw(), Linetemp.getPosition() + (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2, this);
                 });
             });
 
@@ -133,25 +146,21 @@ public class InitGraphic extends JPanel implements Runnable {
             if (InitGame.GameStop) {
                 continue;
             }
+            if (InitGame.GameEnd) {
+                break;
+            }
             try {
                 Lines.stream().forEach((Line Linetemp) -> {
                     Linetemp.getCars().stream().forEach((Car carTemp) -> {
-                        carTemp.MoveInLine();
+                        carTemp.Move();
                     });
                 });
 
+                // Check cars accident
+                checkCarAccident();
+
                 // Repaint panel
                 repaint();
-
-                // Run after wait
-                if (InitGame.RunAfterWait) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception ex) {
-                        System.err.println("InitGraphic paintComponent() 1 " + ex);
-                    }
-                    InitGame.RunAfterWait = false;
-                }
 
                 // Sleep time for repaint again
                 Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
@@ -160,6 +169,43 @@ public class InitGraphic extends JPanel implements Runnable {
                 System.err.println("InitGraphic run() " + ex.getMessage());
             }
         }
+    }
+
+    public void checkCarAccident() {
+        Lines.stream().forEach((Line Linetemp) -> {
+            Linetemp.getCars().stream().forEach((Car carTemp) -> {
+                Linetemp.getCars().stream().forEach((Car carTemp2) -> {
+                    if (carTemp.getId() - 1 == carTemp2.getId()) {
+                        if (Linetemp.getDirection() == Const.LINE_DIRECTION_LTR) {
+                            if (carTemp.getHeadPosition() >= carTemp2.getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+//
+//                                        if (carTemp.Line.CanCarOvertaking) {
+//                                            carTemp.Line.ltrTakeOver(carTemp.Line.getId());
+////                                            Line li = Lines.get(carTemp.Line.getId() - 2);
+//                                            carTemp.Line.Dispose(carTemp);
+////                                            li.addCar(carTemp);
+//                                        } else {
+                                carTemp.Speed = carTemp2.getSpeed();
+//                                        }
+
+                                // Line li = Lines.get(carTemp.Line.getId() - 1);
+//                                        carTemp.Line.Dispose(carTemp);
+//                                        li.addCar(carTemp);
+//                                        if (carTemp.Line.CanCarOvertaking && carTemp.Line.isEmptyForTakover(carTemp)) {
+//                                            Line li = Lines.get(carTemp.Line.getId());
+//                                            carTemp.Line.Dispose(carTemp);
+//                                            li.addCar(carTemp);
+//                                        } else {
+                                //carTemp.Speed = carTemp2.getSpeed();
+//                                        }
+                            }
+                        } else if (carTemp.getHeadPosition() <= carTemp2.getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+                            carTemp.Speed = carTemp2.getSpeed();
+                        }
+                    }
+                });
+            });
+        });
     }
 
 }
