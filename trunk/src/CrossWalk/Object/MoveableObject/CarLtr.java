@@ -2,13 +2,15 @@ package CrossWalk.Object.MoveableObject;
 
 import CrossWalk.Object.Line;
 import CrossWalk.Const;
+import CrossWalk.InitGame;
 import CrossWalk.InitGraphic;
+import java.util.ArrayList;
 
 public class CarLtr extends Car {
 
     // Constructor
     public CarLtr(int Speed, CarType CarType, Line Line) {
-        super((-1) * CarType.getCarWidth(), Speed, CarType, Line);
+        super(0, Speed, CarType, Line);
     }
 
     public CarLtr(float head, int Speed, CarType CarType, Line Line) {
@@ -46,7 +48,7 @@ public class CarLtr extends Car {
     // Car mover  method
     @Override
     public void move() {
-        float tempSpeed = getSpeed();
+        float tempSpeed = getNowSpeed();
 
         if (getHeadPosition() - getCarType().getCarWidth() > Const.GAME_WINDOWS_WIDTH) {
             try {
@@ -94,11 +96,52 @@ public class CarLtr extends Car {
 //                InitGame.RunAfterWait = true;
             return 0;
         }
-        return super.getSpeed();
+        return super.getNowSpeed();
 
 //        } catch (Exception ex) {
 ////                System.err.println("CarLtr isNeartheOtherCar() " + ex);
 //        }
+    }
+
+    @Override
+    public boolean isEnoughSpaceForOverTaking(Line line) {
+//        for (Car cars : line.getCars()) {
+////            if (cars.getHeadPosition() + cars.getCarType().getCarWidth() < this.getHeadPosition()
+////                    && cars.getEndPosition() - cars.getCarType().getCarWidth() > this.getEndPosition()) {
+////                return false;
+////            }
+//            if (cars.getHeadPosition() + cars.getCarType().getCarWidth() < this.getHeadPosition()
+//                    && cars.getEndPosition() - cars.getCarType().getCarWidth() > this.getEndPosition()) {
+//                return false;
+//            }
+//        }
+        return true;
+    }
+
+    @Override
+    public void checkCarAccident(ArrayList<Line> lines) {
+        Car carTemp = this;
+        for (Car carTemp2 : super.getLine().getCars()) {
+            carTemp.TempCarSpeed = 0;
+            if (carTemp.getId() - 1 == carTemp2.getId()) {
+                if (carTemp.getHeadPosition() >= carTemp2.getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+
+                    carTemp.TempCarSpeed = (carTemp2.getNowSpeed());
+//                    if (carTemp.getLine().getCanCarOvertaking()) {
+//                        if (carTemp.isEnoughSpaceForOverTaking()) {
+//                            carTemp.TempCarSpeed = (carTemp2.getNowSpeed());
+//                        } else {
+//                            carTemp.TempCarSpeed = (carTemp2.getNowSpeed());
+//                        }
+//                    } else {
+//                        carTemp.TempCarSpeed = (carTemp2.getNowSpeed());
+//                    }
+
+                }
+                return;
+
+            }
+        }
     }
 
 }

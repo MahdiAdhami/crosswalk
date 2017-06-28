@@ -3,6 +3,7 @@ package CrossWalk.Object.MoveableObject;
 import CrossWalk.Object.Line;
 import CrossWalk.Const;
 import CrossWalk.InitGraphic;
+import java.util.ArrayList;
 
 public class CarRtl extends Car {
 
@@ -35,7 +36,7 @@ public class CarRtl extends Car {
 
     @Override
     public void move() {
-        float tempSpeed = getSpeed();
+        float tempSpeed = getNowSpeed();
 
         if (getEndPosition() < (-1) * getCarType().getCarWidth()) {
             getLine().disposeCar(this);
@@ -60,17 +61,37 @@ public class CarRtl extends Car {
     @Override
     public float getSpeedNearOtherCar() {
 //        try {
-////            float otherCarSpeed = Line.getCars().get(super.getId() - 1).getSpeed();
+////            float otherCarSpeed = Line.getCars().get(super.getId() - 1).getNowSpeed();
 ////            return otherCarSpeed * Const.CHANGE_SPEED_RATE_DISTANCE_FOR_REACH;
 //        } catch (Exception ex) {
 //            System.err.println("Car getSpeedNearOtherCar() :" + ex);
-//            return getSpeed();
+//            return getNowSpeed();
 //        }
         return 0;
     }
 
     @Override
     public boolean isNeartheOtherCar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void checkCarAccident(ArrayList<Line> lines) {
+        Car carTemp = this;
+        for (Car carTemp2 : super.getLine().getCars()) {
+            carTemp.TempCarSpeed = 0;
+            if (carTemp.getId() - 1 == carTemp2.getId()) {
+                if (carTemp.getHeadPosition() <= carTemp2.getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+                    carTemp.setSpeed(carTemp2.getNowSpeed());
+                }
+                return;
+
+            }
+        }
+    }
+
+    @Override
+    public boolean isEnoughSpaceForOverTaking(Line line) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
