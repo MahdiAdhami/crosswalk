@@ -120,8 +120,8 @@ public class InitGraphic extends JPanel implements Runnable {
                         -> {
                     g.setFont(new Font("tahoma", 0, 30));
                     g.setColor(Color.red);
-                    g.drawString(String.format("%d", carTemp.getId()),carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw()+ (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
-                    g.drawImage(carTemp.getCarType().getImage(),carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2, this);
+                    g.drawString(String.format("%d-%.1f-%.1f", carTemp.getId(), carTemp.getSpeed(), carTemp.TempCarSpeed), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
+                    g.drawImage(carTemp.getCarType().getImage(), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2, this);
                 });
             });
 
@@ -154,14 +154,13 @@ public class InitGraphic extends JPanel implements Runnable {
             }
             try {
                 Lines.stream().forEach((Line Linetemp) -> {
-                    Linetemp.getCars().stream().forEach((Car carTemp) -> {
+                    Linetemp.getCars().stream().forEach((carTemp) -> {
                         carTemp.move();
+                        carTemp.checkCarAccident(Lines);
                     });
                 });
 
                 // Check cars accident
-                checkCarAccident();
-
                 // Repaint panel
                 repaint();
 
@@ -169,50 +168,50 @@ public class InitGraphic extends JPanel implements Runnable {
                 Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
 
             } catch (Exception ex) {
-                System.err.println("InitGraphic run() " + ex.getMessage());
+                System.err.println("InitGraphic run() " + ex);
             }
         }
     }
 
-    public void checkCarAccident() {
-        Lines.stream().forEach((Line Linetemp) -> {
-            Linetemp.getCars().stream().forEach((Car carTemp) -> {
-                Linetemp.getCars().stream().forEach((Car carTemp2) -> {
-                    if (carTemp.getId() - 1 == carTemp2.getId()) {
-                        if (Linetemp.getDirection() == Const.LINE_DIRECTION_LTR) {
-                            if (carTemp.getHeadPosition() >= carTemp2.getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+//    public void checkCarAccident() {
+//        Lines.stream().forEach((Line Linetemp) -> {
+//            Linetemp.getCars().stream().forEach((Car carTemp) -> {
+//                Linetemp.getCars().stream().forEach((Car carTemp2) -> {
+//                    if (carTemp.getId() - 1 == carTemp2.getId()) {
+//                        if (Linetemp.getDirection() == Const.LINE_DIRECTION_LTR) {
+//                            if (carTemp.getHeadPosition() >= carTemp2.getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+////
+////                                        if (carTemp.Line.CanCarOvertaking) {
+////                                            carTemp.Line.ltrTakeOver(carTemp.Line.getId());
+//////                                            Line li = Lines.get(carTemp.Line.getId() - 2);
+////                                            carTemp.Line.disposeCar(carTemp);
+//////                                            li.addCar(carTemp);
+////                                        } else {
+//                                carTemp.setSpeed(carTemp2.getNowSpeed());
+////                                        }
 //
-//                                        if (carTemp.Line.CanCarOvertaking) {
-//                                            carTemp.Line.ltrTakeOver(carTemp.Line.getId());
-////                                            Line li = Lines.get(carTemp.Line.getId() - 2);
-//                                            carTemp.Line.disposeCar(carTemp);
+//                                // Line li = Lines.get(carTemp.Line.getId() - 1);
+////                                        carTemp.Line.disposeCar(carTemp);
+////                                        li.addCar(carTemp);
+////                                        if (carTemp.Line.CanCarOvertaking && carTemp.Line.isEmptyForTakover(carTemp)) {
+////                                            Line li = Lines.get(carTemp.Line.getId());
+////                                            carTemp.Line.disposeCar(carTemp);
 ////                                            li.addCar(carTemp);
-//                                        } else {
-                                carTemp.setSpeed(carTemp2.getSpeed());
-//                                        }
-
-                                // Line li = Lines.get(carTemp.Line.getId() - 1);
-//                                        carTemp.Line.disposeCar(carTemp);
-//                                        li.addCar(carTemp);
-//                                        if (carTemp.Line.CanCarOvertaking && carTemp.Line.isEmptyForTakover(carTemp)) {
-//                                            Line li = Lines.get(carTemp.Line.getId());
-//                                            carTemp.Line.disposeCar(carTemp);
-//                                            li.addCar(carTemp);
-//                                        } else {
-                                //carTemp.Speed = carTemp2.getSpeed();
-//                                        }
-                            }
-                        } else if (carTemp.getHeadPosition() <= carTemp2.getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
-                            carTemp.setSpeed(carTemp2.getSpeed());
-                        }
-                    }
-                });
-            });
-        });
-    }
-
+////                                        } else {
+//                                //carTemp.Speed = carTemp2.getNowSpeed();
+////                                        }
+//                            }
+//                        } else if (carTemp.getHeadPosition() <= carTemp2.getEndPosition() + Const.CHANGE_SPEED_DISTANCE_FOR_REACH) {
+//                            carTemp.setSpeed(carTemp2.getNowSpeed());
+//                        }
+//                    }
+//                });
+//            });
+//        });
+//    }
+//
+//}
 }
-
 //////Comments Code
 /*@Override
     protected void paintComponent(Graphics g) {

@@ -6,6 +6,8 @@ package CrossWalk.Object.MoveableObject;
 import CrossWalk.Object.Line;
 import CrossWalk.Const;
 import CrossWalk.Menu.GameSetting;
+import com.sun.javafx.util.TempState;
+import java.util.ArrayList;
 
 public abstract class Car implements Moveable {
 
@@ -15,6 +17,11 @@ public abstract class Car implements Moveable {
     private final CarType CarType;
     private Line Line;
 
+    ///
+    public float TempCarSpeed;
+    public boolean isNowOverTaking;
+
+    ///
     // Constructors
     // Create new random car
     public Car(float HeadPosition, int Speed, CarType CarType, Line Line) {
@@ -47,14 +54,18 @@ public abstract class Car implements Moveable {
     }
 
     private float getSpeedInCrosswalk() {
-        return Speed * Const.CAR_SPEED_RATE_NEAR_CROSSWALK_CHANGE;
+        return getSpeed() * Const.CAR_SPEED_RATE_NEAR_CROSSWALK_CHANGE;
     }
 
-    public float getSpeed() {
+    public float getNowSpeed() {
         if (isNearToSheepAccident()) {
             return getSpeedInCrosswalk();
         }
-        return Speed;
+        return getSpeed();
+    }
+
+    public float getSpeed() {
+        return (TempCarSpeed > 0) ? TempCarSpeed : Speed;
     }
 
     // Over ride toString Mehod
@@ -122,4 +133,9 @@ public abstract class Car implements Moveable {
     // Get position of car for draw in InitGraphic
     @Override
     public abstract int getXPositionForDraw();
+
+    public abstract void checkCarAccident(ArrayList<Line> lines);
+
+    public abstract boolean isEnoughSpaceForOverTaking(Line line);
+
 }

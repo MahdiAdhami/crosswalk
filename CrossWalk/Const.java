@@ -22,6 +22,7 @@ public final class Const {
     public final static int LINE_WIDTH = 87;
     public final static boolean LINE_DIRECTION_RTL = true;
     public final static boolean LINE_DIRECTION_LTR = false;
+    public final static int LINE_DISTANCE_TO_CREATE_NEW_CAR = 100;
 
     // Middle Line
     public final static String MIDDLE_LINE_IMAGE = "\\src\\resources\\Line\\MiddleLine.png";
@@ -43,7 +44,11 @@ public final class Const {
     public final static int CREATE_CAR_SPEED_RATE = 30;
     public final static int CREATE_CAR_SLEEP_TIME = 3000;
     public final static int CREATE_CAR_MAX_SLEEP_TIME = 200;
-
+    
+    // Change speed near other car 
+    public final static int CHANGE_SPEED_DISTANCE_FOR_REACH = 100;
+    public final static float CHANGE_SPEED_RATE_DISTANCE_FOR_REACH = .5f;
+    
     //Setting File
     public final static String MAIN_SETTING_FILE = "\\src\\resources\\Setting\\Setting.xml";
 
@@ -60,10 +65,6 @@ public final class Const {
     public final static int SHEEP_DISTANCE_LINE_WHEN_GAME_START = 30;
     public final static int SHEEP_IGONORE_DISTANCE_IN_CROSSWALK = 30;
 
-    // Change speed near other car 
-    public final static int CHANGE_SPEED_DISTANCE_FOR_REACH = 100;
-    public final static float CHANGE_SPEED_RATE_DISTANCE_FOR_REACH = .5f;
-
     // Save and load
     public final static String SAVE_FILE_ADDRESS_LINE = "\\src\\resources\\Resume\\Line.txt";
     public final static String SAVE_FILE_ADDRESS_SHEEP = "\\src\\resources\\Resume\\Sheep.txt";
@@ -76,7 +77,7 @@ public final class Const {
     public final static String REPLY_CAR_ADDRESS = "\\Cars.txt";
     public final static String REPLY_SHEEP_ADDRESS = "\\Sheep.txt";
     public final static String REPLY_SETTING_ADDRESS = "\\Setting.xml";
-    
+
     // Map
     public final static String MAP_ROOT_ADDRESS = "\\src\\resources\\Map";
 

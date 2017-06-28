@@ -98,31 +98,56 @@ public final class Line {
     }
 
     public boolean createNewCar(Car newCar) {
-        if (Cars.size() > 0) {
-            Car lastCar = Cars.get(Cars.size() - 1);
-            if (lastCar.getLine().getDirection() == newCar.getLine().getDirection()) {
-                if (newCar.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
-                    if (lastCar.getEndPosition() >= -lastCar.getCarType().getCarWidth() + 50) {
+        try {
+            if (Cars.size() > 0) {
+                Car lastCar = Cars.get(Cars.size() - 1);
+                if (this.getDirection() == Const.LINE_DIRECTION_LTR) {
+                    if (lastCar.getEndPosition() > Const.LINE_DISTANCE_TO_CREATE_NEW_CAR) {
                         newCar.setId(CarId);
                         Cars.add(newCar);
                         CarId++;
                         return true;
                     }
-                } else if (lastCar.getEndPosition() <= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
+                } else if (lastCar.getEndPosition() + Const.LINE_DISTANCE_TO_CREATE_NEW_CAR < Const.GAME_WINDOWS_WIDTH) {
                     newCar.setId(CarId);
                     Cars.add(newCar);
                     CarId++;
                     return true;
                 }
+
+            } else {
+                newCar.setId(CarId);
+                Cars.add(newCar);
+                CarId++;
+                return true;
             }
-        } else {
-            newCar.setId(CarId);
-            Cars.add(newCar);
-            CarId++;
-            return true;
+            return false;
+        } catch (Exception ex) {
+            return false;
         }
-        return false;
+
     }
+    //            if (lastCar.getLine().getDirection() == newCar.getLine().getDirection()) {
+    //                if (newCar.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
+    //                    if (lastCar.getEndPosition() >= -lastCar.getCarType().getCarWidth() + 50) {
+    //                        newCar.setId(CarId);
+    //                        Cars.add(newCar);
+    //                        CarId++;
+    //                        return true;
+    //                    }
+    //                } else if (lastCar.getEndPosition() <= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
+    //                    newCar.setId(CarId);
+    //                    Cars.add(newCar);
+    //                    CarId++;
+    //                    return true;
+    //                }
+    //            }
+    //        } else {
+    //            newCar.setId(CarId);
+    //            Cars.add(newCar);
+    //            CarId++;
+    //            return true;
+    //        }
 
     public void disposeCar(Car car) {
         Cars.remove(car);
