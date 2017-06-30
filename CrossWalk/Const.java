@@ -54,7 +54,7 @@ public final class Const {
 
     // Game size
     public final static int GAME_WINDOWS_WIDTH = 800;
-    public final static int TOP_MARGIN = 40;
+    public final static int TOP_MARGIN = 45;
 
     // Repaint time
     public final static long SLEEP_TIME_RE_PAINTING = 30;
