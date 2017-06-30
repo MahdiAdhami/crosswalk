@@ -102,14 +102,16 @@ public final class Sheep {
         }
         ImageStatus = 0;
         PositionOfSheep[1] -= Rate[1];
+        System.out.println(PositionOfSheep[0] + " " + PositionOfSheep[1]);
     }
 
     private void goDown() {
-        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT) + Const.TOP_MARGIN <= getYPositionForDraw()) {
+        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT)+ Const.MIDDLE_LINE_HEIGHT + Const.TOP_MARGIN <= getYPositionForDraw()) {
             return;
         }
         ImageStatus = 1;
         PositionOfSheep[1] += Rate[1];
+        System.out.println(PositionOfSheep[0] + " " + PositionOfSheep[1]);
     }
 
     private void goRight() {
@@ -174,7 +176,57 @@ public final class Sheep {
     }
 
     public void CheckLine() {
-        Line.SheepCurrentLine = (int) Math.floor((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) + 1;
+        
+        if(PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100)
+        {
+            if(PositionOfSheep[1] % 100 ==0)
+            {
+                Line.SheepCurrentLine = -1;
+                System.out.println(Line.SheepCurrentLine);
+            }
+            else{
+                Line.SheepCurrentLine = (int) Math.ceil(PositionOfSheep[1]/100);
+                System.out.println(Line.SheepCurrentLine);
+            }
+        }
+        else if ((PositionOfSheep[1] > GameSetting.getRtlLineCount() * 100 )&&( PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100 + Const.MIDDLE_LINE_HEIGHT)){
+            Line.SheepCurrentLine = -1;
+            System.out.println(Line.SheepCurrentLine);
+        }
+        else{
+                if((PositionOfSheep[1] - Const.MIDDLE_LINE_HEIGHT) % 100 == 0)
+                {
+                    Line.SheepCurrentLine = -1;
+                    System.out.println(Line.SheepCurrentLine);
+                }
+                else
+                {
+                    Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.MIDDLE_LINE_HEIGHT)/100);
+                    System.out.println(Line.SheepCurrentLine);
+                }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        if(PositionOfSheep[1] < GameSetting.getRtlLineCount()*100 + Const.TOP_MARGIN)
+//        {
+//            if((PositionOfSheep[1]-5)%95==0 || (PositionOfSheep[1]%95==0))
+//            {
+//                Line.SheepCurrentLine = -1;
+//                System.out.println(Line.SheepCurrentLine);
+//                return;
+//            }
+//            
+//        }
+       // Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) ;
+       // System.out.println(Line.SheepCurrentLine);
     }
 
     public void setRate(int[] rate) {
