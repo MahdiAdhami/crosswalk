@@ -18,7 +18,7 @@ public final class Const {
     // Line
     public final static String LINE_ROOT_IMAGE = "\\src\\resources\\Line\\MainLines";
     public final static String LINE_IMAGE = "\\src\\resources\\Line\\MainLines\\Line_{0}.png";
-    public final static int LINE_HEIGHT = 100;
+    public final static int LINE_HEIGHT = 85;
     public final static int LINE_WIDTH = 87;
     public final static boolean LINE_DIRECTION_RTL = true;
     public final static boolean LINE_DIRECTION_LTR = false;
