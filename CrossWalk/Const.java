@@ -30,7 +30,7 @@ public final class Const {
     public final static int MIDDLE_LINE_HEIGHT = 50;
 
     // Crosswalk
-    public final static String CROSSWALK_IMAGE = "\\src\\resources\\Line\\Crosswalk.png";
+    public final static String CROSSWALK_IMAGE = "\\src\\resources\\Line\\Crosswalk\\Crosswalk_1.png";
     public final static int CROSSWALK_WIDTH = 100;
     public final static int CROSSWALK_HEIGHT = 20;
 
