@@ -17,7 +17,7 @@ public final class Const {
 
     // Line
     public final static String LINE_ROOT_IMAGE = "\\src\\resources\\Line\\MainLines";
-    public final static String LINE_IMAGE = "\\src\\resources\\Line\\MainLines\\Line{0}.png";
+    public final static String LINE_IMAGE = "\\src\\resources\\Line\\MainLines\\Line_{0}.png";
     public final static int LINE_HEIGHT = 100;
     public final static int LINE_WIDTH = 87;
     public final static boolean LINE_DIRECTION_RTL = true;
@@ -25,7 +25,7 @@ public final class Const {
     public final static int LINE_DISTANCE_TO_CREATE_NEW_CAR = 100;
 
     // Middle Line
-    public final static String MIDDLE_LINE_IMAGE = "\\src\\resources\\Line\\MiddleLine.png";
+    public final static String MIDDLE_LINE_IMAGE = "\\src\\resources\\Line\\MiddleLine\\MiddleLine_1.png";
     public final static int MIDDLE_LINE_WIDTH = 50;
     public final static int MIDDLE_LINE_HEIGHT = 50;
 
