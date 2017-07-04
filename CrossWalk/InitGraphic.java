@@ -55,9 +55,9 @@ public class InitGraphic extends JPanel implements Runnable {
         JFrame gameFrame = new JFrame(Const.GAME_NAME);
 
         try {
-            CrosswalkImage = ImageIO.read(new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE));
+            CrosswalkImage = ImageIO.read(new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE_WITH_PLACEHOLDER.replace("{0}", String.valueOf(GameSetting.getCrossWalkImageNumber()))));
             LineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.LINE_IMAGE_PATH_WITH_PLACEHOLDER.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
-            MiddleLineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE_PATH));
+            MiddleLineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE_PATH.replace("{0}", String.valueOf(GameSetting.getMiddleLineImageNumber()))));
             gameFrame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
         } catch (IOException ex) {
             new ExceptionWriter().write(ex);
@@ -133,8 +133,8 @@ public class InitGraphic extends JPanel implements Runnable {
 
         //Buttons
         g.setFont(new Font("tahoma", 0, 12));
-        g.drawString(String.format("مرحله ی %d ", 5), Const.GAME_WINDOWS_WIDTH - 100, 20);
-        g.drawString(String.format("امتیاز %d ", 5), Const.GAME_WINDOWS_WIDTH - 175, 20);
+        g.drawString(String.format("مرحله ی %d ", Sheep.getLevel()), Const.GAME_WINDOWS_WIDTH - 100, 20);
+        g.drawString(String.format("امتیاز %d ", Sheep.getScore()), Const.GAME_WINDOWS_WIDTH - 175, 20);
 
         g.drawRoundRect(10, 5, 70, 23, 5, 5);
         g.drawString("توقف بازی", 20, 20);
