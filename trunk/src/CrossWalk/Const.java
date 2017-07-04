@@ -19,19 +19,21 @@ public final class Const {
     // Line
     public final static String LINE_IMAGE_ROOT_PATH = "\\src\\resources\\Line\\MainLines";
     public final static String LINE_IMAGE_PATH_WITH_PLACEHOLDER = "\\src\\resources\\Line\\MainLines\\Line_{0}.png";
-    public final static int LINE_IMAGE_HEIGHT = 85;
+    public final static int LINE_IMAGE_HEIGHT = 75;
     public final static int LINE_IMAGE_WIDTH = 87;
     public final static boolean LINE_DIRECTION_RTL = true;
     public final static boolean LINE_DIRECTION_LTR = false;
     public final static int LINE_DISTANCE_NEED_TO_CREATE_NEW_CAR = 100;
 
     // Middle Line
-    public final static String MIDDLE_LINE_IMAGE_PATH = "\\src\\resources\\Line\\MiddleLine\\MiddleLine_1.png";
+    public final static String MIDDLE_LINE_IMAGE_ROOT_PATH = "\\src\\resources\\Line\\MiddleLine";
+    public final static String MIDDLE_LINE_IMAGE_PATH = "\\src\\resources\\Line\\MiddleLine\\MiddleLine_{0}.png";
     public final static int MIDDLE_LINE_IMAGE_WIDTH = 50;
     public final static int MIDDLE_LINE_IMAGE_HEIGHT = 50;
 
     // Crosswalk
-    public final static String CROSSWALK_IMAGE = "\\src\\resources\\Line\\Crosswalk\\Crosswalk_1.png";
+    public final static String CROSSWALK_IMAGE_ROOT_PATH = "\\src\\resources\\Line\\CrossWalk";
+    public final static String CROSSWALK_IMAGE_WITH_PLACEHOLDER = "\\src\\resources\\Line\\Crosswalk\\Crosswalk_{0}.png";
     public final static int CROSSWALK_WIDTH = 100;
     public final static int CROSSWALK_HEIGHT = 20;
 
@@ -57,7 +59,7 @@ public final class Const {
 
     // Game size
     public final static int GAME_WINDOWS_WIDTH = 1000;
-    public final static int TOP_MARGIN = 35;
+    public final static int TOP_MARGIN = 45;
 
     // Repaint time
     public final static long SLEEP_TIME_RE_PAINTING = 30;

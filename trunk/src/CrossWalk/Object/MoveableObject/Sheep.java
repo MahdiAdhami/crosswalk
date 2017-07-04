@@ -23,16 +23,21 @@ public final class Sheep implements Drawable,Serializable {
     private int ImageStatus;
     private final String ImageCode;
     private boolean SaveChanges;
+    private int level;
+    private int score;
+    private float firstYPositionOfSheep;
 
     public static boolean AutoMove = false;
     public WriteReplyData WriteReplyData;
 
     @Override
     public String toString() {
-        return String.format("Sheep,%d,%d,%d,%d,%d,%s", getXPositionForDraw(), getYPositionForDraw(), Rate[0], Rate[1], ImageStatus, ImageCode);
+        return String.format("Sheep,%d,%d,%d,%d,%d,%s,%d,%d", getXPositionForDraw(), getYPositionForDraw(), Rate[0], Rate[1], ImageStatus, ImageCode,level,score);
     }
 
-    public Sheep(float[] PositionOfSheep, int[] Rate, int ImageStatus, String ImageCode) {
+    public Sheep(float[] PositionOfSheep, int[] Rate, int ImageStatus, String ImageCode , int level , int score) {
+        this.level = level;
+        this.score = score;
         this.PositionOfSheep = PositionOfSheep;
         this.Rate = Rate;
         this.ImageStatus = ImageStatus;
@@ -41,10 +46,13 @@ public final class Sheep implements Drawable,Serializable {
     }
 
     public Sheep(int[] Rate, float PositionYOfSheep) {
+        level = 1;
+        score = 5000;
         this.ImageCode = String.valueOf(GameSetting.getSheepImageNumber() + 1);
         initImage();
         this.Rate = Rate;
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
+        firstYPositionOfSheep = PositionYOfSheep;
     }
 
     private void initImage() {
@@ -133,35 +141,34 @@ public final class Sheep implements Drawable,Serializable {
             goUp();
         } else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
             goDown();
-
         } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_A) {
             goRight();
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_D) {
             goLeft();
         }
-
-        if (PositionOfSheep[1] == -30) {
-            win();
+        CheckLine();
+        if (PositionOfSheep[1] == -25) {
+            goToNextLevel();
         }
     }
 
     public void CheckLine() {
-        if (PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100) {
-            if (PositionOfSheep[1] % 100 == 0) {
+        if (PositionOfSheep[1] <= GameSetting.getRtlLineCount() * Const.LINE_IMAGE_HEIGHT) {
+            if (PositionOfSheep[1] % Const.LINE_IMAGE_HEIGHT == 0) {
                 Line.SheepCurrentLine = -1;
                 System.out.println(Line.SheepCurrentLine);
             } else {
-                Line.SheepCurrentLine = (int) Math.ceil(PositionOfSheep[1] / 100);
+                Line.SheepCurrentLine = (int) Math.ceil(PositionOfSheep[1] / Const.LINE_IMAGE_HEIGHT);
                 System.out.println(Line.SheepCurrentLine);
             }
-        } else if ((PositionOfSheep[1] > GameSetting.getRtlLineCount() * 100) && (PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100 + Const.MIDDLE_LINE_IMAGE_HEIGHT)) {
+        } else if ((PositionOfSheep[1] <= (GameSetting.getRtlLineCount() * Const.LINE_IMAGE_HEIGHT) + Const.MIDDLE_LINE_IMAGE_HEIGHT)) {
             Line.SheepCurrentLine = -1;
             System.out.println(Line.SheepCurrentLine);
-        } else if ((PositionOfSheep[1] - Const.MIDDLE_LINE_IMAGE_HEIGHT) % 100 == 0) {
+        } else if ((PositionOfSheep[1] - Const.MIDDLE_LINE_IMAGE_HEIGHT) % Const.LINE_IMAGE_HEIGHT == 0) {
             Line.SheepCurrentLine = -1;
             System.out.println(Line.SheepCurrentLine);
         } else {
-            Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.MIDDLE_LINE_IMAGE_HEIGHT) / 100);
+            Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.MIDDLE_LINE_IMAGE_HEIGHT) / Const.LINE_IMAGE_HEIGHT);
             System.out.println(Line.SheepCurrentLine);
         }
 
@@ -190,14 +197,39 @@ public final class Sheep implements Drawable,Serializable {
     }
 
     public void gameOver() {
-        InitGame.GameEnd = true;
-        JOptionPane.showMessageDialog(null, "باختی جیگر!", "له شدی عزیزم", JOptionPane.INFORMATION_MESSAGE);
-        System.exit(0);
+        if(score > 0)
+        {
+            //Dorost Kar Nemikone Chon Ba har Bar Repaint Shodan Dar Hengame Barkhord Tasadof Mikone VA Emtiaz be Sorat 0 mishe
+            score -= 50;
+        }
+        else{
+            InitGame.GameEnd = true;
+            JOptionPane.showMessageDialog(null, "باختی جیگر!", "له شدی عزیزم", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0);
+        }
+        
     }
 
     // Implements Drawable
     @Override
     public BufferedImage getImage() {
         return ImageOfSheep[ImageStatus];
+    }
+
+    private void goToNextLevel() {
+        level ++;
+        score += 500;
+        PositionOfSheep[0] = GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2;
+        PositionOfSheep[1] = firstYPositionOfSheep;
+    }
+    
+    public int getLevel()
+    {
+        return level;
+    }
+    
+    public int getScore()
+    {
+        return score;
     }
 }

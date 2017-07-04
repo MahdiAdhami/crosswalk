@@ -33,23 +33,46 @@ public class LineMenu extends Menu {
         panel.add(labels, BorderLayout.EAST);
         panel.add(submit, BorderLayout.SOUTH);
 
-        String[] lineImages = new File(Const.ROOT_PATH + Const.LINE_IMAGE_ROOT_PATH).list();
-
-        Object[] items = new Object[lineImages.length];
-        for (int i = 0; i < items.length; i++) {
-            items[i] = new ImageIcon(Const.ROOT_PATH + Const.LINE_IMAGE_ROOT_PATH + "\\" + lineImages[i]);
+        String[] lineImages = new File(Const.ROOT_PATH + Const.LINE_IMAGE_ROOT_PATH + "\\Show").list();
+        Object[] lineItems = new Object[lineImages.length];
+        for (int i = 0; i < lineItems.length; i++) {
+            lineItems[i] = new ImageIcon(Const.ROOT_PATH + Const.LINE_IMAGE_ROOT_PATH + "\\Show\\" + lineImages[i]);
         }
-
-        JComboBox combo = new JComboBox(items);
-
-        JLabel comboLabel = createLabel("نوع خط کشی را انتخاب کنید:");
-        labels.add(comboLabel);
-
-        controls.add(combo);
+        JComboBox comboMainLine = new JComboBox(lineItems);
+        JLabel comboLineLabel = createLabel("نوع خط کشی را انتخاب کنید:");
+        
+        
+        String[] middleLineImages = new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE_ROOT_PATH ).list();
+        Object[] middleLineItems = new Object[middleLineImages.length];
+        for (int i = 0; i < middleLineItems.length; i++) {
+            middleLineItems[i] = new ImageIcon(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE_ROOT_PATH + "\\" + middleLineImages[i]);
+        }
+        JComboBox comboMiddleLine = new JComboBox(middleLineItems);
+        JLabel comboMiddleLineLabel = createLabel("نوع خط کشی وسط را انتخاب کنید:");
+        
+        
+        String[] crossWalkImages = new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE_ROOT_PATH ).list();
+        Object[] crossWalkItems = new Object[crossWalkImages.length];
+        for (int i = 0; i < crossWalkItems.length; i++) {
+            crossWalkItems[i] = new ImageIcon(Const.ROOT_PATH + Const.CROSSWALK_IMAGE_ROOT_PATH + "\\" + crossWalkImages[i]);
+        }
+        JComboBox comboCrossWalk = new JComboBox(crossWalkItems);
+        JLabel comboCrossWalkLabel = createLabel("نوع خط عابر را انتخاب کنید:");
+        
+        
+        
+        labels.add(comboLineLabel);
+        controls.add(comboMainLine);
+        labels.add(comboMiddleLineLabel);
+        controls.add(comboMiddleLine);
+        labels.add(comboCrossWalkLabel);
+        controls.add(comboCrossWalk);
 
         JButton saveChanges = createButton("ذخیره",
                 (ActionEvent e) -> {
-                    GameSetting.setLineImageNumber(combo.getSelectedIndex() + 1);
+                    GameSetting.setLineImageNumber(comboMainLine.getSelectedIndex() + 1);
+                    GameSetting.setMiddleLineImageNumber(comboMiddleLine.getSelectedIndex() + 1);
+                    GameSetting.setCrossWalkImageNumber(comboCrossWalk.getSelectedIndex() + 1);
                     frame.dispose();
                 });
 
