@@ -11,13 +11,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class AutoMoveSheepInReply implements Runnable {
+public class SheepMoverInReply implements Runnable {
 
     // Sheep data path
     private final String Path;
 
     // Constructor
-    public AutoMoveSheepInReply(String Path) {
+    public SheepMoverInReply(String Path) {
         this.Path = Path;
     }
 

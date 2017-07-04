@@ -8,7 +8,7 @@ import CrossWalk.InitGame;
 import CrossWalk.InitGraphic;
 import CrossWalk.Utilities.ExceptionWriter;
 
-public class AutoMoveSheep implements Runnable {
+public class SheepMoverInBotGame implements Runnable {
 
     // Time beetween two action
     private final long SleepInMilliSecond;
@@ -17,7 +17,7 @@ public class AutoMoveSheep implements Runnable {
     private final int RandRate;
 
     // Constructor
-    public AutoMoveSheep(long SleepInMilliSecond, int RandRate) {
+    public SheepMoverInBotGame(long SleepInMilliSecond, int RandRate) {
         this.SleepInMilliSecond = (SleepInMilliSecond > 0) ? 200 : SleepInMilliSecond;
         this.RandRate = (RandRate > 5) ? RandRate : 5;
     }
@@ -34,7 +34,7 @@ public class AutoMoveSheep implements Runnable {
             }
 
             // New random int
-            int key = Const.RAND.nextInt(RandRate);
+            int key = Const.RAND_METHOD.nextInt(RandRate);
 
             if (key == 1 || key == 2) {
                 InitGraphic.Sheep.move(83);

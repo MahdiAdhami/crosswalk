@@ -1,7 +1,7 @@
 package CrossWalk;
 
-import CrossWalk.AutoWork.AutoMoveSheep;
-import CrossWalk.AutoWork.AutoMoveSheepInReply;
+import CrossWalk.AutoWork.SheepMoverInBotGame;
+import CrossWalk.AutoWork.SheepMoverInReply;
 import CrossWalk.AutoWork.CreateCarInReply;
 import CrossWalk.AutoWork.CreateCarInNewGame;
 import CrossWalk.Object.Line;
@@ -25,7 +25,7 @@ public class InitGame {
         Sheep.AutoMove = true;
 
         // Create instance an object for auto move sheep
-        Thread threadAutoMoveSheep = new Thread(new AutoMoveSheep(sleepInMilliSecond, randRate));
+        Thread threadAutoMoveSheep = new Thread(new SheepMoverInBotGame(sleepInMilliSecond, randRate));
         threadAutoMoveSheep.start();
     }
 
@@ -92,7 +92,7 @@ public class InitGame {
         Thread threadBase = new Thread(base);
         threadBase.start();
 
-        AutoMoveSheepInReply sheepReply = new AutoMoveSheepInReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path);
+        SheepMoverInReply sheepReply = new SheepMoverInReply(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + path);
         Thread threadReplySheep = new Thread(sheepReply);
         threadReplySheep.start();
     }

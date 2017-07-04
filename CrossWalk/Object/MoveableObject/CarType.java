@@ -19,7 +19,7 @@ public class CarType {
     // Create random car type
     public CarType(boolean LineDirection) {
         char[] tempCharForGetImage = GameSetting.getCarsNumbers().toCharArray();
-        CarNameAndType = (tempCharForGetImage[Const.RAND.nextInt(tempCharForGetImage.length)]) + ((LineDirection == Const.LINE_DIRECTION_LTR) ? "1" : "2");
+        CarNameAndType = (tempCharForGetImage[Const.RAND_METHOD.nextInt(tempCharForGetImage.length)]) + ((LineDirection == Const.LINE_DIRECTION_LTR) ? "1" : "2");
         initCarImage();
     }
 
@@ -52,7 +52,7 @@ public class CarType {
     }
 
     // Get car image
-    public Image getImage() {
+    public BufferedImage getImage() {
         return Image;
     }
 

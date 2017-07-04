@@ -39,7 +39,7 @@ public class InitGraphic extends JPanel implements Runnable {
     private final int TopLineCount;
 
     // Sheep
-    public static Sheep Sheep = new Sheep(new int[]{5, 25}, (Const.LINE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
+    public static Sheep Sheep = new Sheep(new int[]{5, 25}, (Const.LINE_IMAGE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
 
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
@@ -56,8 +56,8 @@ public class InitGraphic extends JPanel implements Runnable {
 
         try {
             CrosswalkImage = ImageIO.read(new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE));
-            LineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.LINE_IMAGE.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
-            MiddleLineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE));
+            LineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.LINE_IMAGE_PATH_WITH_PLACEHOLDER.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
+            MiddleLineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE_PATH));
             gameFrame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
         } catch (IOException ex) {
             new ExceptionWriter().write(ex);
@@ -72,9 +72,9 @@ public class InitGraphic extends JPanel implements Runnable {
         //
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        int gameHeight = (GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT + Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT;//+ Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START;
-        gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, 290);
-        
+        int gameHeight = (GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_IMAGE_HEIGHT + 4 * Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT;//+ Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START;
+        gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, gameHeight);
+
         gameFrame.setVisible(true);
         gameFrame.setResizable(false);
 
@@ -95,18 +95,18 @@ public class InitGraphic extends JPanel implements Runnable {
 
         // Draw lines
         Lines.stream().forEach((lineTemp) -> {
-            for (int i = 1; i < (Const.GAME_WINDOWS_WIDTH); i += Const.LINE_WIDTH) {
+            for (int i = 1; i < (Const.GAME_WINDOWS_WIDTH); i += Const.LINE_IMAGE_WIDTH) {
                 g.drawImage(LineImage, i, lineTemp.getPosition(), this);
             }
         });
 
         // Draw Midde lines
-        for (int i = 1; i < (Const.GAME_WINDOWS_WIDTH); i += Const.MIDDLE_LINE_WIDTH) {
-            g.drawImage(MiddleLineImage, i, Const.TOP_MARGIN + (Const.LINE_HEIGHT * TopLineCount), this);
+        for (int i = 1; i < (Const.GAME_WINDOWS_WIDTH); i += Const.MIDDLE_LINE_IMAGE_WIDTH) {
+            g.drawImage(MiddleLineImage, i, Const.TOP_MARGIN + (Const.LINE_IMAGE_HEIGHT * TopLineCount), this);
         }
 
         // Draw crosswalk
-        for (int i = 0; i < (Const.LINE_HEIGHT * (Lines.size()) + Const.MIDDLE_LINE_WIDTH) / Const.CROSSWALK_HEIGHT; i++) {
+        for (int i = 0; i < (Const.LINE_IMAGE_HEIGHT * (Lines.size()) + Const.MIDDLE_LINE_IMAGE_WIDTH) / Const.CROSSWALK_HEIGHT; i++) {
             g.drawImage(CrosswalkImage, MiddleOfCrosswalkPosition - Const.CROSSWALK_WIDTH / 2, (i * Const.CROSSWALK_HEIGHT) + Const.TOP_MARGIN, this);
         }
 
@@ -120,10 +120,10 @@ public class InitGraphic extends JPanel implements Runnable {
                         -> {
                     g.setFont(new Font("tahoma", 0, 30));
                     g.setColor(Color.BLUE);
-//                    g.drawString(String.format("%d-%.1f-%.1f", carTemp.getId(), carTemp.getSpeed(), carTemp.TempCarSpeed), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
-//                    g.drawString(String.format("%d -- %d -- %d -- %b", carTemp.getLine().getCarId(),carTemp.getId(),carTemp.getLine().getCars().size(),carTemp.IsFirstCar), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
-//                    g.drawString(String.format("%b", carTemp.isFirstCar()), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
-                    g.drawImage(carTemp.getCarType().getImage(), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2, this);
+//                    g.drawString(String.format("%d-%.1f-%.1f", carTemp.getId(), carTemp.getSpeed(), carTemp.TempCarSpeed), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
+//                    g.drawString(String.format("%d -- %d -- %d -- %b", carTemp.getLine().getCarId(),carTemp.getId(),carTemp.getLine().getCars().size(),carTemp.IsFirstCar), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
+//                    g.drawString(String.format("%b", carTemp.isFirstCar()), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
+                    g.drawImage(carTemp.getCarType().getImage(), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2, this);
                 });
             });
 
@@ -141,9 +141,6 @@ public class InitGraphic extends JPanel implements Runnable {
 
         g.drawRoundRect(100, 5, 120, 23, 6, 6);
         g.drawString("ذخیره سازی بازی", 120, 20);
-
-//        g.setColor(Color.WHITE);
-//        g.drawLine(0, 0, 500, (GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT + Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT);
     }
 
     // Implements  Thread 

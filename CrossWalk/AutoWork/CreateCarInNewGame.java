@@ -38,13 +38,13 @@ public class CreateCarInNewGame extends CreateCar implements Runnable {
                 break;
             }
             // Random int to select line for create new car 
-            int randomLine = Const.RAND.nextInt(super.getLtrLineCount() + super.getRtlLineCount());
+            int randomLine = Const.RAND_METHOD.nextInt(super.getLtrLineCount() + super.getRtlLineCount());
 
             // Get line with random int
             Line tempLine = super.getLine().get(randomLine);
 
             // Create car speed 
-            int speed = tempLine.getMinCarSpeed() + Const.RAND.nextInt(tempLine.getMaxCarSpeed());
+            int speed = tempLine.getMinCarSpeed() + Const.RAND_METHOD.nextInt(tempLine.getMaxCarSpeed());
 
             // variables for instance car object
             CarType carType;
@@ -67,7 +67,7 @@ public class CreateCarInNewGame extends CreateCar implements Runnable {
 
             // Sleep thread wait for create new car again
             try {
-                Thread.sleep(100);//Const.CREATE_CAR_SLEEP_TIME - GameSetting.getAutoCreateCarRate()
+                Thread.sleep(150);//Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate()
             } catch (Exception ex) {
                 new ExceptionWriter().write(ex);
             }
