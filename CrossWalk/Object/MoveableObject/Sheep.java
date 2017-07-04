@@ -10,7 +10,7 @@ import CrossWalk.Const;
 import CrossWalk.GameListener;
 import CrossWalk.InitGame;
 import CrossWalk.Menu.GameSetting;
-import CrossWalk.StoreData.SaveAndLoad;
+import CrossWalk.StoreData.ResumeAndLoad;
 import CrossWalk.StoreData.WriteReplyData;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -91,11 +91,11 @@ public final class Sheep {
     public Image getImage() {
         return ImageOfSheep[ImageStatus];
     }
-    
-    public void setSaveChanges(boolean saveChanges){
+
+    public void setSaveChanges(boolean saveChanges) {
         SaveChanges = saveChanges;
     }
-    
+
     private void goUp() {
         if (Const.TOP_MARGIN - getSheepWidth() >= getYPositionForDraw()) {
             return;
@@ -106,7 +106,7 @@ public final class Sheep {
     }
 
     private void goDown() {
-        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT)+ Const.MIDDLE_LINE_HEIGHT + Const.TOP_MARGIN <= getYPositionForDraw()) {
+        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT) + Const.MIDDLE_LINE_HEIGHT + Const.TOP_MARGIN <= getYPositionForDraw()) {
             return;
         }
         ImageStatus = 1;
@@ -130,91 +130,46 @@ public final class Sheep {
         PositionOfSheep[0] -= Rate[0];
     }
 
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-
-        if (keyCode == 84) {
-            InitGame.GameStop = !InitGame.GameStop;
-            SaveAndLoad saveGame = new SaveAndLoad();
-            saveGame.SaveGameForResume(GameListener.Lines);
+    public void move(int keyCode) {
+        if (SaveChanges) {
+            WriteReplyData.appendSheepToFile(keyCode);
         }
-        if (Sheep.AutoMove) {
-            keyPressed(keyCode);
-            return;
-        }
-        if (keyCode == KeyEvent.VK_UP || keyCode == 87) {
-            keyPressed(87);
-        } else if (keyCode == KeyEvent.VK_DOWN || keyCode == 83) {
-            keyPressed(83);
+        if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
+            goUp();
+        } else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
+            goDown();
 
-        } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == 68) {
-            keyPressed(68);
-
-        } else if (keyCode == KeyEvent.VK_LEFT || keyCode == 65) {
-            keyPressed(65);
+        } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_A) {
+            goRight();
+        } else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_D) {
+            goLeft();
         }
+        
         if (PositionOfSheep[1] == -30) {
             win();
         }
     }
 
-    public void keyPressed(int keyCode) {
-        if (SaveChanges) {
-            WriteReplyData.appendSheepToFile(keyCode);
-        }
-        if (keyCode == 87) {
-            goUp();
-            CheckLine();
-        } else if (keyCode == 83) {
-            goDown();
-            CheckLine();
-        } else if (keyCode == 68) {
-            goRight();
-        } else if (keyCode == 65) {
-            goLeft();
-        }
-    }
-
     public void CheckLine() {
-        
-        if(PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100)
-        {
-            if(PositionOfSheep[1] % 100 ==0)
-            {
+        if (PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100) {
+            if (PositionOfSheep[1] % 100 == 0) {
                 Line.SheepCurrentLine = -1;
                 System.out.println(Line.SheepCurrentLine);
-            }
-            else{
-                Line.SheepCurrentLine = (int) Math.ceil(PositionOfSheep[1]/100);
+            } else {
+                Line.SheepCurrentLine = (int) Math.ceil(PositionOfSheep[1] / 100);
                 System.out.println(Line.SheepCurrentLine);
             }
-        }
-        else if ((PositionOfSheep[1] > GameSetting.getRtlLineCount() * 100 )&&( PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100 + Const.MIDDLE_LINE_HEIGHT)){
+        } else if ((PositionOfSheep[1] > GameSetting.getRtlLineCount() * 100) && (PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100 + Const.MIDDLE_LINE_HEIGHT)) {
             Line.SheepCurrentLine = -1;
             System.out.println(Line.SheepCurrentLine);
+        } else if ((PositionOfSheep[1] - Const.MIDDLE_LINE_HEIGHT) % 100 == 0) {
+            Line.SheepCurrentLine = -1;
+            System.out.println(Line.SheepCurrentLine);
+        } else {
+            Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.MIDDLE_LINE_HEIGHT) / 100);
+            System.out.println(Line.SheepCurrentLine);
         }
-        else{
-                if((PositionOfSheep[1] - Const.MIDDLE_LINE_HEIGHT) % 100 == 0)
-                {
-                    Line.SheepCurrentLine = -1;
-                    System.out.println(Line.SheepCurrentLine);
-                }
-                else
-                {
-                    Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.MIDDLE_LINE_HEIGHT)/100);
-                    System.out.println(Line.SheepCurrentLine);
-                }
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
 //        if(PositionOfSheep[1] < GameSetting.getRtlLineCount()*100 + Const.TOP_MARGIN)
 //        {
 //            if((PositionOfSheep[1]-5)%95==0 || (PositionOfSheep[1]%95==0))
@@ -225,8 +180,8 @@ public final class Sheep {
 //            }
 //            
 //        }
-       // Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) ;
-       // System.out.println(Line.SheepCurrentLine);
+        // Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) ;
+        // System.out.println(Line.SheepCurrentLine);
     }
 
     public void setRate(int[] rate) {

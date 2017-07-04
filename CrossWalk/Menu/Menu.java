@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import CrossWalk.Const;
+import CrossWalk.Utilities.ExceptionWriter;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -49,7 +50,7 @@ public abstract class Menu {
         try {
             frame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
         } catch (IOException ex) {
-            System.err.println("Menu SetInit() " + ex);
+          new ExceptionWriter().write(ex);
         }
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation((dimension.width / 2) - (Width / 2), (dimension.height / 2) - (Height / 2));

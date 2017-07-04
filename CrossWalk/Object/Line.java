@@ -1,7 +1,5 @@
 package CrossWalk.Object;
 
-import CrossWalk.Object.*;
-import CrossWalk.Object.MoveableObject.Car;
 import java.util.ArrayList;
 import CrossWalk.Const;
 import CrossWalk.Menu.GameSetting;
@@ -86,6 +84,7 @@ public final class Line {
 
     public void addCar(Car newCar) {
         Cars.add(newCar);
+        increaseCarId();
     }
 
     @Override
@@ -176,20 +175,8 @@ public final class Line {
         CarId = id;
     }
 
-    public void rtlTakeOver() {
-
+    public void increaseCarId() {
+        CarId++;
     }
 
-    public void ltrTakeOver(int lineId) {
-
-    }
-
-    public boolean isEmptyForTakover(Car newCar) {
-//        for (Car car : Cars) {
-//            if (car.getHeadPosition() >= newCar.getEndPosition() || newCar.getHeadPosition() >= car.getEndPosition()) {
-//                return false;
-//            }
-//        }
-        return true;
-    }
 }

@@ -5,7 +5,7 @@ import CrossWalk.Object.Line;
 import java.util.ArrayList;
 import CrossWalk.Menu.GameSetting;
 
-public class CreateCar {
+public abstract class CreateCar {
 
     private ArrayList<Line> Lines = new ArrayList<>();
     private final int RtlLineCount;
@@ -40,7 +40,9 @@ public class CreateCar {
                 Lines.add(new Line(i, (j + 1), (j), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_HEIGHT + Const.TOP_MARGIN + Const.MIDDLE_LINE_HEIGHT, canCarTakeOver));
             }
         }
-
+//        for(Line lie : Lines){
+//            System.out.println(lie.getId() + " " + lie.getCanCarOvertaking());
+//        }
     }
 
     public void InitLine(ArrayList<Line> line) {

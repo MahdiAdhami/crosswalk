@@ -6,6 +6,7 @@ package CrossWalk.AutoWork;
 import CrossWalk.Const;
 import CrossWalk.InitGame;
 import CrossWalk.InitGraphic;
+import CrossWalk.Utilities.ExceptionWriter;
 
 public class AutoMoveSheep implements Runnable {
 
@@ -36,21 +37,21 @@ public class AutoMoveSheep implements Runnable {
             int key = Const.RAND.nextInt(RandRate);
 
             if (key == 1 || key == 2) {
-                InitGraphic.Sheep.keyPressed(83);
+                InitGraphic.Sheep.move(83);
             } else if (key == 3) {
-                InitGraphic.Sheep.keyPressed(68);
+                InitGraphic.Sheep.move(68);
 
             } else if (key == 4) {
-                InitGraphic.Sheep.keyPressed(65);
+                InitGraphic.Sheep.move(65);
             } else {
-                InitGraphic.Sheep.keyPressed(87);
+                InitGraphic.Sheep.move(87);
             }
 
             // Sleep time
             try {
                 Thread.sleep(SleepInMilliSecond);
             } catch (Exception ex) {
-                System.err.println("AutoMoveSheep run() " + ex);
+                new ExceptionWriter().write(ex);
             }
         }
     }

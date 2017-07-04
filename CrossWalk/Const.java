@@ -36,25 +36,27 @@ public final class Const {
 
     // Car 
     public final static String CAR_ROOT_IMAGE = "\\src\\resources\\Cars";
-    public final static int CAR_DISTANCE_TO_CROSSWALK_FOR_DECREASE_SPEED = 110;
+    public final static int CAR_DISTANCE_TO_CROSSWALK_FOR_DECREASE_SPEED = 100;
+    public final static int CAR_ENOUTH_SPACE_FOR_TAKEOVER = 75;
     public final static float CAR_SPEED_RATE_NEAR_CROSSWALK_CHANGE = .4f;
     public final static int CAR_COUNT = 4;
+    public final static int INCREASE_IN_Y = 3;
 
     // Cars Speed Rate
     public final static int CREATE_CAR_SPEED_RATE = 30;
-    public final static int CREATE_CAR_SLEEP_TIME = 3000;
-    public final static int CREATE_CAR_MAX_SLEEP_TIME = 200;
-    
+    public final static int CREATE_CAR_SLEEP_TIME = 3500;
+    public final static int CREATE_CAR_MAX_SLEEP_TIME = 500;
+
     // Change speed near other car 
     public final static int CHANGE_SPEED_DISTANCE_FOR_REACH = 100;
     public final static float CHANGE_SPEED_RATE_DISTANCE_FOR_REACH = .5f;
-    
+
     //Setting File
     public final static String MAIN_SETTING_FILE = "\\src\\resources\\Setting\\Setting.xml";
 
     // Game size
-    public final static int GAME_WINDOWS_WIDTH = 800;
-    public final static int TOP_MARGIN = 45;
+    public final static int GAME_WINDOWS_WIDTH = 1000;
+    public final static int TOP_MARGIN = 35;
 
     // Repaint time
     public final static long SLEEP_TIME_RE_PAINTING = 30;
@@ -66,10 +68,11 @@ public final class Const {
     public final static int SHEEP_IGONORE_DISTANCE_IN_CROSSWALK = 30;
 
     // Save and load
-    public final static String SAVE_FILE_ADDRESS_LINE = "\\src\\resources\\Resume\\Line.txt";
-    public final static String SAVE_FILE_ADDRESS_SHEEP = "\\src\\resources\\Resume\\Sheep.txt";
-    public final static String SAVE_FILE_ADDRESS_CAR = "\\src\\resources\\Resume\\Cars.txt";
-    public final static String SAVE_FILE_ADDRESS_SETTING = "\\src\\resources\\Resume\\Setting.xml";
+    public final static String RESUME_ROOT_PATH = "\\src\\resources\\Resume";
+    public final static String RESUME_LINE_PATH = "\\src\\resources\\Resume\\Line.txt";
+    public final static String RESUME_SHEEP_PATH = "\\src\\resources\\Resume\\Sheep.txt";
+    public final static String RESUME_CAR_PATH = "\\src\\resources\\Resume\\Cars.txt";
+    public final static String RESUME_SETTING_PATH = "\\src\\resources\\Resume\\Setting.xml";
 
     // Reply
     public final static String REPLY_ROOT_ADDRESS = "\\src\\resources\\Replies";
