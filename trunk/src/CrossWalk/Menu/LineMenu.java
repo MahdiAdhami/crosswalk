@@ -33,11 +33,11 @@ public class LineMenu extends Menu {
         panel.add(labels, BorderLayout.EAST);
         panel.add(submit, BorderLayout.SOUTH);
 
-        String[] lineImages = new File(Const.ROOT_PATH + Const.LINE_ROOT_IMAGE).list();
+        String[] lineImages = new File(Const.ROOT_PATH + Const.LINE_IMAGE_ROOT_PATH).list();
 
         Object[] items = new Object[lineImages.length];
         for (int i = 0; i < items.length; i++) {
-            items[i] = new ImageIcon(Const.ROOT_PATH + Const.LINE_ROOT_IMAGE + "\\" + lineImages[i]);
+            items[i] = new ImageIcon(Const.ROOT_PATH + Const.LINE_IMAGE_ROOT_PATH + "\\" + lineImages[i]);
         }
 
         JComboBox combo = new JComboBox(items);

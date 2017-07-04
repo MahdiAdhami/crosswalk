@@ -5,7 +5,7 @@ import CrossWalk.Const;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.Object.MoveableObject.Car;
 
-public final class Line {
+public final class Line{
 
     // Line Id
     private int Id;
@@ -27,8 +27,8 @@ public final class Line {
         this();
         this.Id = Id;
         this.Position = Position;
-        this.MaxCarSpeed = MaxCarSpeed * Const.CREATE_CAR_SPEED_RATE;
-        this.MinCarSpeed = MinCarSpeed * Const.CREATE_CAR_SPEED_RATE;
+        this.MaxCarSpeed = MaxCarSpeed * Const.CAR_SPEED_RATE_NEW_CREATED;
+        this.MinCarSpeed = MinCarSpeed * Const.CAR_SPEED_RATE_NEW_CREATED;
         this.Direction = Direction;
         this.CanCarOvertaking = CanCarOvertaking;
         CrosswalkPosition = getAchieveCrosswalkPosistion();
@@ -101,13 +101,13 @@ public final class Line {
             if (Cars.size() > 0) {
                 Car lastCar = Cars.get(Cars.size() - 1);
                 if (this.getDirection() == Const.LINE_DIRECTION_LTR) {
-                    if (lastCar.getEndPosition() > Const.LINE_DISTANCE_TO_CREATE_NEW_CAR) {
+                    if (lastCar.getEndPosition() > Const.LINE_DISTANCE_NEED_TO_CREATE_NEW_CAR) {
                         newCar.setId(CarId);
                         Cars.add(newCar);
                         CarId++;
                         return true;
                     }
-                } else if (lastCar.getEndPosition() + Const.LINE_DISTANCE_TO_CREATE_NEW_CAR < Const.GAME_WINDOWS_WIDTH) {
+                } else if (lastCar.getEndPosition() + Const.LINE_DISTANCE_NEED_TO_CREATE_NEW_CAR < Const.GAME_WINDOWS_WIDTH) {
                     newCar.setId(CarId);
                     Cars.add(newCar);
                     CarId++;
@@ -126,27 +126,6 @@ public final class Line {
         }
 
     }
-    //            if (lastCar.getLine().getDirection() == newCar.getLine().getDirection()) {
-    //                if (newCar.getLine().getDirection() == Const.LINE_DIRECTION_LTR) {
-    //                    if (lastCar.getEndPosition() >= -lastCar.getCarType().getCarWidth() + 50) {
-    //                        newCar.setId(CarId);
-    //                        Cars.add(newCar);
-    //                        CarId++;
-    //                        return true;
-    //                    }
-    //                } else if (lastCar.getEndPosition() <= (Const.GAME_WINDOWS_WIDTH - lastCar.getCarType().getCarWidth())) {
-    //                    newCar.setId(CarId);
-    //                    Cars.add(newCar);
-    //                    CarId++;
-    //                    return true;
-    //                }
-    //            }
-    //        } else {
-    //            newCar.setId(CarId);
-    //            Cars.add(newCar);
-    //            CarId++;
-    //            return true;
-    //        }
 
     public void disposeCar(Car car) {
         Cars.remove(car);

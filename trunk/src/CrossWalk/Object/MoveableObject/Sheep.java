@@ -1,21 +1,20 @@
 package CrossWalk.Object.MoveableObject;
 
 import CrossWalk.Object.Line;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import CrossWalk.Const;
-import CrossWalk.GameListener;
 import CrossWalk.InitGame;
 import CrossWalk.Menu.GameSetting;
-import CrossWalk.StoreData.ResumeAndLoad;
+import CrossWalk.Object.Drawable;
 import CrossWalk.StoreData.WriteReplyData;
+import java.io.Serializable;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
-public final class Sheep {
+public final class Sheep implements Drawable,Serializable {
 
     private float[] PositionOfSheep;
     private float[] SheepSize;
@@ -88,10 +87,6 @@ public final class Sheep {
         return SheepSize[1];
     }
 
-    public Image getImage() {
-        return ImageOfSheep[ImageStatus];
-    }
-
     public void setSaveChanges(boolean saveChanges) {
         SaveChanges = saveChanges;
     }
@@ -106,7 +101,7 @@ public final class Sheep {
     }
 
     private void goDown() {
-        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_HEIGHT) + Const.MIDDLE_LINE_HEIGHT + Const.TOP_MARGIN <= getYPositionForDraw()) {
+        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_IMAGE_HEIGHT) + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.TOP_MARGIN <= getYPositionForDraw()) {
             return;
         }
         ImageStatus = 1;
@@ -144,7 +139,7 @@ public final class Sheep {
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_D) {
             goLeft();
         }
-        
+
         if (PositionOfSheep[1] == -30) {
             win();
         }
@@ -159,14 +154,14 @@ public final class Sheep {
                 Line.SheepCurrentLine = (int) Math.ceil(PositionOfSheep[1] / 100);
                 System.out.println(Line.SheepCurrentLine);
             }
-        } else if ((PositionOfSheep[1] > GameSetting.getRtlLineCount() * 100) && (PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100 + Const.MIDDLE_LINE_HEIGHT)) {
+        } else if ((PositionOfSheep[1] > GameSetting.getRtlLineCount() * 100) && (PositionOfSheep[1] <= GameSetting.getRtlLineCount() * 100 + Const.MIDDLE_LINE_IMAGE_HEIGHT)) {
             Line.SheepCurrentLine = -1;
             System.out.println(Line.SheepCurrentLine);
-        } else if ((PositionOfSheep[1] - Const.MIDDLE_LINE_HEIGHT) % 100 == 0) {
+        } else if ((PositionOfSheep[1] - Const.MIDDLE_LINE_IMAGE_HEIGHT) % 100 == 0) {
             Line.SheepCurrentLine = -1;
             System.out.println(Line.SheepCurrentLine);
         } else {
-            Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.MIDDLE_LINE_HEIGHT) / 100);
+            Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.MIDDLE_LINE_IMAGE_HEIGHT) / 100);
             System.out.println(Line.SheepCurrentLine);
         }
 
@@ -180,7 +175,7 @@ public final class Sheep {
 //            }
 //            
 //        }
-        // Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_HEIGHT) ;
+        // Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_IMAGE_HEIGHT) ;
         // System.out.println(Line.SheepCurrentLine);
     }
 
@@ -200,4 +195,9 @@ public final class Sheep {
         System.exit(0);
     }
 
+    // Implements Drawable
+    @Override
+    public BufferedImage getImage() {
+        return ImageOfSheep[ImageStatus];
+    }
 }

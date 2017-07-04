@@ -74,9 +74,9 @@ public class CarLtr extends Car {
     public int getYPositionForDraw() {
         int linePosition = getLine().getPosition();
         if (IsNowOverTaking) {
-            IncreasLinePosition += Const.INCREASE_IN_Y;
-            if (IncreasLinePosition <= Const.LINE_HEIGHT) {
-                return linePosition += Const.LINE_HEIGHT - IncreasLinePosition;
+            IncreasLinePosition += Const.CAR_INCREASE_POSITION_IN_Y;
+            if (IncreasLinePosition <= Const.LINE_IMAGE_HEIGHT) {
+                return linePosition += Const.LINE_IMAGE_HEIGHT - IncreasLinePosition;
             }
             IsNowOverTaking = false;
             IncreasLinePosition = 0;
@@ -89,7 +89,7 @@ public class CarLtr extends Car {
         Car carTemp = this;
         getLine().getCars().stream().forEach((carTemp2) -> {
             carTemp.TempCarSpeed = 0;
-            if (carTemp.getHeadPosition() >= carTemp2.getEndPosition() - Const.CHANGE_SPEED_DISTANCE_FOR_REACH && carTemp != carTemp2) {
+            if (carTemp.getHeadPosition() >= carTemp2.getEndPosition() - Const.CAR_SPEED_DISTANCE_FOR_REACH && carTemp != carTemp2) {
                 if (carTemp.getLine().getCanCarOvertaking()
                         && carTemp.isEnoughSpaceForOverTaking(otherLine) && !isFirstCar() && !IsNowOverTaking) {
 

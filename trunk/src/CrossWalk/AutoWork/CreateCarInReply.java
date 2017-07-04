@@ -45,7 +45,7 @@ public class CreateCarInReply extends CreateCar implements Runnable {
                 }
                 
                 try {
-                    Thread.sleep(Const.CREATE_CAR_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
+                    Thread.sleep(Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
                 } catch (InterruptedException ex) {
                     new ExceptionWriter().write(ex);
                 }

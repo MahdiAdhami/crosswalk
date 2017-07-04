@@ -6,8 +6,11 @@ package CrossWalk.Object.MoveableObject;
 import CrossWalk.Object.Line;
 import CrossWalk.Const;
 import CrossWalk.Menu.GameSetting;
+import CrossWalk.Object.Drawable;
+import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public abstract class Car implements Moveable {
+public abstract class Car implements Moveable,Drawable,Serializable {
 
     private int Id;
     private float HeadPosition;
@@ -45,13 +48,14 @@ public abstract class Car implements Moveable {
     public CarType getCarType() {
         return CarType;
     }
-
+    
+  
     public Line getLine() {
         return Line;
     }
 
     private float getSpeedInCrosswalk() {
-        return getSpeed() * Const.CAR_SPEED_RATE_NEAR_CROSSWALK_CHANGE;
+        return getSpeed() * Const.CAR_SPEED_RATE_NEAR_CROSSWALK;
     }
 
     public float getNowSpeed() {
@@ -119,12 +123,19 @@ public abstract class Car implements Moveable {
     // Get end position of car
     public abstract float getEndPosition();
 
-    // Get position of car for draw in InitGraphic
-    @Override
-    public abstract int getXPositionForDraw();
+    
 
     public abstract void checkCarAccident(Line otherLine);
 
     public abstract boolean isEnoughSpaceForOverTaking(Line otherLine);
 
+     // Implements Drawable
+    @Override
+    public BufferedImage getImage() {
+        return getCarType().getImage();
+    }
+    
+    // Implements Moveable
+    @Override
+    public abstract int getXPositionForDraw();
 }
