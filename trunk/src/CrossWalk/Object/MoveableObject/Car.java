@@ -6,8 +6,6 @@ package CrossWalk.Object.MoveableObject;
 import CrossWalk.Object.Line;
 import CrossWalk.Const;
 import CrossWalk.Menu.GameSetting;
-import com.sun.javafx.util.TempState;
-import java.util.ArrayList;
 
 public abstract class Car implements Moveable {
 
@@ -17,11 +15,10 @@ public abstract class Car implements Moveable {
     private final CarType CarType;
     private Line Line;
 
-    ///
     public float TempCarSpeed;
-    public boolean isNowOverTaking;
+    public boolean IsNowOverTaking;
+    public int IncreasLinePosition;
 
-    ///
     // Constructors
     // Create new random car
     public Car(float HeadPosition, int Speed, CarType CarType, Line Line) {
@@ -108,24 +105,16 @@ public abstract class Car implements Moveable {
                 || (getEndPosition() >= crosswalkPosition[0] && getEndPosition() <= crosswalkPosition[1]));
     }
 
-    // Implements Moveable interface
-    @Override
-    public int getYPositionForDraw() {
-        return (int) Line.getPosition();
+    public boolean isFirstCar(){
+        return getLine().getCarId() == getId() + getLine().getCars().size();  
     }
 
     // Abstract mehods
-    // Check for distance from other car
-    public abstract boolean isNeartheOtherCar();
-
-    // move Car Methods
-    public abstract void move();
+    @Override
+    public abstract int getYPositionForDraw();
 
     // Check for accident car with sheep
     public abstract void checkSheepAccident();
-
-    // Get  speed of other car
-    public abstract float getSpeedNearOtherCar();
 
     // Get end position of car
     public abstract float getEndPosition();
@@ -134,8 +123,8 @@ public abstract class Car implements Moveable {
     @Override
     public abstract int getXPositionForDraw();
 
-    public abstract void checkCarAccident(ArrayList<Line> lines);
+    public abstract void checkCarAccident(Line otherLine);
 
-    public abstract boolean isEnoughSpaceForOverTaking(Line line);
+    public abstract boolean isEnoughSpaceForOverTaking(Line otherLine);
 
 }

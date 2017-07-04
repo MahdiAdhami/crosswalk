@@ -14,60 +14,51 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import CrossWalk.Menu.GameSetting;
+import CrossWalk.Utilities.ExceptionWriter;
 
-public class SaveAndLoad {
+public class ResumeAndLoad {
 
-    private String LineFile;
-    private String SheepFile;
-    private String CarFile;
-    private String SettingPathFile;
+//    private String LineFile;
+//    private String SheepFile;
+//    private String CarFile;
+//    private String SettingPathFile;
 
-    public SaveAndLoad() {
+    public ResumeAndLoad() {
     }
 
-    public SaveAndLoad(String LineFile, String SheepFile, String CarFile, String SettingPathFile) {
-        this.LineFile = LineFile;
-        this.SheepFile = SheepFile;
-        this.CarFile = CarFile;
-        this.SettingPathFile = SettingPathFile;
-    }
 
     public final void initForSaveGame() {
-        File resumeFolder = new File(Const.ROOT_PATH);
+        File resumeFolder = new File(Const.ROOT_PATH + Const.RESUME_ROOT_PATH);
         if (!resumeFolder.exists()) {
             resumeFolder.mkdir();
         }
-        SettingPathFile = Const.SAVE_FILE_ADDRESS_SETTING;
-        LineFile = Const.SAVE_FILE_ADDRESS_LINE;
-        SheepFile = Const.SAVE_FILE_ADDRESS_SHEEP;
-        CarFile = Const.SAVE_FILE_ADDRESS_CAR;
     }
 
     public boolean isExistResumeFile() {
-        return (new File(Const.ROOT_PATH + Const.SAVE_FILE_ADDRESS_LINE).exists() && new File(Const.ROOT_PATH + Const.SAVE_FILE_ADDRESS_SHEEP).exists());
+        return (new File(Const.ROOT_PATH + Const.RESUME_LINE_PATH).exists()
+                && new File(Const.ROOT_PATH + Const.RESUME_SHEEP_PATH).exists());
     }
 
-    public ArrayList<Line> LoadGame() {
+    public ArrayList<Line> loadGame() {
         Scanner LinesReader = null;
         Scanner SheepReader = null;
         Scanner CarReader = null;
 
         try {
-            LinesReader = new Scanner(new File(Const.ROOT_PATH + LineFile));
-            CarReader = new Scanner(new File(Const.ROOT_PATH + CarFile));
-            SheepReader = new Scanner(new File(Const.ROOT_PATH + SheepFile));
+            LinesReader = new Scanner(new File(Const.ROOT_PATH + Const.RESUME_LINE_PATH));
+            CarReader = new Scanner(new File(Const.ROOT_PATH + Const.RESUME_CAR_PATH));
+            SheepReader = new Scanner(new File(Const.ROOT_PATH + Const.RESUME_SHEEP_PATH));
 
-            GameSetting.setSettingPath(SettingPathFile);
+            GameSetting.setSettingPath(Const.RESUME_SETTING_PATH);
 
         } catch (FileNotFoundException ex) {
-            System.err.println("Load LoadGame()");
+            new ExceptionWriter().write(ex);
         }
         String nextLineFromReader;
 
         ArrayList<Line> lines = new ArrayList<>();
 
         if (CarReader != null && LinesReader != null && SheepReader != null) {
-//
 //            // Read Lines
             while (LinesReader.hasNextLine()) {
                 nextLineFromReader = LinesReader.nextLine();
@@ -95,13 +86,7 @@ public class SaveAndLoad {
                     Integer.parseInt(sheepStringSplited[5]), sheepStringSplited[6]
             );
             InitGraphic.Sheep.CheckLine();
-//            String[] argsForSheep = SheepReader.nextLine().split(",");
-                
-//            InitGraphic.Sheep.setPosFromReply(new float[]{Float.parseFloat(argsForSheep[1]), Float.parseFloat(argsForSheep[2])});
-//            InitGraphic.Sheep.setImageStatus(Integer.parseInt(argsForSheep[5]));
-//            InitGraphic.Sheep.setImageCode(argsForSheep[6]);
-//            InitGraphic.Sheep.CheckLine();
-            
+
             SheepReader.close();
             LinesReader.close();
             CarReader.close();
@@ -117,13 +102,13 @@ public class SaveAndLoad {
         PrintWriter writerForCars = null;
 
         try {
-            writerForCars = new PrintWriter(Const.ROOT_PATH + CarFile, "UTF-8");
-            writerForLine = new PrintWriter(Const.ROOT_PATH + LineFile, "UTF-8");
+            writerForCars = new PrintWriter(Const.ROOT_PATH + Const.RESUME_CAR_PATH, "UTF-8");
+            writerForLine = new PrintWriter(Const.ROOT_PATH + Const.RESUME_LINE_PATH, "UTF-8");
 
-            GameSetting.writeSetting(SettingPathFile);
+            GameSetting.writeSetting(Const.RESUME_SETTING_PATH);
 
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-
+            new ExceptionWriter().write(ex);
         }
         for (Line tempLine : line) {
             writerForLine.println(tempLine.toString());
@@ -142,9 +127,9 @@ public class SaveAndLoad {
     private void saveSheepForResume() {
         PrintWriter writerForSheep = null;
         try {
-            writerForSheep = new PrintWriter(Const.ROOT_PATH + SheepFile, "UTF-8");
+            writerForSheep = new PrintWriter(Const.ROOT_PATH + Const.RESUME_SHEEP_PATH, "UTF-8");
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-
+            new ExceptionWriter().write(ex);
         }
         writerForSheep.println(InitGraphic.Sheep.toString());
         writerForSheep.close();
@@ -159,14 +144,6 @@ public class SaveAndLoad {
     public ArrayList<Line> loadForResume() {
         initForSaveGame();
 
-        return LoadGame();
+        return loadGame();
     }
 }
-
-//
-//else if(nextLineFromReader.matches("Line Id = \\d false"))
-//            {
-//                String[] nextLineSplited = nextLineFromReader.split(" ");
-//                int id = Integer.parseInt(nextLineSplited[3]);
-//                AutoCreateCar.Lines.add(new Line(id,id + 1,id ,Const.LINE_DIRECTION_RTL ,  Const.LINE_HEIGHT * (id - 1) + Const.TOP_MARGIN));
-//            }

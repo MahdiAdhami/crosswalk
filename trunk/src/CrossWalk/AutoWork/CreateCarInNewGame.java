@@ -10,6 +10,7 @@ import CrossWalk.Object.MoveableObject.CarType;
 import CrossWalk.Object.MoveableObject.CarRtl;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.StoreData.WriteReplyData;
+import CrossWalk.Utilities.ExceptionWriter;
 
 public class CreateCarInNewGame extends CreateCar implements Runnable {
 
@@ -66,9 +67,9 @@ public class CreateCarInNewGame extends CreateCar implements Runnable {
 
             // Sleep thread wait for create new car again
             try {
-                Thread.sleep(Const.CREATE_CAR_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
+                Thread.sleep(100);//Const.CREATE_CAR_SLEEP_TIME - GameSetting.getAutoCreateCarRate()
             } catch (Exception ex) {
-                System.err.println("AutoCreateCar run() " + ex);
+                new ExceptionWriter().write(ex);
             }
 
         }

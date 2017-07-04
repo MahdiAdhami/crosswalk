@@ -5,27 +5,39 @@
  */
 package CrossWalk;
 
-import CrossWalk.StoreData.SaveAndLoad;
+import CrossWalk.StoreData.ResumeAndLoad;
 import CrossWalk.Object.Line;
+import CrossWalk.Object.MoveableObject.Sheep;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class GameListener {
 
     public KeyListener KeyListener;
     public MouseListener MouseListener;
-    static public ArrayList<Line> Lines;
 
     public GameListener(ArrayList<Line> Lines) {
-        GameListener.Lines = Lines;
 
         KeyListener = new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
-                InitGraphic.Sheep.keyPressed(e);
+                int keyCode = e.getKeyCode();
+
+                if (keyCode == KeyEvent.VK_F2 || keyCode == KeyEvent.VK_T) {
+                    InitGame.GameStop = !InitGame.GameStop;
+                    ResumeAndLoad saveGame = new ResumeAndLoad();
+                    saveGame.SaveGameForResume(Lines);
+                    JOptionPane.showMessageDialog(null, "بازی با موفقیت ذخیره شد و در منوی اصلی قابل بازیابی است!", "ذخیره شد", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (Sheep.AutoMove) {
+                    return;
+                }
+
+                InitGraphic.Sheep.move(keyCode);
             }
 
             @Override
@@ -48,7 +60,7 @@ public class GameListener {
                 if (e.getX() >= 2 && e.getX() < 90 && e.getY() > 0 && e.getY() < 60) {
                     InitGame.GameStop = !InitGame.GameStop;
                 } else if (e.getX() > 100 && e.getX() < 320 && e.getY() > 0 && e.getY() < 60) {
-                    SaveAndLoad saveGame = new SaveAndLoad();
+                    ResumeAndLoad saveGame = new ResumeAndLoad();
                     saveGame.SaveGameForResume(Lines);
                     InitGame.GameStop = !InitGame.GameStop;
                 }

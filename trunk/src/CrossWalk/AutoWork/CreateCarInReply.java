@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import CrossWalk.Menu.GameSetting;
+import CrossWalk.Utilities.ExceptionWriter;
 
 public class CreateCarInReply extends CreateCar implements Runnable {
     
@@ -28,6 +29,7 @@ public class CreateCarInReply extends CreateCar implements Runnable {
         try {
             reader = new Scanner(new File(Path));
         } catch (FileNotFoundException ex) {
+            new ExceptionWriter().write(ex);
         }
         
         if (reader != null) {
@@ -45,7 +47,7 @@ public class CreateCarInReply extends CreateCar implements Runnable {
                 try {
                     Thread.sleep(Const.CREATE_CAR_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
                 } catch (InterruptedException ex) {
-                    System.out.println("ReplyMovie run() " + ex);
+                    new ExceptionWriter().write(ex);
                 }
             }
         }

@@ -8,6 +8,7 @@ package CrossWalk.Menu;
 import java.io.File;
 import java.io.IOException;
 import CrossWalk.Const;
+import CrossWalk.Utilities.ExceptionWriter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -78,6 +79,7 @@ public class GameSetting {
         SettingPath = path;
     }
 //
+
     public static void SetDefaultSettingPath() {
         SettingPath = Const.MAIN_SETTING_FILE;
     }
@@ -208,7 +210,7 @@ public class GameSetting {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException ex) {
-            System.err.println("Setting SaveChange() " + ex);
+            new ExceptionWriter().write(ex);
         }
     }
 
@@ -272,126 +274,8 @@ public class GameSetting {
             transformer.transform(source, result);
 
         } catch (ParserConfigurationException | TransformerException ex) {
-            System.err.println("Setting writeSetting() " + ex);
+            new ExceptionWriter().write(ex);
         }
 
     }
-
-//    public static void writeSetting(String pathAddress) {
-//        try {
-//            String path = Const.PATH + pathAddress;
-//
-//            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-//            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-//
-//            Node Settings = doc.getFirstChild();
-//            Node GameSettings = doc.getElementsByTagName("GameSettings").item(0);
-//
-//            // update GameSettings attribute
-//            //NamedNodeMap attr = GameSettings.getAttributes();
-//            //Node nodeAttr = attr.getNamedItem("company");
-//            //nodeAttr.setTextContent("Lamborigini");
-//            // loop the GameSettings child node
-//            NodeList list = GameSettings.getChildNodes();
-//
-//            for (int temp = 0; temp < list.getLength(); temp++) {
-//                Node node = list.item(temp);
-//
-//                if (node.getNodeType() == Node.ELEMENT_NODE) {
-//                    Element eElement = (Element) node;
-//                    if (SettingConst.RTL_LINE_COUNT.equals(eElement.getNodeName())) {
-//                        eElement.setTextContent(String.format("%d", RTL_LINE_COUNT));
-//                    } else if (SettingConst.LTR_LINE_COUNT.equals(eElement.getNodeName())) {
-//                        eElement.setTextContent(String.format("%d", LTR_LINE_COUNT));
-//                    } else if (SettingConst.CROSSWALK_MIDDLE_POSITION.equals(eElement.getNodeName())) {
-//                        eElement.setTextContent(String.format("%d", CROSSWALK_MIDDLE_POSITION));
-//                    } else if (SettingConst.AUTO_CREATE_CAR_RATE.equals(eElement.getNodeName())) {
-//                        eElement.setTextContent(String.format("%d", AUTO_CREATE_CAR_RATE));
-//                    }
-//                }
-//            }
-//
-//            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//            Transformer transformer = transformerFactory.newTransformer();
-//            DOMSource source = new DOMSource(doc);
-//
-//            File file = new File(path);
-//            StreamResult consoleResult = new StreamResult(file);
-//
-//            transformer.transform(source, consoleResult);
-//
-//        } catch (ParserConfigurationException | SAXException | IOException | TransformerException ex) {
-//            System.err.println("Setting writeSetting() " + ex);
-//        }
-//    }
 }
-
-// try {
-//            File inputFile = new File(Const.PATH + Const.SETTING_FILE);
-//
-//            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-//            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-//            Document doc = docBuilder.parse(inputFile);
-//            Node cars = doc.getFirstChild();
-//            Node supercar = doc.getElementsByTagName("supercars").item(0);
-//            // update supercar attribute
-//            NamedNodeMap attr = supercar.getAttributes();
-//            Node nodeAttr = attr.getNamedItem("company");
-//            nodeAttr.setTextContent("Lamborigini");
-//
-//            // loop the supercar child node
-//            NodeList list = supercar.getChildNodes();
-//            for (int temp = 0; temp < list.getLength(); temp++) {
-//                Node node = list.item(temp);
-//                if (node.getNodeType() == Node.ELEMENT_NODE) {
-//                    Element eElement = (Element) node;
-//                    if ("carname".equals(eElement.getNodeName())) {
-//                        if ("Ferrari 101".equals(eElement.getTextContent())) {
-//                            eElement.setTextContent("Lamborigini 001");
-//                        }
-//                        if ("Ferrari 202".equals(eElement.getTextContent())) {
-//                            eElement.setTextContent("Lamborigini 002");
-//                        }
-//                    }
-//                }
-//            }
-//            NodeList childNodes = cars.getChildNodes();
-//            for (int count = 0; count < childNodes.getLength(); count++) {
-//                Node node = childNodes.item(count);
-//                if ("luxurycars".equals(node.getNodeName())) {
-//                    cars.removeChild(node);
-//                }
-//            }
-//            // write the content on console
-//            TransformerFactory transformerFactory
-//                    = TransformerFactory.newInstance();
-//            Transformer transformer = transformerFactory.newTransformer();
-//            DOMSource source = new DOMSource(doc);
-//            System.out.println("-----------Modified File-----------");
-//            StreamResult consoleResult = new StreamResult(System.out);
-//            transformer.transform(source, consoleResult);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-//<cars>
-//   <supercars company="Ferrari">
-//      <carname type="formula one">Ferrari 101</carname>
-//      <carname type="sports">Ferrari 202</carname>
-//   </supercars>
-//   <luxurycars company="Benteley">
-//      <carname>Benteley 1</carname>
-//      <carname>Benteley 2</carname>
-//      <carname>Benteley 3</carname>
-//   </luxurycars>
-//</cars>
-//
-//-----------Modified File-----------
-//<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-//<cars>
-//<supercars company="Lamborigini">
-//<carname type="formula one">Lamborigini 001</carname>
-//<carname type="sports">Lamborigini 002</carname>
-//</supercars></cars> 

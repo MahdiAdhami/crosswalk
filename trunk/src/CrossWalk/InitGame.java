@@ -53,7 +53,7 @@ public class InitGame {
     public void loadResumeGame(ArrayList<Line> lines) {
         boolean CreateReply = false;
 
-        GameSetting.setSettingPath(Const.SAVE_FILE_ADDRESS_SETTING);
+        GameSetting.setSettingPath(Const.RESUME_SETTING_PATH);
         GameSetting.UpdateSettings();
 
         InitGraphic.Sheep.setSaveChanges(CreateReply);

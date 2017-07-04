@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import CrossWalk.Menu.GameSetting;
+import CrossWalk.Utilities.ExceptionWriter;
 
 public class WriteReplyData {
 
@@ -47,7 +48,7 @@ public class WriteReplyData {
                 carWriter.newLine();
             }
         } catch (IOException ex) {
-            System.out.println("ReplyMovie appendCarsToFile() " + ex);
+           new ExceptionWriter().write(ex);
         }
     }
 
@@ -65,7 +66,7 @@ public class WriteReplyData {
 
             StartedTime = tempDate;
         } catch (IOException ex) {
-            System.out.println("ReplyMovie appendSheepToFile() " + ex);
+            new ExceptionWriter().write(ex);
         }
     }
 }
