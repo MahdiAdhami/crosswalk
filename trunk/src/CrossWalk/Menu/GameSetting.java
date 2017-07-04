@@ -57,18 +57,26 @@ public class GameSetting {
     }
 
     public static int getLineImageNumber() {
+        if(lineImageNumber == 0 )
+            return 1;
         return lineImageNumber;
     }
     
      public static int getMiddleLineImageNumber() {
+         if(middleLineImageNumber == 0 )
+            return 1;
         return middleLineImageNumber;
     }
      
     public static int getCrossWalkImageNumber() {
+        if(crossWalkImageNumber == 0 )
+            return 1;
         return crossWalkImageNumber;
     }
      
     public static int getSheepImageNumber() {
+        if(sheepImageNumber == 0 )
+            return 1;
         return sheepImageNumber;
     }
 
@@ -77,6 +85,8 @@ public class GameSetting {
     }
 
     public static String getCarsNumbers() {
+        if(carsNumbers == null )
+            return "1234";
         return carsNumbers;
     }
 
