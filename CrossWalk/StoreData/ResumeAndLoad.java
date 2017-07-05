@@ -50,6 +50,7 @@ public class ResumeAndLoad {
             SheepReader = new Scanner(new File(Const.ROOT_PATH + Const.RESUME_SHEEP_PATH));
 
             GameSetting.setSettingPath(Const.RESUME_SETTING_PATH);
+            
 
         } catch (FileNotFoundException ex) {
             new ExceptionWriter().write(ex);

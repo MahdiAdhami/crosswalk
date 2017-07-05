@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.Utilities.ExceptionWriter;
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -70,7 +73,18 @@ public class InitGraphic extends JPanel implements Runnable {
         gameFrame.addMouseListener(gameListener.MouseListener);
 
         //
-        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        gameFrame.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                System.out.println("Closed");
+                InitGame.GameEnd = true;
+                e.getWindow().dispose();
+            }
+        });
 
         int gameHeight = (GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_IMAGE_HEIGHT + 4 * Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT;//+ Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START;
         gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, gameHeight);

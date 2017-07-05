@@ -25,7 +25,7 @@ public final class Sheep implements Drawable,Serializable {
     private boolean SaveChanges;
     private int level;
     private int score;
-    private float firstYPositionOfSheep;
+    private float bottomYPositionOfSheep;
     private int life;
 
     public static boolean AutoMove = false;
@@ -33,13 +33,16 @@ public final class Sheep implements Drawable,Serializable {
 
     @Override
     public String toString() {
-        return String.format("Sheep,%d,%d,%d,%d,%d,%s,%d,%d,%d", getXPositionForDraw(), getYPositionForDraw(), Rate[0], Rate[1], ImageStatus, ImageCode,level,score,life);
+        return String.format("Sheep,%d,%d,%d,%d,%d,%s,%d,%d,%d", getXPositionForDraw(), getYPositionForDraw()
+                , Rate[0], Rate[1], ImageStatus, ImageCode,level,score,life);
     }
 
     public Sheep(float[] PositionOfSheep, int[] Rate, int ImageStatus, String ImageCode , int level , int score , int life) {
         this.level = level;
         this.score = score;
         this.life = life;
+        bottomYPositionOfSheep =  (Const.LINE_IMAGE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) 
+                + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START; 
         this.PositionOfSheep = PositionOfSheep;
         this.Rate = Rate;
         this.ImageStatus = ImageStatus;
@@ -51,11 +54,11 @@ public final class Sheep implements Drawable,Serializable {
         level = 1;
         score = 50;
         life = 3;
-        this.ImageCode = String.valueOf(GameSetting.getSheepImageNumber() + 1);
+        this.ImageCode = String.valueOf(GameSetting.getSheepImageNumber());
         initImage();
         this.Rate = Rate;
         this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
-        firstYPositionOfSheep = PositionYOfSheep;
+        bottomYPositionOfSheep = PositionYOfSheep;
     }
 
     private void initImage() {
@@ -112,7 +115,8 @@ public final class Sheep implements Drawable,Serializable {
     }
 
     private void goDown() {
-        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_IMAGE_HEIGHT) + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.TOP_MARGIN <= getYPositionForDraw()) {
+        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_IMAGE_HEIGHT) 
+                + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START<= getYPositionForDraw()) {
             return;
         }
         ImageStatus = 1;
@@ -205,7 +209,8 @@ public final class Sheep implements Drawable,Serializable {
         {
             life--;
             PositionOfSheep[0] = GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2;
-            PositionOfSheep[1] = firstYPositionOfSheep;
+            PositionOfSheep[1] = bottomYPositionOfSheep;
+            System.out.println(PositionOfSheep[1]);
             CheckLine();
         }
         else{
@@ -223,18 +228,12 @@ public final class Sheep implements Drawable,Serializable {
     }
 
     private void goToNextLevel() {
-        if(level > 1)
-        {
-            win();
-        }
-        else
-        {
+        
             level ++;
             score += 50;
             PositionOfSheep[0] = GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2;
-            PositionOfSheep[1] = firstYPositionOfSheep;
+            PositionOfSheep[1] = bottomYPositionOfSheep;
             CheckLine();
-        }
         
     }
     
