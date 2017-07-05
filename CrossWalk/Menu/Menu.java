@@ -7,7 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import CrossWalk.Const;
+import CrossWalk.Utilities.Const;
 import CrossWalk.Utilities.ExceptionWriter;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -25,35 +25,35 @@ public abstract class Menu {
     private final String Title;
     private final int Height;
     private final int Width;
-    public JFrame frame;
+    public JFrame Frame;
 
     public Menu(String Title, int Height, int Width) {
         this.Height = Height;
         this.Width = Width;
         this.Title = Title;
-        frame = new JFrame();
+        Frame = new JFrame();
     }
 
     public void Show() {
         createPanel();
-        setInit(frame);
+        setInit();
     }
 
-    public void setInit(JFrame frame) {
-        //frame.setAlwaysOnTop(true);
-        frame.setResizable(false);
-        frame.pack();
-        frame.setTitle(Title);
-        frame.setSize(Width, Height);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setVisible(true);
-        try {
-            frame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
-        } catch (IOException ex) {
-          new ExceptionWriter().write(ex);
-        }
+    public void setInit() {
+        Frame.setResizable(false);
+        Frame.pack();
+        Frame.setTitle(Title);
+        Frame.setSize(Width, Height);
+        Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        Frame.setVisible(true);
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation((dimension.width / 2) - (Width / 2), (dimension.height / 2) - (Height / 2));
+        Frame.setLocation((dimension.width / 2) - (Width / 2), (dimension.height / 2) - (Height / 2));
+        
+        try {
+            Frame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
+        } catch (IOException ex) {
+            new ExceptionWriter().write(ex);
+        }
     }
 
     protected JButton createButton(String Title, ActionListener actionListener) {
@@ -74,7 +74,6 @@ public abstract class Menu {
 
     protected JSpinner createSpinner(String Title, int defaultValue, int minValue, int maxValue, int step, ChangeListener changeListener) {
         SpinnerModel model = new SpinnerNumberModel(defaultValue, minValue, maxValue, step);
-        //SpinnerModel model = new SpinnerNumberModel(defaultValue, -100, 100, step);
         JSpinner spinner = new JSpinner(model);
 
         spinner.setName(Title);

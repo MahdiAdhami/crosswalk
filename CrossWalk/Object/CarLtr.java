@@ -1,8 +1,8 @@
-package CrossWalk.Object.MoveableObject;
+package CrossWalk.Object;
 
 import CrossWalk.Object.Line;
-import CrossWalk.Const;
-import CrossWalk.InitGraphic;
+import CrossWalk.Utilities.Const;
+import CrossWalk.UI.InitGraphic;
 
 public class CarLtr extends Car {
 

@@ -6,7 +6,7 @@ package CrossWalk;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.Menu.MainMenu;
 
-public class JavaGame {
+public class StartGame {
 
     // start program 
     public static void main(String[] args) {

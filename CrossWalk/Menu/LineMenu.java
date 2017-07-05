@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import CrossWalk.Const;
+import CrossWalk.Utilities.Const;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,7 +23,7 @@ public class LineMenu extends Menu {
         JPanel panel = new JPanel(new BorderLayout(1, 1));
         panel.setBorder(new EmptyBorder(50, 10, 50, 10));
 
-        frame.setContentPane(panel);
+        Frame.setContentPane(panel);
 
         JPanel controls = new JPanel(new GridLayout(4, 0));
         JPanel labels = new JPanel(new GridLayout(6, 0));
@@ -73,7 +73,7 @@ public class LineMenu extends Menu {
                     GameSetting.setLineImageNumber(comboMainLine.getSelectedIndex() + 1);
                     GameSetting.setMiddleLineImageNumber(comboMiddleLine.getSelectedIndex() + 1);
                     GameSetting.setCrossWalkImageNumber(comboCrossWalk.getSelectedIndex() + 1);
-                    frame.dispose();
+                    Frame.dispose();
                 });
 
         submit.add(saveChanges);

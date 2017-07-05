@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CrossWalk;
+package CrossWalk.UI;
 
 import CrossWalk.StoreData.ResumeAndLoad;
 import CrossWalk.Object.Line;
-import CrossWalk.Object.MoveableObject.Sheep;
+import CrossWalk.Object.Sheep;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;

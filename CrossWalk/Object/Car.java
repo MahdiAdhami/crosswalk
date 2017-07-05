@@ -1,10 +1,10 @@
 /*
 Car Base Class 
  */
-package CrossWalk.Object.MoveableObject;
+package CrossWalk.Object;
 
 import CrossWalk.Object.Line;
-import CrossWalk.Const;
+import CrossWalk.Utilities.Const;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.Object.Drawable;
 import java.awt.image.BufferedImage;

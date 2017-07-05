@@ -1,6 +1,6 @@
 package CrossWalk.Menu;
 
-import CrossWalk.Const;
+import CrossWalk.Utilities.Const;
 
 public final class MenuConst {
     public final static int MAX_TOP_LINE_COUNT = 3;

@@ -3,9 +3,9 @@ Auto Move Sheep In Game Reply
  */
 package CrossWalk.AutoWork;
 
-import CrossWalk.Const;
-import CrossWalk.InitGraphic;
-import CrossWalk.Object.MoveableObject.Sheep;
+import CrossWalk.Utilities.Const;
+import CrossWalk.UI.InitGraphic;
+import CrossWalk.Object.Sheep;
 import CrossWalk.Utilities.ExceptionWriter;
 import java.io.File;
 import java.io.FileNotFoundException;

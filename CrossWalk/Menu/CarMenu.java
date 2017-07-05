@@ -5,7 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
-import CrossWalk.Const;
+import CrossWalk.Utilities.Const;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,7 +23,7 @@ public class CarMenu extends Menu {
         JPanel panel = new JPanel(new BorderLayout(1, 1));
         panel.setBorder(new EmptyBorder(5, 10, 20, 10));
 
-        frame.setContentPane(panel);
+        Frame.setContentPane(panel);
 
         JPanel controls = new JPanel(new GridLayout(3, 0));
         JPanel submit = new JPanel(new GridLayout(1, 0));
@@ -80,7 +80,7 @@ public class CarMenu extends Menu {
                 }
             }
             GameSetting.setCarsNumbers(temp);
-            frame.dispose();
+            Frame.dispose();
         });
         submit.add(submitButton);
     }

@@ -3,9 +3,9 @@
  */
 package CrossWalk.AutoWork;
 
-import CrossWalk.Const;
-import CrossWalk.InitGame;
-import CrossWalk.InitGraphic;
+import CrossWalk.Utilities.Const;
+import CrossWalk.UI.InitGame;
+import CrossWalk.UI.InitGraphic;
 import CrossWalk.Utilities.ExceptionWriter;
 
 public class SheepMoverInBotGame implements Runnable {
