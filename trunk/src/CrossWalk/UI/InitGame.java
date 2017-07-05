@@ -22,9 +22,7 @@ public class InitGame {
 
     public void autoMoveSheep(long sleepInMilliSecond, int randRate) {
         newGame();
-
         Sheep.AutoMove = true;
-
         // Create instance an object for auto move sheep
         Thread threadAutoMoveSheep = new Thread(new SheepMoverInBotGame(sleepInMilliSecond, randRate));
         threadAutoMoveSheep.start();

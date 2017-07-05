@@ -1,6 +1,5 @@
 package CrossWalk.Object;
 
-import CrossWalk.Object.Line;
 import CrossWalk.Utilities.Const;
 import CrossWalk.UI.InitGraphic;
 
@@ -46,8 +45,6 @@ public class CarLtr extends Car {
     // Car mover  method
     @Override
     public void move() {
-        float tempSpeed = getNowSpeed();
-
         if (getHeadPosition() - getCarType().getCarWidth() > Const.GAME_WINDOWS_WIDTH) {
             try {
                 getLine().disposeCar(this);
@@ -56,7 +53,7 @@ public class CarLtr extends Car {
             }
             return;
         }
-        setHeadPosition(getHeadPosition() + tempSpeed * Const.SLEEP_TIME_RE_PAINTING / 1000);
+        setHeadPosition(getHeadPosition() + (getNowSpeed() * Const.SLEEP_TIME_RE_PAINTING / 1000));
         checkSheepAccident();
     }
 
@@ -86,23 +83,30 @@ public class CarLtr extends Car {
 
     @Override
     public void checkCarAccident(Line otherLine) {
-        Car carTemp = this;
-        getLine().getCars().stream().forEach((carTemp2) -> {
-            carTemp.TempCarSpeed = 0;
-            if (carTemp.getHeadPosition() >= carTemp2.getEndPosition() - Const.CAR_SPEED_DISTANCE_FOR_REACH && carTemp != carTemp2) {
-                if (carTemp.getLine().getCanCarOvertaking()
-                        && carTemp.isEnoughSpaceForOverTaking(otherLine) && !isFirstCar() && !IsNowOverTaking) {
+        TempCarSpeed = 0;
 
-                    carTemp.getLine().disposeCar(carTemp);
-                    carTemp.setLine(otherLine);
-                    otherLine.addCar(carTemp);
-                    carTemp.IsNowOverTaking = true;
+        for (Car carTemp2 : getLine().getCars()) {
+            if (carTemp2.getHeadPosition() > getHeadPosition() && getHeadPosition() + Const.CAR_SPEED_DISTANCE_FOR_REACH >= carTemp2.getEndPosition()) {// 
+                if (getLine().getCanCarOvertaking()
+                        && isEnoughSpaceForOverTaking(otherLine) && !isFirstCar()) {
+
+                    getLine().disposeCar(this);
+                    setLine(otherLine);
+                    otherLine.addCar(this);
+                    IsNowOverTaking = true;
 
                 } else {
-                    carTemp.TempCarSpeed = (carTemp2.getNowSpeed());
+                    TempCarSpeed = carTemp2.getNowSpeed();
                 }
+
+                break;
             }
-        });
+        }
+    }
+
+    @Override
+    public boolean isFirstCar() {
+        return getLine().getCars().stream().noneMatch((car) -> (car.getHeadPosition() > getHeadPosition()));
     }
 
 }

@@ -67,7 +67,7 @@ public class CreateCarInNewGame extends CreateCar{
 
             // Sleep thread wait for create new car again
             try {
-                Thread.sleep(Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
+                Thread.sleep(250);//Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
             } catch (Exception ex) {
                 new ExceptionWriter().write("CreateCarInNewGame run()", ex, false);
             }

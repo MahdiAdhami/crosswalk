@@ -129,7 +129,6 @@ public class InitGraphic extends JPanel implements Runnable {
                     g.setColor(Color.BLUE);
 //                    g.drawString(String.format("%d-%.1f-%.1f", carTemp.getId(), carTemp.getSpeed(), carTemp.TempCarSpeed), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
 //                    g.drawString(String.format("%d -- %d -- %d -- %b", carTemp.getLine().getCreatedCarCount(),carTemp.getId(),carTemp.getLine().getCars().size(),carTemp.IsFirstCar), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
-//                    g.drawString(String.format("%b", carTemp.isFirstCar()), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
                     g.drawImage(carTemp.getCarType().getImage(), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2, this);
                 });
             });
