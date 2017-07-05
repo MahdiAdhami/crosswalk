@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 
 public class GameListener {
 
-    public KeyListener KeyListener;
-    public MouseListener MouseListener;
+    private final KeyListener KeyListener;
+    private final MouseListener MouseListener;
 
     public GameListener(ArrayList<Line> Lines) {
 
@@ -79,5 +79,13 @@ public class GameListener {
             }
 
         };
+    }
+
+    public KeyListener getKeyListener() {
+        return KeyListener;
+    }
+
+    public MouseListener getMouseListener() {
+        return MouseListener;
     }
 }

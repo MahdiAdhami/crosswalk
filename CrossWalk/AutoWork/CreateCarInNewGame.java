@@ -1,5 +1,6 @@
 package CrossWalk.AutoWork;
 
+import CrossWalk.Menu.GameSetting;
 import CrossWalk.Utilities.Const;
 import CrossWalk.UI.InitGame;
 import CrossWalk.UI.InitGraphic;
@@ -8,11 +9,10 @@ import CrossWalk.Object.Car;
 import CrossWalk.Object.Line;
 import CrossWalk.Object.CarType;
 import CrossWalk.Object.CarRtl;
-import CrossWalk.Menu.GameSetting;
 import CrossWalk.StoreData.WriteReplyData;
 import CrossWalk.Utilities.ExceptionWriter;
 
-public class CreateCarInNewGame extends CreateCar implements Runnable {
+public class CreateCarInNewGame extends CreateCar{
 
     public boolean SaveReply;
     public WriteReplyData WriteReplyData;
@@ -24,7 +24,7 @@ public class CreateCarInNewGame extends CreateCar implements Runnable {
         if (SaveReply) {
             WriteReplyData temp = new WriteReplyData();
             this.WriteReplyData = temp;
-            InitGraphic.Sheep.WriteReplyData = temp;
+            InitGraphic.Sheep.setWriteReplyData(temp);
         }
     }
 
@@ -67,21 +67,11 @@ public class CreateCarInNewGame extends CreateCar implements Runnable {
 
             // Sleep thread wait for create new car again
             try {
-                Thread.sleep(150);//Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate()
+                Thread.sleep(Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
             } catch (Exception ex) {
-                new ExceptionWriter().write(ex);
+                new ExceptionWriter().write("CreateCarInNewGame run()", ex, false);
             }
 
         }
     }
-//  //  private float[] InitPostion(int carWidth){
-//        float[] position = new float[2];
-//
-//        int CarWidthRate = this.getDirection() == Const.LINE_DIRECTION_LTR
-//                ? CarType.getCarWidth() * (-1)
-//                : CarWidth;
-//        return Position[0] + CarWidthRate;
-//        
-//        return ;
-//    }
 }

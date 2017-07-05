@@ -54,7 +54,7 @@ public class SelectMapMenu extends Menu {
                     start.autoMoveSheep(250, 10);
                 } else {
                     InitGame start = new InitGame();
-                    start.autoCreateCar();
+                    start.newGame();
                 }
             }
         }));
@@ -71,7 +71,7 @@ public class SelectMapMenu extends Menu {
                     start.autoMoveSheep(250, 10);
                 } else {
                     InitGame start = new InitGame();
-                    start.autoCreateCar();
+                    start.newGame();
                 }
 
             });

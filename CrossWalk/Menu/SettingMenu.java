@@ -82,17 +82,17 @@ public class SettingMenu extends Menu {
 
         JButton goToSheepSelectMenu = createButton("انتخاب آدمک", (e) -> {
             SheepMenu sheepSelectMenu = new SheepMenu();
-            sheepSelectMenu.Show();
+            sheepSelectMenu.show();
         });
 
         JButton goToCarSelectMenu = createButton("انتخاب ماشین ها", (e) -> {
             CarMenu carSelectMenu = new CarMenu();
-            carSelectMenu.Show();
+            carSelectMenu.show();
         });
 
         JButton goToLineSelectMenu = createButton("انتخاب خط کشی ها", (e) -> {
             LineMenu lineSelectMenu = new LineMenu();
-            lineSelectMenu.Show();
+            lineSelectMenu.show();
         });
 
         otherSetting.add(goToCarSelectMenu);

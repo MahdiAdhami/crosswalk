@@ -57,26 +57,30 @@ public class GameSetting {
     }
 
     public static int getLineImageNumber() {
-        if(lineImageNumber == 0 )
+        if (lineImageNumber == 0) {
             return 1;
+        }
         return lineImageNumber;
     }
-    
-     public static int getMiddleLineImageNumber() {
-         if(middleLineImageNumber == 0 )
+
+    public static int getMiddleLineImageNumber() {
+        if (middleLineImageNumber == 0) {
             return 1;
+        }
         return middleLineImageNumber;
     }
-     
+
     public static int getCrossWalkImageNumber() {
-        if(crossWalkImageNumber == 0 )
+        if (crossWalkImageNumber == 0) {
             return 1;
+        }
         return crossWalkImageNumber;
     }
-     
+
     public static int getSheepImageNumber() {
-        if(sheepImageNumber == 0 )
+        if (sheepImageNumber == 0) {
             return 1;
+        }
         return sheepImageNumber;
     }
 
@@ -85,16 +89,15 @@ public class GameSetting {
     }
 
     public static String getCarsNumbers() {
-        if(carsNumbers == null )
+        if (carsNumbers == null) {
             return "1234";
+        }
         return carsNumbers;
     }
 
     public static float getCarsSpeed() {
         return carsSpeedFromUser;
     }
-    
-    
 
     /// Setter Methods
     public static void setSettingPath(String path) {
@@ -162,13 +165,13 @@ public class GameSetting {
         lineImageNumber = valueAsInt;
         return true;
     }
-    
+
     public static boolean setMiddleLineImageNumber(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
         middleLineImageNumber = valueAsInt;
         return true;
     }
-    
+
     public static boolean setCrossWalkImageNumber(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
         crossWalkImageNumber = valueAsInt;
@@ -248,13 +251,12 @@ public class GameSetting {
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("GameSetting readSetting()", ex, false);
         }
     }
 
     public static void writeSetting(String path) {
         try {
-
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -302,11 +304,11 @@ public class GameSetting {
             firstname = doc.createElement(SettingConst.CARS_SPEED_RATE);
             firstname.appendChild(doc.createTextNode(String.format("%f", getCarsSpeed())));
             staff.appendChild(firstname);
-            
+
             firstname = doc.createElement(SettingConst.MIDDLE_LINE_IMG_NUMBER);
             firstname.appendChild(doc.createTextNode(String.format("%d", getMiddleLineImageNumber())));
             staff.appendChild(firstname);
-            
+
             firstname = doc.createElement(SettingConst.CROSSWALK_IMG_NUMBER);
             firstname.appendChild(doc.createTextNode(String.format("%d", getCrossWalkImageNumber())));
             staff.appendChild(firstname);
@@ -320,7 +322,7 @@ public class GameSetting {
             transformer.transform(source, result);
 
         } catch (ParserConfigurationException | TransformerException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("writeSetting readSetting()", ex, false);
         }
 
     }

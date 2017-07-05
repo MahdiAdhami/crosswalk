@@ -11,14 +11,14 @@ import java.util.Scanner;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.Utilities.ExceptionWriter;
 
-public class CreateCarInReply extends CreateCar implements Runnable {
+public class CreateCarInReply extends CreateCar{
     
-    private final String Path;
+    private final String CarsPath;
     
-    public CreateCarInReply(String Path) {
+    public CreateCarInReply(String CarsPath) {
         super();
         setLine(new ArrayList<>());
-        this.Path = Path;
+        this.CarsPath = CarsPath;
     }
     
     @Override
@@ -27,9 +27,9 @@ public class CreateCarInReply extends CreateCar implements Runnable {
         Scanner reader = null;
         
         try {
-            reader = new Scanner(new File(Path));
+            reader = new Scanner(new File(CarsPath));
         } catch (FileNotFoundException ex) {
-            new ExceptionWriter().write(ex);
+             new ExceptionWriter().write("CreateCarInReply run()", ex, false);
         }
         
         if (reader != null) {
@@ -47,7 +47,7 @@ public class CreateCarInReply extends CreateCar implements Runnable {
                 try {
                     Thread.sleep(Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
                 } catch (InterruptedException ex) {
-                    new ExceptionWriter().write(ex);
+                     new ExceptionWriter().write("CreateCarInReply run()", ex, false);
                 }
             }
         }

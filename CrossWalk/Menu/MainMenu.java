@@ -34,7 +34,7 @@ public class MainMenu extends Menu {
                     ResumeAndLoad load = new ResumeAndLoad();
                     if (load.isExistResumeFile()) {
                         InitGame start = new InitGame();
-                        start.loadResumeGame(load.loadForResume());
+                        start.loadResumeGame(load.loadGame());
                     } else {
                         JOptionPane.showMessageDialog(null, "اول باید یک بازی را دخیره کنید", "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                     }
@@ -46,7 +46,7 @@ public class MainMenu extends Menu {
         JButton startGame = createButton("شروع بازی",
                 (ActionEvent e) -> {
                     SelectMapMenu selectMapMenu = new SelectMapMenu(false);
-                    selectMapMenu.Show();
+                    selectMapMenu.show();
                 }
         );
         controls.add(startGame);//,BorderLayout.CENTER
@@ -55,7 +55,7 @@ public class MainMenu extends Menu {
                 (ActionEvent e) -> {
                     if (new File(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS).exists()) {
                         ReplyMenu replyButton = new ReplyMenu();
-                        replyButton.Show();
+                        replyButton.show();
                     } else {
                         JOptionPane.showMessageDialog(null, "اول باید یک بازی انجام دهید", "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
                     }
@@ -67,7 +67,7 @@ public class MainMenu extends Menu {
         JButton autoGame = createButton("حرکت خودکار ادمک",
                 (ActionEvent e) -> {
                     SelectMapMenu selectMapMenu = new SelectMapMenu(true);
-                    selectMapMenu.Show();
+                    selectMapMenu.show();
                 }
         );
         controls.add(autoGame);//,BorderLayout.CENTER
@@ -78,7 +78,7 @@ public class MainMenu extends Menu {
                     GameSetting.UpdateSettings();
 
                     SettingMenu settingMenu = new SettingMenu("تنظیمات", 300, 600);
-                    settingMenu.Show();
+                    settingMenu.show();
                 }
         );
         controls.add(Setting);

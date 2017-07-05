@@ -51,7 +51,7 @@ public class SheepMoverInBotGame implements Runnable {
             try {
                 Thread.sleep(SleepInMilliSecond);
             } catch (Exception ex) {
-                new ExceptionWriter().write(ex);
+                new ExceptionWriter().write("SheepMoverInBotGame run()", ex, false);
             }
         }
     }

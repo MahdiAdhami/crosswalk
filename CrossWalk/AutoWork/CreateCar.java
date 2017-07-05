@@ -5,13 +5,14 @@ import CrossWalk.Object.Line;
 import java.util.ArrayList;
 import CrossWalk.Menu.GameSetting;
 
-public abstract class CreateCar {
+public abstract class CreateCar implements Runnable {
 
-    private ArrayList<Line> Lines = new ArrayList<>();
+    private ArrayList<Line> Lines;
     private final int RtlLineCount;
     private final int LtrLineCount;
 
     public CreateCar() {
+        Lines = new ArrayList<>();
         this.LtrLineCount = GameSetting.getLtrLineCount();
         this.RtlLineCount = GameSetting.getRtlLineCount();
     }
@@ -40,12 +41,9 @@ public abstract class CreateCar {
                 Lines.add(new Line(i, (j + 1), (j), Const.LINE_DIRECTION_RTL, (i - 1) * Const.LINE_IMAGE_HEIGHT + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT, canCarTakeOver));
             }
         }
-//        for(Line lie : Lines){
-//            System.out.println(lie.getId() + " " + lie.getCanCarOvertaking());
-//        }
     }
 
-    public void InitLine(ArrayList<Line> line) {
+    public void InitLineWithCars(ArrayList<Line> line) {
         InitLine();
 
         line.stream().forEach((tempLine) -> {
@@ -73,4 +71,7 @@ public abstract class CreateCar {
     public final void setLine(ArrayList<Line> line) {
         Lines = line;
     }
+
+    @Override
+    public abstract void run();
 }

@@ -14,11 +14,11 @@ import java.util.Scanner;
 public class SheepMoverInReply implements Runnable {
 
     // Sheep data path
-    private final String Path;
+    private final String SheepPath;
 
     // Constructor
-    public SheepMoverInReply(String Path) {
-        this.Path = Path;
+    public SheepMoverInReply(String SheepPath) {
+        this.SheepPath = SheepPath;
     }
 
     // Implemets thread method
@@ -28,9 +28,9 @@ public class SheepMoverInReply implements Runnable {
 
         // Find sheep file from path
         try {
-            sheepReader = new Scanner(new File(Path + Const.REPLY_SHEEP_ADDRESS));
+            sheepReader = new Scanner(new File(SheepPath + Const.REPLY_SHEEP_ADDRESS));
         } catch (FileNotFoundException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("SheepMoverInReply run()", ex, false);
         }
 
         if (sheepReader != null) {
@@ -55,10 +55,9 @@ public class SheepMoverInReply implements Runnable {
                     
                     Thread.sleep(sleepTime);
                 } catch (InterruptedException ex) {
-                    new ExceptionWriter().write(ex);
+                    new ExceptionWriter().write("SheepMoverInReply run()", ex, false);
                 }
                 InitGraphic.Sheep.move(Integer.parseInt(split[0]));
-
             }
 
             sheepReader.close();

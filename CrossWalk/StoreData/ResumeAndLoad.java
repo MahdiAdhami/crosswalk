@@ -19,6 +19,7 @@ import CrossWalk.Utilities.ExceptionWriter;
 public class ResumeAndLoad {
 
     public ResumeAndLoad() {
+        initForSaveGame();
     }
 
     public final void initForSaveGame() {
@@ -47,7 +48,7 @@ public class ResumeAndLoad {
             
 
         } catch (FileNotFoundException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("ResumeAndLoad writeSheepDataToFile()", ex, false);
         }
         String nextLineFromReader;
 
@@ -81,7 +82,7 @@ public class ResumeAndLoad {
                     Integer.parseInt(sheepStringSplited[5]), sheepStringSplited[6] 
                     , Integer.parseInt(sheepStringSplited[7]), Integer.parseInt(sheepStringSplited[8]) , Integer.parseInt(sheepStringSplited[9])
             );
-            InitGraphic.Sheep.CheckLine();
+            InitGraphic.Sheep.checkLine();
 
             SheepReader.close();
             LinesReader.close();
@@ -93,7 +94,7 @@ public class ResumeAndLoad {
         return null;
     }
 
-    public void saveGame(ArrayList<Line> line) {
+    private void writeLinesDataToFile(ArrayList<Line> lines) {
         PrintWriter writerForLine = null;
         PrintWriter writerForCars = null;
 
@@ -104,9 +105,9 @@ public class ResumeAndLoad {
             GameSetting.writeSetting(Const.RESUME_SETTING_PATH);
 
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("ResumeAndLoad writeLinesDataToFile()", ex, false);
         }
-        for (Line tempLine : line) {
+        for (Line tempLine : lines) {
             writerForLine.println(tempLine.toString());
             for (Car tempCar : tempLine.getCars()) {
                 writerForCars.println(tempCar.toString());
@@ -120,26 +121,19 @@ public class ResumeAndLoad {
         }
     }
 
-    private void saveSheepForResume() {
+    private void writeSheepDataToFile() {
         PrintWriter writerForSheep = null;
         try {
             writerForSheep = new PrintWriter(Const.ROOT_PATH + Const.RESUME_SHEEP_PATH, "UTF-8");
         } catch (FileNotFoundException | UnsupportedEncodingException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("ResumeAndLoad writeSheepDataToFile()", ex, false);
         }
         writerForSheep.println(InitGraphic.Sheep.toString());
         writerForSheep.close();
     }
 
     public void SaveGameForResume(ArrayList<Line> line) {
-        initForSaveGame();
-        saveGame(line);
-        saveSheepForResume();
-    }
-
-    public ArrayList<Line> loadForResume() {
-        initForSaveGame();
-
-        return loadGame();
+        writeLinesDataToFile(line);
+        writeSheepDataToFile();
     }
 }
