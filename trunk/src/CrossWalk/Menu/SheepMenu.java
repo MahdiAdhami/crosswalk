@@ -57,7 +57,7 @@ public class SheepMenu extends Menu{
         
         JButton saveChanges = createButton("ذخیره",
                 (ActionEvent e) -> {
-                        GameSetting.setSheepImageNumber(combo.getSelectedIndex());
+                        GameSetting.setSheepImageNumber(combo.getSelectedIndex() + 1);
                         frame.dispose();
                 });
         
