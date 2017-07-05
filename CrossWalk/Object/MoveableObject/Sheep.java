@@ -26,18 +26,20 @@ public final class Sheep implements Drawable,Serializable {
     private int level;
     private int score;
     private float firstYPositionOfSheep;
+    private int life;
 
     public static boolean AutoMove = false;
     public WriteReplyData WriteReplyData;
 
     @Override
     public String toString() {
-        return String.format("Sheep,%d,%d,%d,%d,%d,%s,%d,%d", getXPositionForDraw(), getYPositionForDraw(), Rate[0], Rate[1], ImageStatus, ImageCode,level,score);
+        return String.format("Sheep,%d,%d,%d,%d,%d,%s,%d,%d,%d", getXPositionForDraw(), getYPositionForDraw(), Rate[0], Rate[1], ImageStatus, ImageCode,level,score,life);
     }
 
-    public Sheep(float[] PositionOfSheep, int[] Rate, int ImageStatus, String ImageCode , int level , int score) {
+    public Sheep(float[] PositionOfSheep, int[] Rate, int ImageStatus, String ImageCode , int level , int score , int life) {
         this.level = level;
         this.score = score;
+        this.life = life;
         this.PositionOfSheep = PositionOfSheep;
         this.Rate = Rate;
         this.ImageStatus = ImageStatus;
@@ -47,7 +49,8 @@ public final class Sheep implements Drawable,Serializable {
 
     public Sheep(int[] Rate, float PositionYOfSheep) {
         level = 1;
-        score = 5000;
+        score = 50;
+        life = 3;
         this.ImageCode = String.valueOf(GameSetting.getSheepImageNumber() + 1);
         initImage();
         this.Rate = Rate;
@@ -191,16 +194,19 @@ public final class Sheep implements Drawable,Serializable {
     }
 
     public void win() {
+        
         InitGame.GameEnd = true;
         JOptionPane.showMessageDialog(null, "بردی دیگه !", "اینجا آخر خطه!", JOptionPane.INFORMATION_MESSAGE);
         System.exit(0);
     }
 
     public void gameOver() {
-        if(score > 0)
+        if(life >= 0)
         {
-            //Dorost Kar Nemikone Chon Ba har Bar Repaint Shodan Dar Hengame Barkhord Tasadof Mikone VA Emtiaz be Sorat 0 mishe
-            score -= 50;
+            life--;
+            PositionOfSheep[0] = GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2;
+            PositionOfSheep[1] = firstYPositionOfSheep;
+            CheckLine();
         }
         else{
             InitGame.GameEnd = true;
@@ -217,10 +223,19 @@ public final class Sheep implements Drawable,Serializable {
     }
 
     private void goToNextLevel() {
-        level ++;
-        score += 500;
-        PositionOfSheep[0] = GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2;
-        PositionOfSheep[1] = firstYPositionOfSheep;
+        if(level > 1)
+        {
+            win();
+        }
+        else
+        {
+            level ++;
+            score += 50;
+            PositionOfSheep[0] = GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2;
+            PositionOfSheep[1] = firstYPositionOfSheep;
+            CheckLine();
+        }
+        
     }
     
     public int getLevel()
@@ -231,5 +246,10 @@ public final class Sheep implements Drawable,Serializable {
     public int getScore()
     {
         return score;
+    }
+    
+    public int getLife()
+    {
+        return life;
     }
 }

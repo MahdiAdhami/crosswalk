@@ -100,7 +100,7 @@ public class InitGraphic extends JPanel implements Runnable {
             }
         });
 
-        // Draw Midde lines
+        // Draw Midde line
         for (int i = 1; i < (Const.GAME_WINDOWS_WIDTH); i += Const.MIDDLE_LINE_IMAGE_WIDTH) {
             g.drawImage(MiddleLineImage, i, Const.TOP_MARGIN + (Const.LINE_IMAGE_HEIGHT * TopLineCount), this);
         }
@@ -135,6 +135,11 @@ public class InitGraphic extends JPanel implements Runnable {
         g.setFont(new Font("tahoma", 0, 12));
         g.drawString(String.format("مرحله ی %d ", Sheep.getLevel()), Const.GAME_WINDOWS_WIDTH - 100, 20);
         g.drawString(String.format("امتیاز %d ", Sheep.getScore()), Const.GAME_WINDOWS_WIDTH - 175, 20);
+        
+        for(int i = 1 ; i <= Sheep.getLife() ; i++)
+        {
+            g.drawString(String.format("%c",254), Const.GAME_WINDOWS_WIDTH - 225 - (i*10), 20);
+        }
 
         g.drawRoundRect(10, 5, 70, 23, 5, 5);
         g.drawString("توقف بازی", 20, 20);

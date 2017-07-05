@@ -84,7 +84,7 @@ public class ResumeAndLoad {
             InitGraphic.Sheep = new Sheep(new float[]{Float.parseFloat(sheepStringSplited[1]), Float.parseFloat(sheepStringSplited[2])},
                     new int[]{Integer.parseInt(sheepStringSplited[3]), Integer.parseInt(sheepStringSplited[4])},
                     Integer.parseInt(sheepStringSplited[5]), sheepStringSplited[6] 
-                    , Integer.parseInt(sheepStringSplited[7]), Integer.parseInt(sheepStringSplited[8])
+                    , Integer.parseInt(sheepStringSplited[7]), Integer.parseInt(sheepStringSplited[8]) , Integer.parseInt(sheepStringSplited[9])
             );
             InitGraphic.Sheep.CheckLine();
 
