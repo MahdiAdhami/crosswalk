@@ -1,27 +1,25 @@
 package CrossWalk.UI;
 
-import CrossWalk.Utilities.Const;
-import CrossWalk.Object.Car;
-import CrossWalk.Object.Line;
-import CrossWalk.Object.Sheep;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import CrossWalk.Menu.GameSetting;
-import CrossWalk.Utilities.ExceptionWriter;
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import CrossWalk.Menu.GameSetting;
+import CrossWalk.Utilities.ExceptionWriter;
+import CrossWalk.Utilities.Const;
+import CrossWalk.Object.Car;
+import CrossWalk.Object.Line;
+import CrossWalk.Object.Sheep;
 
 public class InitGraphic extends JPanel implements Runnable {
 
@@ -44,10 +42,10 @@ public class InitGraphic extends JPanel implements Runnable {
     private final int TopLineCount;
 
     // Sheep
-    public static Sheep Sheep = new Sheep(new int[]{5, 25}, (Const.LINE_IMAGE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
+    public static Sheep Sheep = new Sheep();
 
     // Middle line Image
-    private BufferedImage Heart;
+    private BufferedImage HeartImage;
 
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
@@ -61,29 +59,24 @@ public class InitGraphic extends JPanel implements Runnable {
     // Initialize game window
     private void setInit() {
         JFrame gameFrame = new JFrame(Const.GAME_NAME);
-
         try {
-            Heart = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_HEART_PATH_IMAGE));
+            HeartImage = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_HEART_PATH_IMAGE));
             CrosswalkImage = ImageIO.read(new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE_WITH_PLACEHOLDER.replace("{0}", String.valueOf(GameSetting.getCrossWalkImageNumber()))));
             LineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.LINE_IMAGE_PATH_WITH_PLACEHOLDER.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
             MiddleLineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE_PATH.replace("{0}", String.valueOf(GameSetting.getMiddleLineImageNumber()))));
             gameFrame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
         } catch (IOException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("InitGraphic setInit()",ex,false);
         }
 
         // Add listeners for mouse and keyboard events
         GameListener gameListener = new GameListener(this.Lines);
+        gameFrame.addKeyListener(gameListener.getKeyListener());
+        gameFrame.addMouseListener(gameListener.getMouseListener());
 
-        gameFrame.addKeyListener(gameListener.KeyListener);
-        gameFrame.addMouseListener(gameListener.MouseListener);
-
-        //
-        //gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                System.out.println("Closed");
                 InitGame.GameEnd = true;
                 e.getWindow().dispose();
             }
@@ -113,7 +106,7 @@ public class InitGraphic extends JPanel implements Runnable {
         // Draw lines
         Lines.stream().forEach((lineTemp) -> {
             for (int i = 1; i < (Const.GAME_WINDOWS_WIDTH); i += Const.LINE_IMAGE_WIDTH) {
-                g.drawImage(LineImage, i, lineTemp.getPosition(), this);
+                g.drawImage(LineImage, i, lineTemp.getYPosition(), this);
             }
         });
 
@@ -135,14 +128,14 @@ public class InitGraphic extends JPanel implements Runnable {
                     g.setFont(new Font("tahoma", 0, 30));
                     g.setColor(Color.BLUE);
 //                    g.drawString(String.format("%d-%.1f-%.1f", carTemp.getId(), carTemp.getSpeed(), carTemp.TempCarSpeed), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
-//                    g.drawString(String.format("%d -- %d -- %d -- %b", carTemp.getLine().getCarId(),carTemp.getId(),carTemp.getLine().getCars().size(),carTemp.IsFirstCar), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
+//                    g.drawString(String.format("%d -- %d -- %d -- %b", carTemp.getLine().getCreatedCarCount(),carTemp.getId(),carTemp.getLine().getCars().size(),carTemp.IsFirstCar), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
 //                    g.drawString(String.format("%b", carTemp.isFirstCar()), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2);
                     g.drawImage(carTemp.getCarType().getImage(), carTemp.getXPositionForDraw(), carTemp.getYPositionForDraw() + (Const.LINE_IMAGE_HEIGHT - carTemp.getCarType().getCarHeight()) / 2, this);
                 });
             });
 
         } catch (Exception ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("InitGraphic paintComponents()", ex,false);
         }
 
         // Draw Sheep
@@ -154,7 +147,7 @@ public class InitGraphic extends JPanel implements Runnable {
         g.drawString(String.format("امتیاز %d ", Sheep.getScore()), Const.GAME_WINDOWS_WIDTH - 175, 20);
 
         for (int i = 1; i <= Sheep.getLife(); i++) {
-            g.drawImage(Heart, Const.GAME_WINDOWS_WIDTH - 225 - (i * 15), 5, this);
+            g.drawImage(HeartImage, Const.GAME_WINDOWS_WIDTH - 225 - (i * 15), 5, this);
         }
 
         g.drawRoundRect(10, 5, 70, 23, 5, 5);
@@ -200,7 +193,7 @@ public class InitGraphic extends JPanel implements Runnable {
                 Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
 
             } catch (Exception ex) {
-                new ExceptionWriter().write(ex);
+                new ExceptionWriter().write("InitGraphic run()",ex,false);
             }
         }
     }

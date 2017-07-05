@@ -103,14 +103,14 @@ public abstract class Car implements Moveable,Drawable,Serializable {
 
     //  Is car near to crosswalk Method
     public boolean isNeartheCrosswalk() {
-        float[] crosswalkPosition = Line.getCrosswalkPosition();
+        float[] crosswalkPosition = Line.getCrosswalkXPosition();
 
         return ((getHeadPosition() >= crosswalkPosition[0] && (getHeadPosition() <= crosswalkPosition[1]))
                 || (getEndPosition() >= crosswalkPosition[0] && getEndPosition() <= crosswalkPosition[1]));
     }
 
     public boolean isFirstCar(){
-        return getLine().getCarId() == getId() + getLine().getCars().size();  
+        return getLine().getCreatedCarCount() == getId() + getLine().getCars().size();  
     }
 
     // Abstract mehods

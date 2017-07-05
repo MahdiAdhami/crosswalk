@@ -50,7 +50,7 @@ public class WriteReplyData {
                 carWriter.newLine();
             }
         } catch (IOException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("WriteReplyData appendCarsToFile()", ex, false);
         }
     }
 
@@ -68,7 +68,7 @@ public class WriteReplyData {
 
             StartedTime = tempDate;
         } catch (IOException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("WriteReplyData appendSheepToFile()", ex, false);
         }
     }
 }

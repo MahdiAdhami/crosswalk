@@ -21,7 +21,7 @@ public class InitGame {
     }
 
     public void autoMoveSheep(long sleepInMilliSecond, int randRate) {
-        autoCreateCar();
+        newGame();
 
         Sheep.AutoMove = true;
 
@@ -31,7 +31,7 @@ public class InitGame {
     }
 
     // Auto create Cars Method
-    public void autoCreateCar() {
+    public void newGame() {
         boolean CreateReply = true;
 
         Sheep.AutoMove = false;
@@ -65,7 +65,7 @@ public class InitGame {
 
         // Create instance an object for game graphics
         InitGraphic base = new InitGraphic(autoCreateCar.getLine());
-        autoCreateCar.InitLine(lines);
+        autoCreateCar.InitLineWithCars(lines);
 
         Thread threadBase = new Thread(base);
         threadBase.start();

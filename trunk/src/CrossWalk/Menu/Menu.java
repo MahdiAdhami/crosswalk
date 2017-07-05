@@ -34,7 +34,7 @@ public abstract class Menu {
         Frame = new JFrame();
     }
 
-    public void Show() {
+    public void show() {
         createPanel();
         setInit();
     }
@@ -52,7 +52,7 @@ public abstract class Menu {
         try {
             Frame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
         } catch (IOException ex) {
-            new ExceptionWriter().write(ex);
+            new ExceptionWriter().write("Menu setInit()", ex, false);
         }
     }
 

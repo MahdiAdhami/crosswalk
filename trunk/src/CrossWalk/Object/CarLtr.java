@@ -72,7 +72,7 @@ public class CarLtr extends Car {
 
     @Override
     public int getYPositionForDraw() {
-        int linePosition = getLine().getPosition();
+        int linePosition = getLine().getYPosition();
         if (IsNowOverTaking) {
             IncreasLinePosition += Const.CAR_INCREASE_POSITION_IN_Y;
             if (IncreasLinePosition <= Const.LINE_IMAGE_HEIGHT) {

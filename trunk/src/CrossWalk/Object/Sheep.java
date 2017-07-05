@@ -1,6 +1,5 @@
 package CrossWalk.Object;
 
-import CrossWalk.Object.Line;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -8,79 +7,85 @@ import java.io.IOException;
 import CrossWalk.Utilities.Const;
 import CrossWalk.UI.InitGame;
 import CrossWalk.Menu.GameSetting;
-import CrossWalk.Object.Drawable;
 import CrossWalk.StoreData.WriteReplyData;
 import java.io.Serializable;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
-public final class Sheep implements Drawable,Serializable {
+public final class Sheep implements Drawable, Serializable {
 
     private float[] PositionOfSheep;
     private float[] SheepSize;
-    private int[] Rate;
-    private BufferedImage[] ImageOfSheep;
+    private int[] MoveRate = new int[]{5, 25};
+    private BufferedImage[] ShapeImage;
     private int ImageStatus;
     private final String ImageCode;
     private boolean SaveChanges;
-    private int level;
-    private int score;
-    private float bottomYPositionOfSheep;
-    private int life;
+    private int Level;
+    private int Score;
+    private int Life;
+    private WriteReplyData WriteReplyData;
 
     public static boolean AutoMove = false;
-    public WriteReplyData WriteReplyData;
 
-    @Override
-    public String toString() {
-        return String.format("Sheep,%d,%d,%d,%d,%d,%s,%d,%d,%d", getXPositionForDraw(), getYPositionForDraw()
-                , Rate[0], Rate[1], ImageStatus, ImageCode,level,score,life);
-    }
-
-    public Sheep(float[] PositionOfSheep, int[] Rate, int ImageStatus, String ImageCode , int level , int score , int life) {
-        this.level = level;
-        this.score = score;
-        this.life = life;
-        bottomYPositionOfSheep =  (Const.LINE_IMAGE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) 
-                + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START; 
+    public Sheep(float[] PositionOfSheep, int[] Rate, int ImageStatus, String ImageCode, int Level, int Score, int Life) {
+        this.Level = Level;
+        this.Score = Score;
+        this.Life = Life;
         this.PositionOfSheep = PositionOfSheep;
-        this.Rate = Rate;
+        this.MoveRate = Rate;
         this.ImageStatus = ImageStatus;
         this.ImageCode = ImageCode;
         initImage();
     }
 
-    public Sheep(int[] Rate, float PositionYOfSheep) {
-        level = 1;
-        score = 50;
-        life = 3;
+    public Sheep() {
+        Level = 1;
+        Score = 50;
+        Life = 3;
         this.ImageCode = String.valueOf(GameSetting.getSheepImageNumber());
+        this.PositionOfSheep = new float[2];
         initImage();
-        this.Rate = Rate;
-        this.PositionOfSheep = new float[]{GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2, PositionYOfSheep - getSheepHeight() / 2};
-        bottomYPositionOfSheep = PositionYOfSheep;
+        setDefaultPosition();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Sheep,%d,%d,%d,%d,%d,%s,%d,%d,%d", getXPositionForDraw(), getYPositionForDraw(), MoveRate[0], MoveRate[1], ImageStatus, ImageCode, Level, Score, Life);
+    }
+
+    public final void setDefaultPosition() {
+        PositionOfSheep[0] = GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2;
+        PositionOfSheep[1] = (Const.LINE_IMAGE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount()))
+                + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START;
+    }
+
+    public void setWriteReplyData(WriteReplyData writeReplyData) {
+        WriteReplyData = writeReplyData;
     }
 
     private void initImage() {
         try {
-            ImageOfSheep = new BufferedImage[4];
+            ShapeImage = new BufferedImage[4];
 
-            ImageOfSheep[0] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Up")));
-            ImageOfSheep[1] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Down")));
-            ImageOfSheep[2] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Right")));
-            ImageOfSheep[3] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Left")));
+            ShapeImage[0] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Up")));
+            ShapeImage[1] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Down")));
+            ShapeImage[2] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Right")));
+            ShapeImage[3] = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_PATH_IMAGE.replace("{0}", ImageCode + "-Left")));
 
-            SheepSize = new float[]{ImageOfSheep[0].getWidth(), ImageOfSheep[0].getHeight()};
+            SheepSize = new float[]{ShapeImage[0].getWidth(), ShapeImage[0].getHeight()};
 
         } catch (IOException ex) {
             System.err.println("Sheep Sheep() " + ex);
         }
     }
 
+    @Override
     public int getXPositionForDraw() {
         return (int) PositionOfSheep[0];
     }
 
+    @Override
     public int getYPositionForDraw() {
         return (int) PositionOfSheep[1];
     }
@@ -90,7 +95,7 @@ public final class Sheep implements Drawable,Serializable {
     }
 
     public int[] getRate() {
-        return Rate;
+        return MoveRate;
     }
 
     public float getSheepWidth() {
@@ -110,34 +115,32 @@ public final class Sheep implements Drawable,Serializable {
             return;
         }
         ImageStatus = 0;
-        PositionOfSheep[1] -= Rate[1];
-        System.out.println(PositionOfSheep[0] + " " + PositionOfSheep[1]);
+        PositionOfSheep[1] -= MoveRate[1];
     }
 
     private void goDown() {
-        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_IMAGE_HEIGHT) 
-                + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START<= getYPositionForDraw()) {
+        if (((GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_IMAGE_HEIGHT)
+                + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START <= getYPositionForDraw()) {
             return;
         }
         ImageStatus = 1;
-        PositionOfSheep[1] += Rate[1];
-        System.out.println(PositionOfSheep[0] + " " + PositionOfSheep[1]);
+        PositionOfSheep[1] += MoveRate[1];
     }
 
     private void goRight() {
         if (GameSetting.getCrosswalkMiddlePosition() + Const.CROSSWALK_WIDTH / 2 <= PositionOfSheep[0] + getSheepWidth()) {
             return;
         }
-        ImageStatus = 2;
-        PositionOfSheep[0] += Rate[0];
+        ImageStatus = 3;
+        PositionOfSheep[0] -= MoveRate[0];
     }
 
     private void goLeft() {
         if (GameSetting.getCrosswalkMiddlePosition() - Const.CROSSWALK_WIDTH / 2 >= PositionOfSheep[0]) {
             return;
         }
-        ImageStatus = 3;
-        PositionOfSheep[0] -= Rate[0];
+        ImageStatus = 2;
+        PositionOfSheep[0] += MoveRate[0];
     }
 
     public void move(int keyCode) {
@@ -153,102 +156,72 @@ public final class Sheep implements Drawable,Serializable {
         } else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_D) {
             goLeft();
         }
-        CheckLine();
+        checkLine();
         if (PositionOfSheep[1] == -25) {
             goToNextLevel();
         }
     }
 
-    public void CheckLine() {
+    public void checkLine() {
         if (PositionOfSheep[1] <= GameSetting.getRtlLineCount() * Const.LINE_IMAGE_HEIGHT) {
             if (PositionOfSheep[1] % Const.LINE_IMAGE_HEIGHT == 0) {
                 Line.SheepCurrentLine = -1;
-                System.out.println(Line.SheepCurrentLine);
             } else {
                 Line.SheepCurrentLine = (int) Math.ceil(PositionOfSheep[1] / Const.LINE_IMAGE_HEIGHT);
-                System.out.println(Line.SheepCurrentLine);
             }
         } else if ((PositionOfSheep[1] <= (GameSetting.getRtlLineCount() * Const.LINE_IMAGE_HEIGHT) + Const.MIDDLE_LINE_IMAGE_HEIGHT)) {
             Line.SheepCurrentLine = -1;
-            System.out.println(Line.SheepCurrentLine);
         } else if ((PositionOfSheep[1] - Const.MIDDLE_LINE_IMAGE_HEIGHT) % Const.LINE_IMAGE_HEIGHT == 0) {
             Line.SheepCurrentLine = -1;
-            System.out.println(Line.SheepCurrentLine);
         } else {
             Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.MIDDLE_LINE_IMAGE_HEIGHT) / Const.LINE_IMAGE_HEIGHT);
-            System.out.println(Line.SheepCurrentLine);
         }
-
-//        if(PositionOfSheep[1] < GameSetting.getRtlLineCount()*100 + Const.TOP_MARGIN)
-//        {
-//            if((PositionOfSheep[1]-5)%95==0 || (PositionOfSheep[1]%95==0))
-//            {
-//                Line.SheepCurrentLine = -1;
-//                System.out.println(Line.SheepCurrentLine);
-//                return;
-//            }
-//            
-//        }
-        // Line.SheepCurrentLine = (int) Math.ceil((PositionOfSheep[1] - Const.TOP_MARGIN) / Const.LINE_IMAGE_HEIGHT) ;
-        // System.out.println(Line.SheepCurrentLine);
     }
 
     public void setRate(int[] rate) {
-        Rate = rate;
+        MoveRate = rate;
     }
 
     public void win() {
-        
         InitGame.GameEnd = true;
         JOptionPane.showMessageDialog(null, "بردی دیگه !", "اینجا آخر خطه!", JOptionPane.INFORMATION_MESSAGE);
         System.exit(0);
     }
 
     public void gameOver() {
-        if(life >= 0)
-        {
-            life--;
-            PositionOfSheep[0] = GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2;
-            PositionOfSheep[1] = bottomYPositionOfSheep;
-            System.out.println(PositionOfSheep[1]);
-            CheckLine();
-        }
-        else{
+        if (Life >= 0) {
+            Life--;
+            setDefaultPosition();
+            checkLine();
+        } else {
             InitGame.GameEnd = true;
             JOptionPane.showMessageDialog(null, "باختی جیگر!", "له شدی عزیزم", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
-        
     }
 
     // Implements Drawable
     @Override
     public BufferedImage getImage() {
-        return ImageOfSheep[ImageStatus];
+        return ShapeImage[ImageStatus];
     }
 
     private void goToNextLevel() {
-        
-            level ++;
-            score += 50;
-            PositionOfSheep[0] = GameSetting.getCrosswalkMiddlePosition() - getSheepWidth() / 2;
-            PositionOfSheep[1] = bottomYPositionOfSheep;
-            CheckLine();
-        
+        Level++;
+        Score += 50;
+        setDefaultPosition();
+        checkLine();
     }
-    
-    public int getLevel()
-    {
-        return level;
+
+    public int getLevel() {
+        return Level;
     }
-    
-    public int getScore()
-    {
-        return score;
+
+    public int getScore() {
+        return Score;
     }
-    
-    public int getLife()
-    {
-        return life;
+
+    public int getLife() {
+        return Life;
     }
 }

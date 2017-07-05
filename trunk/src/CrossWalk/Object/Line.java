@@ -3,18 +3,19 @@ package CrossWalk.Object;
 import java.util.ArrayList;
 import CrossWalk.Utilities.Const;
 import CrossWalk.Menu.GameSetting;
+import java.io.Serializable;
 
-public final class Line{
+public final class Line implements Serializable{
 
     // Line Id
     private int Id;
     private int MaxCarSpeed;
     private int MinCarSpeed;
     private boolean Direction;
-    private int Position;
+    private int YPosition;
     private ArrayList<Car> Cars;
-    private float[] CrosswalkPosition;
-    private int CarId;
+    private float[] CrosswalkXPosition;
+    private int CreatedCarCount;
     public static int SheepCurrentLine;
     private boolean CanCarOvertaking;
 
@@ -22,39 +23,39 @@ public final class Line{
         this.Cars = new ArrayList<>();
     }
 
-    public Line(int Id, int MaxCarSpeed, int MinCarSpeed, boolean Direction, int Position, boolean CanCarOvertaking) {
+    public Line(int Id, int MaxCarSpeed, int MinCarSpeed, boolean Direction, int YPosition, boolean CanCarOvertaking) {
         this();
         this.Id = Id;
-        this.Position = Position;
+        this.YPosition = YPosition;
         this.MaxCarSpeed = MaxCarSpeed * Const.CAR_SPEED_RATE_NEW_CREATED;
         this.MinCarSpeed = MinCarSpeed * Const.CAR_SPEED_RATE_NEW_CREATED;
         this.Direction = Direction;
         this.CanCarOvertaking = CanCarOvertaking;
-        CrosswalkPosition = getAchieveCrosswalkPosistion();
+        CrosswalkXPosition = calcuteXCrosswalkPosistion();
     }
 
-    public Line(int Id, int MaxCarSpeed, int MinCarSpeed, boolean Direction, int Position, boolean CanCarOvertaking, int CarId) {
+    public Line(int Id, int MaxCarSpeed, int MinCarSpeed, boolean Direction, int Position, boolean CanCarOvertaking, int CreatedCarCount) {
         this();
         this.Id = Id;
         this.MaxCarSpeed = MaxCarSpeed;
         this.MinCarSpeed = MinCarSpeed;
         this.Direction = Direction;
-        this.Position = Position;
-        this.CarId = CarId;
+        this.YPosition = Position;
+        this.CreatedCarCount = CreatedCarCount;
         this.CanCarOvertaking = CanCarOvertaking;
-        CrosswalkPosition = getAchieveCrosswalkPosistion();
+        CrosswalkXPosition = calcuteXCrosswalkPosistion();
     }
 
-    public int getPosition() {
-        return Position;
+    public int getYPosition() {
+        return YPosition;
     }
 
     public boolean getCanCarOvertaking() {
         return CanCarOvertaking;
     }
 
-    public int getCarId() {
-        return CarId;
+    public int getCreatedCarCount() {
+        return CreatedCarCount;
     }
 
     public int getMinCarSpeed() {
@@ -69,30 +70,26 @@ public final class Line{
         return Cars;
     }
 
-    public float[] getCrosswalkPosition() {
-        return CrosswalkPosition;
+    public float[] getCrosswalkXPosition() {
+        return CrosswalkXPosition;
     }
 
     public boolean getDirection() {
         return Direction;
     }
 
-    public void checkAccident() {
-
-    }
-
-    public void addCar(Car newCar) {
-        Cars.add(newCar);
-        increaseCarId();
+    public int getId() {
+        return Id;
     }
 
     @Override
     public String toString() {
-        return String.format("Line,%d,%d,%d,%s,%d,%s,%d", Id, MaxCarSpeed, MinCarSpeed, Direction == true ? "1" : "0", Position, CanCarOvertaking == true ? "1" : "0", CarId);
+        return String.format("Line,%d,%d,%d,%s,%d,%s,%d", Id, MaxCarSpeed, MinCarSpeed, Direction == true ? "1" : "0", YPosition, CanCarOvertaking == true ? "1" : "0", CreatedCarCount);
     }
 
-    public int getId() {
-        return Id;
+    public void addCar(Car newCar) {
+        Cars.add(newCar);
+        increaseCreatedCarCount();
     }
 
     public boolean createNewCar(Car newCar) {
@@ -101,22 +98,22 @@ public final class Line{
                 Car lastCar = Cars.get(Cars.size() - 1);
                 if (this.getDirection() == Const.LINE_DIRECTION_LTR) {
                     if (lastCar.getEndPosition() > Const.LINE_DISTANCE_NEED_TO_CREATE_NEW_CAR) {
-                        newCar.setId(CarId);
+                        newCar.setId(CreatedCarCount);
                         Cars.add(newCar);
-                        CarId++;
+                        CreatedCarCount++;
                         return true;
                     }
                 } else if (lastCar.getEndPosition() + Const.LINE_DISTANCE_NEED_TO_CREATE_NEW_CAR < Const.GAME_WINDOWS_WIDTH) {
-                    newCar.setId(CarId);
+                    newCar.setId(CreatedCarCount);
                     Cars.add(newCar);
-                    CarId++;
+                    CreatedCarCount++;
                     return true;
                 }
 
             } else {
-                newCar.setId(CarId);
+                newCar.setId(CreatedCarCount);
                 Cars.add(newCar);
-                CarId++;
+                CreatedCarCount++;
                 return true;
             }
             return false;
@@ -130,7 +127,7 @@ public final class Line{
         Cars.remove(car);
     }
 
-    public final float[] getAchieveCrosswalkPosistion() {
+    private float[] calcuteXCrosswalkPosistion() {
         float middle = GameSetting.getCrosswalkMiddlePosition();
         float[] result = new float[2];
 
@@ -149,12 +146,8 @@ public final class Line{
         }
     }
 
-    public void setCarId(int id) {
-        CarId = id;
-    }
-
-    public void increaseCarId() {
-        CarId++;
+    public void increaseCreatedCarCount() {
+        CreatedCarCount++;
     }
 
 }
