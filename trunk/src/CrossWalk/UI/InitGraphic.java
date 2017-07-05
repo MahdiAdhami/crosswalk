@@ -1,8 +1,9 @@
-package CrossWalk;
+package CrossWalk.UI;
 
-import CrossWalk.Object.MoveableObject.Car;
+import CrossWalk.Utilities.Const;
+import CrossWalk.Object.Car;
 import CrossWalk.Object.Line;
-import CrossWalk.Object.MoveableObject.Sheep;
+import CrossWalk.Object.Sheep;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -17,6 +18,7 @@ import CrossWalk.Utilities.ExceptionWriter;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,19 +32,22 @@ public class InitGraphic extends JPanel implements Runnable {
     private final int MiddleOfCrosswalkPosition;
 
     // Crosswalk Image
-    private Image CrosswalkImage;
+    private BufferedImage CrosswalkImage;
 
     // Line Image
-    private Image LineImage;
+    private BufferedImage LineImage;
 
     // Middle line Image
-    private Image MiddleLineImage;
+    private BufferedImage MiddleLineImage;
 
     // Top line count
     private final int TopLineCount;
 
     // Sheep
     public static Sheep Sheep = new Sheep(new int[]{5, 25}, (Const.LINE_IMAGE_HEIGHT * (GameSetting.getRtlLineCount() + GameSetting.getLtrLineCount())) + Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT + Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START);
+
+    // Middle line Image
+    private BufferedImage Heart;
 
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
@@ -58,6 +63,7 @@ public class InitGraphic extends JPanel implements Runnable {
         JFrame gameFrame = new JFrame(Const.GAME_NAME);
 
         try {
+            Heart = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_HEART_PATH_IMAGE));
             CrosswalkImage = ImageIO.read(new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE_WITH_PLACEHOLDER.replace("{0}", String.valueOf(GameSetting.getCrossWalkImageNumber()))));
             LineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.LINE_IMAGE_PATH_WITH_PLACEHOLDER.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
             MiddleLineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE_PATH.replace("{0}", String.valueOf(GameSetting.getMiddleLineImageNumber()))));
@@ -74,12 +80,9 @@ public class InitGraphic extends JPanel implements Runnable {
 
         //
         //gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        gameFrame.addWindowListener(new WindowAdapter()
-        {
+        gameFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e)
-            {
+            public void windowClosing(WindowEvent e) {
                 System.out.println("Closed");
                 InitGame.GameEnd = true;
                 e.getWindow().dispose();
@@ -124,9 +127,6 @@ public class InitGraphic extends JPanel implements Runnable {
             g.drawImage(CrosswalkImage, MiddleOfCrosswalkPosition - Const.CROSSWALK_WIDTH / 2, (i * Const.CROSSWALK_HEIGHT) + Const.TOP_MARGIN, this);
         }
 
-        // Draw Sheep
-        g.drawImage(Sheep.getImage(), Sheep.getXPositionForDraw(), Sheep.getYPositionForDraw(), this);
-
         // Draw cars
         try {
             Lines.stream().forEach((Linetemp) -> {
@@ -145,14 +145,16 @@ public class InitGraphic extends JPanel implements Runnable {
             new ExceptionWriter().write(ex);
         }
 
+        // Draw Sheep
+        g.drawImage(Sheep.getImage(), Sheep.getXPositionForDraw(), Sheep.getYPositionForDraw(), this);
+
         //Buttons
         g.setFont(new Font("tahoma", 0, 12));
         g.drawString(String.format("مرحله ی %d ", Sheep.getLevel()), Const.GAME_WINDOWS_WIDTH - 100, 20);
         g.drawString(String.format("امتیاز %d ", Sheep.getScore()), Const.GAME_WINDOWS_WIDTH - 175, 20);
-        
-        for(int i = 1 ; i <= Sheep.getLife() ; i++)
-        {
-            g.drawString(String.format("%c",254), Const.GAME_WINDOWS_WIDTH - 225 - (i*10), 20);
+
+        for (int i = 1; i <= Sheep.getLife(); i++) {
+            g.drawImage(Heart, Const.GAME_WINDOWS_WIDTH - 225 - (i * 15), 5, this);
         }
 
         g.drawRoundRect(10, 5, 70, 23, 5, 5);

@@ -1,12 +1,12 @@
-package CrossWalk.Object.MoveableObject;
+package CrossWalk.Object;
 
 import CrossWalk.Object.Line;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import CrossWalk.Const;
-import CrossWalk.InitGame;
+import CrossWalk.Utilities.Const;
+import CrossWalk.UI.InitGame;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.Object.Drawable;
 import CrossWalk.StoreData.WriteReplyData;

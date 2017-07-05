@@ -1,6 +1,6 @@
 package CrossWalk.AutoWork;
 
-import CrossWalk.Const;
+import CrossWalk.Utilities.Const;
 import CrossWalk.Object.Line;
 import java.util.ArrayList;
 import CrossWalk.Menu.GameSetting;

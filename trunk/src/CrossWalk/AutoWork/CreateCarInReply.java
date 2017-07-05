@@ -1,9 +1,9 @@
 package CrossWalk.AutoWork;
 
-import CrossWalk.Const;
-import CrossWalk.Object.MoveableObject.CarLtr;
+import CrossWalk.Utilities.Const;
+import CrossWalk.Object.CarLtr;
 import CrossWalk.Object.Line;
-import CrossWalk.Object.MoveableObject.CarRtl;
+import CrossWalk.Object.CarRtl;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

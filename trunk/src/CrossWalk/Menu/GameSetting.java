@@ -7,7 +7,7 @@ package CrossWalk.Menu;
 
 import java.io.File;
 import java.io.IOException;
-import CrossWalk.Const;
+import CrossWalk.Utilities.Const;
 import CrossWalk.Utilities.ExceptionWriter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

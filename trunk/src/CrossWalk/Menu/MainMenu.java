@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import CrossWalk.Const;
-import CrossWalk.InitGame;
+import CrossWalk.Utilities.Const;
+import CrossWalk.UI.InitGame;
 import CrossWalk.StoreData.ResumeAndLoad;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -23,7 +23,7 @@ public class MainMenu extends Menu {
         JPanel panel = new JPanel(new BorderLayout(1, 1));//new BorderLayout(1,1)
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        frame.setContentPane(panel);
+        Frame.setContentPane(panel);
 
         JPanel controls = new JPanel(new GridLayout(6, 0));
 
@@ -54,7 +54,7 @@ public class MainMenu extends Menu {
         JButton showRepliesButtons = createButton("مشاهده بازی ها",
                 (ActionEvent e) -> {
                     if (new File(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS).exists()) {
-                        ReplyButton replyButton = new ReplyButton();
+                        ReplyMenu replyButton = new ReplyMenu();
                         replyButton.Show();
                     } else {
                         JOptionPane.showMessageDialog(null, "اول باید یک بازی انجام دهید", "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);

@@ -1,13 +1,13 @@
 package CrossWalk.AutoWork;
 
-import CrossWalk.Const;
-import CrossWalk.InitGame;
-import CrossWalk.InitGraphic;
-import CrossWalk.Object.MoveableObject.CarLtr;
-import CrossWalk.Object.MoveableObject.Car;
+import CrossWalk.Utilities.Const;
+import CrossWalk.UI.InitGame;
+import CrossWalk.UI.InitGraphic;
+import CrossWalk.Object.CarLtr;
+import CrossWalk.Object.Car;
 import CrossWalk.Object.Line;
-import CrossWalk.Object.MoveableObject.CarType;
-import CrossWalk.Object.MoveableObject.CarRtl;
+import CrossWalk.Object.CarType;
+import CrossWalk.Object.CarRtl;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.StoreData.WriteReplyData;
 import CrossWalk.Utilities.ExceptionWriter;

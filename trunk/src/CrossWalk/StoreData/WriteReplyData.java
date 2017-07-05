@@ -1,7 +1,7 @@
 package CrossWalk.StoreData;
 
-import CrossWalk.Const;
-import CrossWalk.Object.MoveableObject.Car;
+import CrossWalk.Utilities.Const;
+import CrossWalk.Object.Car;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

@@ -1,8 +1,8 @@
-package CrossWalk.Object.MoveableObject;
+package CrossWalk.Object;
 
 import CrossWalk.Object.Line;
-import CrossWalk.Const;
-import CrossWalk.InitGraphic;
+import CrossWalk.Utilities.Const;
+import CrossWalk.UI.InitGraphic;
 import java.util.ArrayList;
 
 public class CarRtl extends Car {

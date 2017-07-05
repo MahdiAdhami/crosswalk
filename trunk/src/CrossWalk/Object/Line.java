@@ -1,9 +1,8 @@
 package CrossWalk.Object;
 
 import java.util.ArrayList;
-import CrossWalk.Const;
+import CrossWalk.Utilities.Const;
 import CrossWalk.Menu.GameSetting;
-import CrossWalk.Object.MoveableObject.Car;
 
 public final class Line{
 

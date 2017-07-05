@@ -1,12 +1,12 @@
 package CrossWalk.StoreData;
 
-import CrossWalk.Const;
-import CrossWalk.InitGraphic;
-import CrossWalk.Object.MoveableObject.Car;
-import CrossWalk.Object.MoveableObject.CarLtr;
+import CrossWalk.Utilities.Const;
+import CrossWalk.UI.InitGraphic;
+import CrossWalk.Object.Car;
+import CrossWalk.Object.CarLtr;
 import CrossWalk.Object.Line;
-import CrossWalk.Object.MoveableObject.CarRtl;
-import CrossWalk.Object.MoveableObject.Sheep;
+import CrossWalk.Object.CarRtl;
+import CrossWalk.Object.Sheep;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -18,14 +18,8 @@ import CrossWalk.Utilities.ExceptionWriter;
 
 public class ResumeAndLoad {
 
-//    private String LineFile;
-//    private String SheepFile;
-//    private String CarFile;
-//    private String SettingPathFile;
-
     public ResumeAndLoad() {
     }
-
 
     public final void initForSaveGame() {
         File resumeFolder = new File(Const.ROOT_PATH + Const.RESUME_ROOT_PATH);
@@ -60,7 +54,7 @@ public class ResumeAndLoad {
         ArrayList<Line> lines = new ArrayList<>();
 
         if (CarReader != null && LinesReader != null && SheepReader != null) {
-//            // Read Lines
+            // Read Lines
             while (LinesReader.hasNextLine()) {
                 nextLineFromReader = LinesReader.nextLine();
                 String[] temp = nextLineFromReader.split(",");

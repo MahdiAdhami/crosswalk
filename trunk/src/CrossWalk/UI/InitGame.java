@@ -1,11 +1,12 @@
-package CrossWalk;
+package CrossWalk.UI;
 
+import CrossWalk.Utilities.Const;
 import CrossWalk.AutoWork.SheepMoverInBotGame;
 import CrossWalk.AutoWork.SheepMoverInReply;
 import CrossWalk.AutoWork.CreateCarInReply;
 import CrossWalk.AutoWork.CreateCarInNewGame;
 import CrossWalk.Object.Line;
-import CrossWalk.Object.MoveableObject.Sheep;
+import CrossWalk.Object.Sheep;
 import java.util.ArrayList;
 import CrossWalk.Menu.GameSetting;
 

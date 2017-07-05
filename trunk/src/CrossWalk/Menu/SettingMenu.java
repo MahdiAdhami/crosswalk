@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import CrossWalk.Const;
+import CrossWalk.Utilities.Const;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -24,7 +24,7 @@ public class SettingMenu extends Menu {
         JPanel panel = new JPanel(new BorderLayout(1, 1));
         panel.setBorder(new EmptyBorder(5, 10, 5, 10));
 
-        frame.setContentPane(panel);
+        Frame.setContentPane(panel);
 
         JPanel controls = new JPanel(new GridLayout(6, 0));
         JPanel labels = new JPanel(new GridLayout(7, 0));
@@ -124,7 +124,7 @@ public class SettingMenu extends Menu {
                     } else {
                         GameSetting.SetDefaultSettingPath();
                         GameSetting.SaveChanges();
-                        frame.dispose();
+                        Frame.dispose();
                     }
                 });
 
@@ -166,7 +166,7 @@ public class SettingMenu extends Menu {
                         new File(Const.ROOT_PATH + Const.MAP_ROOT_ADDRESS + "\\" + name).mkdir();
                         GameSetting.setSettingPath(Const.MAP_ROOT_ADDRESS + "\\" + name + "\\Setting.xml");
                         GameSetting.SaveChanges();
-                        frame.dispose();
+                        Frame.dispose();
                     }
                 });
 
