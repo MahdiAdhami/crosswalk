@@ -10,7 +10,7 @@ import CrossWalk.Object.Drawable;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-public abstract class Car implements Moveable,Drawable,Serializable {
+public abstract class Car implements Moveable, Drawable, Serializable {
 
     private int Id;
     private float HeadPosition;
@@ -48,8 +48,7 @@ public abstract class Car implements Moveable,Drawable,Serializable {
     public CarType getCarType() {
         return CarType;
     }
-    
-  
+
     public Line getLine() {
         return Line;
     }
@@ -65,7 +64,7 @@ public abstract class Car implements Moveable,Drawable,Serializable {
         return getSpeed();
     }
 
-    public float getSpeed() {
+    private float getSpeed() {
         return (TempCarSpeed > 0) ? TempCarSpeed : Speed;
     }
 
@@ -109,9 +108,7 @@ public abstract class Car implements Moveable,Drawable,Serializable {
                 || (getEndPosition() >= crosswalkPosition[0] && getEndPosition() <= crosswalkPosition[1]));
     }
 
-    public boolean isFirstCar(){
-        return getLine().getCreatedCarCount() == getId() + getLine().getCars().size();  
-    }
+    public abstract boolean isFirstCar();
 
     // Abstract mehods
     @Override
@@ -123,19 +120,18 @@ public abstract class Car implements Moveable,Drawable,Serializable {
     // Get end position of car
     public abstract float getEndPosition();
 
-    
-
     public abstract void checkCarAccident(Line otherLine);
 
     public abstract boolean isEnoughSpaceForOverTaking(Line otherLine);
 
-     // Implements Drawable
+    // Implements Drawable
     @Override
     public BufferedImage getImage() {
         return getCarType().getImage();
     }
-    
+
     // Implements Moveable
     @Override
     public abstract int getXPositionForDraw();
+    
 }

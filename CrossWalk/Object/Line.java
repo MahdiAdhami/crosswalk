@@ -5,7 +5,7 @@ import CrossWalk.Utilities.Const;
 import CrossWalk.Menu.GameSetting;
 import java.io.Serializable;
 
-public final class Line implements Serializable{
+public final class Line implements Serializable {
 
     // Line Id
     private int Id;
@@ -88,8 +88,8 @@ public final class Line implements Serializable{
     }
 
     public void addCar(Car newCar) {
-        Cars.add(newCar);
         increaseCreatedCarCount();
+        Cars.add(newCar);
     }
 
     public boolean createNewCar(Car newCar) {

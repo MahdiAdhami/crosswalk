@@ -50,13 +50,13 @@ public class CarRtl extends Car {
     public float getEndPosition() {
         return getHeadPosition() + getCarType().getCarWidth();
     }
-    
+
     // Get X position of car for draw
     @Override
     public int getXPositionForDraw() {
         return (int) getHeadPosition();
     }
-    
+
     // Get Y position of car for draw
     @Override
     public int getYPositionForDraw() {
@@ -74,34 +74,39 @@ public class CarRtl extends Car {
 
     @Override
     public boolean isEnoughSpaceForOverTaking(Line otherLine) {
-        if (otherLine.getCars().stream().noneMatch((cars) -> (
-                cars.getHeadPosition() - Const.CAR_ENOUTH_SPACE_FOR_TAKEOVER < this.getEndPosition()
+        if (otherLine.getCars().stream().noneMatch((cars) -> (cars.getHeadPosition() - Const.CAR_ENOUTH_SPACE_FOR_TAKEOVER < this.getEndPosition()
                 && cars.getEndPosition() > this.getHeadPosition() - Const.CAR_ENOUTH_SPACE_FOR_TAKEOVER))) {
         } else {
             return false;
         }
         return true;
     }
-    
-    @Override
-    public void checkCarAccident(Line otherLine) {
-        Car carTemp = this;
-        getLine().getCars().stream().forEach((carTemp2) -> {
-            carTemp.TempCarSpeed = 0;
-            if (carTemp.getHeadPosition() <= carTemp2.getEndPosition() + Const.CAR_SPEED_DISTANCE_FOR_REACH && carTemp != carTemp2) {
-                if (carTemp.getLine().getCanCarOvertaking()
-                        && carTemp.isEnoughSpaceForOverTaking(otherLine) && !isFirstCar() && !IsNowOverTaking) {
 
-                    carTemp.getLine().disposeCar(carTemp);
-                    carTemp.setLine(otherLine);
-                    otherLine.addCar(carTemp);
-                    carTemp.IsNowOverTaking = true;
+ @Override
+    public void checkCarAccident(Line otherLine) {
+        TempCarSpeed = 0;
+
+        for (Car carTemp2 : getLine().getCars()) {
+            if (carTemp2.getHeadPosition() > getHeadPosition() && getHeadPosition() <= carTemp2.getEndPosition() + Const.CAR_SPEED_DISTANCE_FOR_REACH) {
+                if (getLine().getCanCarOvertaking()
+                        && isEnoughSpaceForOverTaking(otherLine) && !isFirstCar()) {
+
+                    getLine().disposeCar(this);
+                    setLine(otherLine);
+                    otherLine.addCar(this);
+                    IsNowOverTaking = true;
 
                 } else {
-                    carTemp.TempCarSpeed = (carTemp2.getNowSpeed());
+                    TempCarSpeed = carTemp2.getNowSpeed();
                 }
+
+                break;
             }
-        });
+        }
     }
 
+    @Override
+    public boolean isFirstCar() {
+        return getLine().getCars().stream().noneMatch((car) -> (car.getHeadPosition() < getHeadPosition()));
+    }
 }

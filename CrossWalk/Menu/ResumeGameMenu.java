@@ -1,20 +1,29 @@
 package CrossWalk.Menu;
 
-import CrossWalk.Utilities.Const;
 import CrossWalk.UI.InitGame;
-import CrossWalk.StoreData.ResumeAndLoad;
+import CrossWalk.Utilities.Const;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class ResumeGameMenu extends Menu{
+public class ResumeGameMenu extends Menu {
+
     public ResumeGameMenu() {
-        super("توقف بازی", 400, 300);
+        super("توقف بازی", 200, 200);
+        Frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                InitGame.GameStop = false;
+                e.getWindow().dispose();
+            }
+        });
     }
 
     @Override
@@ -28,9 +37,13 @@ public class ResumeGameMenu extends Menu{
 
         panel.add(controls, BorderLayout.CENTER);
 
-        JButton loadLastGame = createButton("بارگذاری اخرین بازی",
+        JButton loadLastGame = createButton("ادامه ی بازی",
                 (ActionEvent event) -> {
-                    
+                    InitGame.GameStop = true;
+
+                    Frame.setVisible(false);
+                    Frame.dispose();
+
                 }
         );
 

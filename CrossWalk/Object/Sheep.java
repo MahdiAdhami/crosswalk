@@ -131,16 +131,16 @@ public final class Sheep implements Drawable, Serializable {
         if (GameSetting.getCrosswalkMiddlePosition() + Const.CROSSWALK_WIDTH / 2 <= PositionOfSheep[0] + getSheepWidth()) {
             return;
         }
-        ImageStatus = 3;
-        PositionOfSheep[0] -= MoveRate[0];
+        ImageStatus = 2;
+        PositionOfSheep[0] += MoveRate[0];
     }
 
     private void goLeft() {
         if (GameSetting.getCrosswalkMiddlePosition() - Const.CROSSWALK_WIDTH / 2 >= PositionOfSheep[0]) {
             return;
         }
-        ImageStatus = 2;
-        PositionOfSheep[0] += MoveRate[0];
+        ImageStatus = 3;
+        PositionOfSheep[0] -= MoveRate[0];
     }
 
     public void move(int keyCode) {
@@ -151,10 +151,10 @@ public final class Sheep implements Drawable, Serializable {
             goUp();
         } else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
             goDown();
-        } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_A) {
-            goRight();
-        } else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_D) {
+        } else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
             goLeft();
+        } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
+            goRight();
         }
         checkLine();
         if (PositionOfSheep[1] == -25) {
@@ -189,7 +189,7 @@ public final class Sheep implements Drawable, Serializable {
     }
 
     public void gameOver() {
-        if (Life >= 0) {
+        if (Life > 0) {
             Life--;
             setDefaultPosition();
             checkLine();

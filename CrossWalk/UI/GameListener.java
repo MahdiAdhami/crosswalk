@@ -5,6 +5,7 @@
  */
 package CrossWalk.UI;
 
+import CrossWalk.Menu.ResumeGameMenu;
 import CrossWalk.StoreData.ResumeAndLoad;
 import CrossWalk.Object.Line;
 import CrossWalk.Object.Sheep;
@@ -33,7 +34,12 @@ public class GameListener {
                     saveGame.SaveGameForResume(Lines);
                     JOptionPane.showMessageDialog(null, "بازی با موفقیت ذخیره شد و در منوی اصلی قابل بازیابی است!", "ذخیره شد", JOptionPane.INFORMATION_MESSAGE);
                 }
-                if (Sheep.AutoMove) {
+                else if (keyCode == KeyEvent.VK_ESCAPE) {
+                    InitGame.GameStop = true;
+                    ResumeGameMenu menu = new ResumeGameMenu();
+                    menu.show();
+                }
+                else if (Sheep.AutoMove) {
                     return;
                 }
 
