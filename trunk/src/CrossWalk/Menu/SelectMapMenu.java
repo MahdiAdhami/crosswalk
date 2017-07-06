@@ -11,6 +11,7 @@ import java.io.File;
 import CrossWalk.Utilities.Const;
 import CrossWalk.UI.InitGame;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -53,6 +54,7 @@ public class SelectMapMenu extends Menu {
                     InitGame start = new InitGame();
                     start.autoMoveSheep(250, 10);
                 } else {
+                    JOptionPane.showMessageDialog(null, Const.TIPS, "نکات",JOptionPane.INFORMATION_MESSAGE);
                     InitGame start = new InitGame();
                     start.newGame();
                 }

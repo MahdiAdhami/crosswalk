@@ -12,7 +12,7 @@ import CrossWalk.Object.CarRtl;
 import CrossWalk.StoreData.WriteReplyData;
 import CrossWalk.Utilities.ExceptionWriter;
 
-public class CreateCarInNewGame extends CreateCar{
+public class CreateCarInNewGame extends CreateCar {
 
     public boolean SaveReply;
     public WriteReplyData WriteReplyData;
@@ -31,11 +31,11 @@ public class CreateCarInNewGame extends CreateCar{
     @Override
     public void run() {
         while (true) {
-            if (InitGame.GameStop) {
-                continue;
-            }
             if (InitGame.GameEnd) {
                 break;
+            }
+            if (InitGame.GameStop) {
+                continue;
             }
             // Random int to select line for create new car 
             int randomLine = Const.RAND_METHOD.nextInt(super.getLtrLineCount() + super.getRtlLineCount());

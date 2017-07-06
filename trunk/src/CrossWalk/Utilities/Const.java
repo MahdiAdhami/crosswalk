@@ -86,5 +86,5 @@ public final class Const {
 
     // Map
     public final static String MAP_ROOT_ADDRESS = "\\src\\resources\\Map";
-
+    public final static String TIPS = "توضیحات";
 }
