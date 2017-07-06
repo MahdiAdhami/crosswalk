@@ -54,7 +54,9 @@ public class SelectMapMenu extends Menu {
                     InitGame start = new InitGame();
                     start.autoMoveSheep(250, 10);
                 } else {
-                    JOptionPane.showMessageDialog(null, Const.TIPS, "نکات",JOptionPane.INFORMATION_MESSAGE);
+                    TipsMenu tipsMenu = new TipsMenu();
+                    //tipsMenu.show();
+
                     InitGame start = new InitGame();
                     start.newGame();
                 }

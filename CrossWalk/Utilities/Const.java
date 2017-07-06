@@ -69,6 +69,7 @@ public final class Const {
     public final static int SHEEP_DISTANCE_LINE_WHEN_GAME_START = 30;
     public final static int SHEEP_IGONORE_DISTANCE_IN_CROSSWALK = 30;
     public final static String SHEEP_HEART_PATH_IMAGE = "\\src\\resources\\Sheep\\heart.png";
+    public final static int SHEEP_SCORE_INCREASE = 50;
 
     // Save and load
     public final static String RESUME_ROOT_PATH = "\\src\\resources\\Resume";
