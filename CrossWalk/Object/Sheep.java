@@ -55,6 +55,7 @@ public final class Sheep implements Drawable, Serializable {
         Life = 3;
         setDefaultPosition();
         Line.SheepCurrentLine = -1;
+        ImageStatus = 0;
     }
 
     @Override

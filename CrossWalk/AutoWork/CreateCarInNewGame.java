@@ -78,7 +78,6 @@ public class CreateCarInNewGame extends CreateCar {
             if (SaveReply && temp) {
                 LocalDateTime tempDate2 = LocalDateTime.now();
                 long diffInMilli = ChronoUnit.MILLIS.between(tempDate, tempDate2);
-                System.out.println(diffInMilli);
                 tempDate = tempDate2;
                 WriteReplyData.appendCarsToFile(newCar, diffInMilli);
             }
