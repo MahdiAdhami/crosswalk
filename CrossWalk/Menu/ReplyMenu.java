@@ -18,18 +18,15 @@ public class ReplyMenu extends Menu {
 
     @Override
     protected void createPanel() {
-        File buttons = null;
-
-        JPanel panel = new JPanel(new BorderLayout(1, 1));
-        panel.setBorder(new EmptyBorder(5, 10, 20, 10));
-
-        Frame.setContentPane(panel);
-
-        JPanel controls = new JPanel(new GridLayout(6, 0));
-        panel.add(controls, BorderLayout.CENTER);
-
-        buttons = new File(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS);
+        File buttons = new File(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS);
         String[] buttonsName = buttons.list();
+
+        GridLayout grid = new GridLayout(6, 1, 10, 10);
+        Frame.setLayout(grid);
+
+        JPanel controls = new JPanel();
+        controls.setLayout(grid);
+        controls.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         for (int i = 1; i <= buttonsName.length; i++) {
             JButton currentButton = createButton(buttonsName[i - 1], (ActionEvent event) -> {
@@ -40,6 +37,8 @@ public class ReplyMenu extends Menu {
             });
             controls.add(currentButton);
         }
+        
+        Frame.setContentPane(controls);
     }
 
 }

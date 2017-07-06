@@ -20,7 +20,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeListener;
 
-public abstract class Menu {
+public abstract class Menu extends JFrame{
 
     private final String Title;
     private final int Height;
@@ -31,7 +31,7 @@ public abstract class Menu {
         this.Height = Height;
         this.Width = Width;
         this.Title = Title;
-        Frame = new JFrame();
+        this.Frame = new JFrame();
     }
 
     public void show() {

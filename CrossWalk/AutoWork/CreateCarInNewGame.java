@@ -3,7 +3,6 @@ package CrossWalk.AutoWork;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.Utilities.Const;
 import CrossWalk.UI.InitGame;
-import CrossWalk.UI.InitGraphic;
 import CrossWalk.Object.CarLtr;
 import CrossWalk.Object.Car;
 import CrossWalk.Object.Line;
@@ -13,22 +12,23 @@ import CrossWalk.StoreData.WriteReplyData;
 import CrossWalk.Utilities.ExceptionWriter;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 public class CreateCarInNewGame extends CreateCar {
 
-    public boolean SaveReply;
-    public WriteReplyData WriteReplyData;
+    private final boolean SaveReply;
+    private WriteReplyData WriteReplyData;
 
     public CreateCarInNewGame(boolean SaveReply) {
         super();
 
         this.SaveReply = SaveReply;
         if (SaveReply) {
-            WriteReplyData temp = new WriteReplyData();
-            this.WriteReplyData = temp;
-            InitGraphic.Sheep.setWriteReplyData(temp);
+            this.WriteReplyData = new WriteReplyData();
         }
+    }
+    
+    public WriteReplyData getWriteReplyData(){
+        return WriteReplyData;
     }
 
     @Override

@@ -24,7 +24,7 @@ public class ResumeGameMenu extends Menu {
         super("توقف بازی", 200, 200);
 
         this.Lines = Lines;
-        
+
         Frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -37,14 +37,12 @@ public class ResumeGameMenu extends Menu {
 
     @Override
     protected void createPanel() {
-        JPanel panel = new JPanel(new BorderLayout(1, 1));//new BorderLayout(1,1)
-        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        GridLayout grid = new GridLayout(4, 1, 10, 10);
+        Frame.setLayout(grid);
 
-        Frame.setContentPane(panel);
-
-        JPanel controls = new JPanel(new GridLayout(6, 0));
-
-        panel.add(controls, BorderLayout.CENTER);
+        JPanel controls = new JPanel();
+        controls.setLayout(grid);
+        controls.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         JButton loadLastGame = createButton("ادامه ی بازی",
                 (ActionEvent event) -> {
@@ -82,5 +80,8 @@ public class ResumeGameMenu extends Menu {
                 }
         );
         controls.add(exit);
+
+        Frame.setContentPane(controls);
+
     }
 }
