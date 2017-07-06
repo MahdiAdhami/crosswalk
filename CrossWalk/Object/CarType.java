@@ -6,9 +6,10 @@ import java.io.File;
 import java.io.IOException;
 import CrossWalk.Utilities.Const;
 import CrossWalk.Menu.GameSetting;
+import java.io.Serializable;
 import javax.imageio.ImageIO;
 
-public class CarType {
+public class CarType implements Serializable  {
 
     private int CarWidth;
     private int CarHeight;
