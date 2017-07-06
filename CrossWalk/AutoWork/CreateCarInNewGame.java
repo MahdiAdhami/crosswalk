@@ -37,6 +37,7 @@ public class CreateCarInNewGame extends CreateCar {
             if (InitGame.GameStop) {
                 continue;
             }
+
             // Random int to select line for create new car 
             int randomLine = Const.RAND_METHOD.nextInt(super.getLtrLineCount() + super.getRtlLineCount());
 
@@ -58,6 +59,7 @@ public class CreateCarInNewGame extends CreateCar {
                 carType = new CarType(tempLine.getDirection());
                 newCar = new CarLtr(speed, carType, tempLine);
             }
+
             // Call create new car method of line 
             boolean temp = tempLine.createNewCar(newCar);
 
@@ -67,7 +69,7 @@ public class CreateCarInNewGame extends CreateCar {
 
             // Sleep thread wait for create new car again
             try {
-                Thread.sleep(250);//Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
+                Thread.sleep(Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
             } catch (Exception ex) {
                 new ExceptionWriter().write("CreateCarInNewGame run()", ex, false);
             }

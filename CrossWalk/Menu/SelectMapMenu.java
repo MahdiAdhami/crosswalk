@@ -60,6 +60,9 @@ public class SelectMapMenu extends Menu {
                     InitGame start = new InitGame();
                     start.newGame();
                 }
+
+                Frame.dispose();
+
             }
         }));
 
@@ -77,6 +80,8 @@ public class SelectMapMenu extends Menu {
                     InitGame start = new InitGame();
                     start.newGame();
                 }
+
+                Frame.dispose();
 
             });
             controls.add(currentButton);

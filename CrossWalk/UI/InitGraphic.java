@@ -53,6 +53,7 @@ public class InitGraphic extends JPanel implements Runnable {
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
         super();
+        InitGraphic.Sheep.newSheep();
         this.Lines = Lines;
         setInit();
         this.MiddleOfCrosswalkPosition = GameSetting.getCrosswalkMiddlePosition();

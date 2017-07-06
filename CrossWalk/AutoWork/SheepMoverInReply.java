@@ -52,12 +52,8 @@ public class SheepMoverInReply implements Runnable {
                     long sleepTime = Long.parseLong(split[1]);
 
                     // Write data time
-                    if (sleepTime > 30) {
-                        sleepTime -= 30;
-                    } else if (sleepTime > 15) {
-                        sleepTime -= 15;
-                    } else if (sleepTime > 5) {
-                        sleepTime -= 3;
+                    if(sleepTime >= 5) {
+                        sleepTime -= 5;
                     }
 
                     Thread.sleep(sleepTime);

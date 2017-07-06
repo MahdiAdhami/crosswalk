@@ -26,7 +26,6 @@ public class CarRtl extends Car {
     @Override
     public void move() {
         float tempSpeed = getNowSpeed();
-
         if (getEndPosition() < (-1) * getCarType().getCarWidth()) {
             getLine().disposeCar(this);
             return;
