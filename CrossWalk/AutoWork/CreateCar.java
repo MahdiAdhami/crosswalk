@@ -16,7 +16,8 @@ public abstract class CreateCar implements Runnable {
         this.LtrLineCount = GameSetting.getLtrLineCount();
         this.RtlLineCount = GameSetting.getRtlLineCount();
     }
-
+    
+    //create new lines with specified directions 
     public void InitLine() {
         boolean canCarTakeOver;
 
@@ -42,7 +43,7 @@ public abstract class CreateCar implements Runnable {
             }
         }
     }
-
+    //create new lines from resume of saved games
     public void InitLineWithCars(ArrayList<Line> line) {
         InitLine();
 

@@ -1,7 +1,7 @@
 package CrossWalk.Menu;
 
 public class SettingConst {
-
+    //element node names for setting files in string type
     public static final String RTL_LINE_COUNT = "RtlLineCount";
     public static final String LTR_LINE_COUNT = "LtrLineCount";
     public static final String CROSSWALK_MIDDLE_POSITION = "CrosswalkMiddlePosition";

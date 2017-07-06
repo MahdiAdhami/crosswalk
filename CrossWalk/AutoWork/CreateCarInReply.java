@@ -42,7 +42,7 @@ public class CreateCarInReply extends CreateCar {
                 if (InitGame.GameStop) {
                     continue;
                 }
-
+                //split a line from file by , character
                 String[] temp = reader.nextLine().split(",");
 
                 try {
@@ -50,7 +50,7 @@ public class CreateCarInReply extends CreateCar {
                 } catch (InterruptedException ex) {
                     new ExceptionWriter().write("CreateCarInReply run()", ex, false);
                 }
-
+                //getting  the correct line for adding the car 
                 Line tempLine = getLine().get(Integer.parseInt((temp[4])) - 1);
 
                 if (tempLine.getDirection() == Const.LINE_DIRECTION_LTR) {

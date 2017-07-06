@@ -20,6 +20,8 @@ public class LineMenu extends Menu {
 
     @Override
     protected void createPanel() {
+        
+        //initialize the frame and panel
         JPanel panel = new JPanel(new BorderLayout(1, 1));
         panel.setBorder(new EmptyBorder(50, 10, 50, 10));
 
@@ -33,6 +35,7 @@ public class LineMenu extends Menu {
         panel.add(labels, BorderLayout.EAST);
         panel.add(submit, BorderLayout.SOUTH);
 
+         // getting required images and information about  middle lines and creating a combobox with images
         String[] lineImages = new File(Const.ROOT_PATH + Const.LINE_IMAGE_ROOT_PATH + "\\Show").list();
         Object[] lineItems = new Object[lineImages.length];
         for (int i = 0; i < lineItems.length; i++) {
@@ -41,7 +44,7 @@ public class LineMenu extends Menu {
         JComboBox comboMainLine = new JComboBox(lineItems);
         JLabel comboLineLabel = createLabel("نوع خط کشی را انتخاب کنید:");
         
-        
+        // getting required images and information about  middle lines and creating a combobox with images
         String[] middleLineImages = new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE_ROOT_PATH ).list();
         Object[] middleLineItems = new Object[middleLineImages.length];
         for (int i = 0; i < middleLineItems.length; i++) {
@@ -50,7 +53,7 @@ public class LineMenu extends Menu {
         JComboBox comboMiddleLine = new JComboBox(middleLineItems);
         JLabel comboMiddleLineLabel = createLabel("نوع خط کشی وسط را انتخاب کنید:");
         
-        
+         // getting required images and information about cross lines and creating a combobox with images
         String[] crossWalkImages = new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE_ROOT_PATH ).list();
         Object[] crossWalkItems = new Object[crossWalkImages.length];
         for (int i = 0; i < crossWalkItems.length; i++) {
@@ -67,7 +70,7 @@ public class LineMenu extends Menu {
         controls.add(comboMiddleLine);
         labels.add(comboCrossWalkLabel);
         controls.add(comboCrossWalk);
-
+        //getting the indexes and extracting to file with a string
         JButton saveChanges = createButton("ذخیره",
                 (ActionEvent e) -> {
                     GameSetting.setLineImageNumber(comboMainLine.getSelectedIndex() + 1);

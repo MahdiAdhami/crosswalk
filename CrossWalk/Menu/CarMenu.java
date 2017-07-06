@@ -33,14 +33,18 @@ public class CarMenu extends Menu {
 
         String[] carImages = new File(Const.ROOT_PATH + Const.CAR_IMAGE_ROOT_PATH + "\\Setting\\Show").list();
         ArrayList<JCheckBox> checkBoxesArrayList = new ArrayList<>();
-
+        
+        //getting required information for determine whether a car is selected or not 
+        
         String selectedCar = GameSetting.getCarsNumbers();
         String[] selectedCarType = new String[selectedCar.length()];
         int j = 0;
         for (int i = 0; i < selectedCar.length(); i++) {
             selectedCarType[j++] = selectedCar.substring(i, i + 1);
         }
-
+        
+        //adding the property of selected or not to a checkbox of car 
+        
         boolean isSelected;
         for (String carName : carImages) {
             JCheckBox currentCheckBox;
@@ -54,7 +58,9 @@ public class CarMenu extends Menu {
                     break;
                 }
             }
-
+            
+            //creating checkboxes with cars images 
+            
             currentCheckBox = new JCheckBox(new ImageIcon(Const.ROOT_PATH + Const.CAR_IMAGE_ROOT_PATH + "\\Setting\\Show\\" + carName));
 
             if (!isSelected) {
@@ -65,13 +71,14 @@ public class CarMenu extends Menu {
             checkBoxesArrayList.add(currentCheckBox);
             controls.add(currentCheckBox);
         }
-
+        
         String[] carImagesSelected = new File(Const.ROOT_PATH + Const.CAR_IMAGE_ROOT_PATH + "\\Setting\\Select").list();
-
+        
+        //set selected icons for selected checkboxes
         for (int i = 0; i < carImagesSelected.length; i++) {
             checkBoxesArrayList.get(i).setSelectedIcon(new ImageIcon(Const.ROOT_PATH + Const.CAR_IMAGE_ROOT_PATH + "\\Setting\\Select\\" + carImagesSelected[i]));
         }
-
+        //getting the indexes and extracting to file with a string
         JButton submitButton = createButton("ذخیره", (ActionEvent e) -> {
             String temp = "";
             for (int i = 0; i < checkBoxesArrayList.size(); i++) {
