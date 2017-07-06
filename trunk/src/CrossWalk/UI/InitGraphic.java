@@ -42,7 +42,7 @@ public class InitGraphic extends JPanel implements Runnable {
     private final int TopLineCount;
 
     // Sheep
-    public static Sheep Sheep = new Sheep();
+    public static Sheep Sheep;
 
     // Middle line Image
     private BufferedImage HeartImage;
@@ -53,7 +53,7 @@ public class InitGraphic extends JPanel implements Runnable {
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
         super();
-        InitGraphic.Sheep.newSheep();
+        Sheep = new Sheep();
         this.Lines = Lines;
         setInit();
         this.MiddleOfCrosswalkPosition = GameSetting.getCrosswalkMiddlePosition();
@@ -103,9 +103,9 @@ public class InitGraphic extends JPanel implements Runnable {
 
     // Over ride paint method for draw object 
     @Override
-    public void paintComponent(Graphics g) {
+    public void paint(Graphics g) {
         // Call super methods for initialize
-        super.paintComponent(g);
+        super.paint(g);
 
         // Draw lines
         Lines.stream().forEach((lineTemp) -> {

@@ -9,6 +9,7 @@ import CrossWalk.Object.Line;
 import CrossWalk.Object.Sheep;
 import java.util.ArrayList;
 import CrossWalk.Menu.GameSetting;
+import CrossWalk.StoreData.WriteReplyData;
 
 public class InitGame {
 
@@ -23,6 +24,7 @@ public class InitGame {
     public void autoMoveSheep(long sleepInMilliSecond, int randRate) {
         newGame();
         Sheep.AutoMove = true;
+
         // Create instance an object for auto move sheep
         Thread threadAutoMoveSheep = new Thread(new SheepMoverInBotGame(sleepInMilliSecond, randRate));
         threadAutoMoveSheep.start();
@@ -32,9 +34,6 @@ public class InitGame {
     public void newGame() {
         boolean CreateReply = true;
 
-        Sheep.AutoMove = false;
-        InitGraphic.Sheep.setSaveChanges(CreateReply);
-
         // Create instance an object for create cars in a thread
         CreateCarInNewGame autoCreateCar = new CreateCarInNewGame(CreateReply);
 
@@ -43,6 +42,12 @@ public class InitGame {
         Thread threadBase = new Thread(base);
         threadBase.start();
 
+        Sheep.AutoMove = false;
+        InitGraphic.Sheep.setSaveChanges(CreateReply);
+        if (CreateReply) {
+            InitGraphic.Sheep.setWriteReplyData(autoCreateCar.getWriteReplyData());
+        }
+        
         // Create instance an object for auto create car
         Thread threadAutoCreateCar = new Thread(autoCreateCar);
         autoCreateCar.InitLine();
@@ -54,9 +59,6 @@ public class InitGame {
 
         GameSetting.setSettingPath(Const.RESUME_SETTING_PATH);
         GameSetting.UpdateSettings();
-
-        InitGraphic.Sheep.setSaveChanges(CreateReply);
-        Sheep.AutoMove = false;
 
         // Create instance an object for create cars in a thread
         CreateCarInNewGame autoCreateCar = new CreateCarInNewGame(CreateReply);
@@ -71,6 +73,9 @@ public class InitGame {
         // Create instance an object for auto create car
         Thread threadAutoCreateCar = new Thread(autoCreateCar);
         threadAutoCreateCar.start();
+
+        InitGraphic.Sheep.setSaveChanges(CreateReply);
+        Sheep.AutoMove = false;
     }
 
     public void replyTheMovie(String path) {
