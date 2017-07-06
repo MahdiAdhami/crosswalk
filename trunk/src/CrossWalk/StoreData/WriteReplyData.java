@@ -42,11 +42,12 @@ public class WriteReplyData {
         GameSetting.writeSetting(Const.REPLY_ROOT_ADDRESS + Path + Const.REPLY_SETTING_ADDRESS);
     }
 
-    public void appendCarsToFile(Car tempCar) {
+    public void appendCarsToFile(Car tempCar, long millisecond) {
         try {
             FileWriter temp = new FileWriter(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS + Path + Const.REPLY_CAR_ADDRESS, true);
             try (BufferedWriter carWriter = new BufferedWriter(temp);) {
                 carWriter.append(tempCar.toString());
+                carWriter.append("," + millisecond);
                 carWriter.newLine();
             }
         } catch (IOException ex) {

@@ -11,6 +11,9 @@ import CrossWalk.Object.CarType;
 import CrossWalk.Object.CarRtl;
 import CrossWalk.StoreData.WriteReplyData;
 import CrossWalk.Utilities.ExceptionWriter;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 public class CreateCarInNewGame extends CreateCar {
 
@@ -30,12 +33,21 @@ public class CreateCarInNewGame extends CreateCar {
 
     @Override
     public void run() {
+        LocalDateTime tempDate = LocalDateTime.now();
+
         while (true) {
             if (InitGame.GameEnd) {
                 break;
             }
             if (InitGame.GameStop) {
                 continue;
+            }
+
+            // Sleep thread wait for create new car again
+            try {
+                Thread.sleep(Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
+            } catch (Exception ex) {
+                new ExceptionWriter().write("CreateCarInNewGame run()", ex, false);
             }
 
             // Random int to select line for create new car 
@@ -64,14 +76,11 @@ public class CreateCarInNewGame extends CreateCar {
             boolean temp = tempLine.createNewCar(newCar);
 
             if (SaveReply && temp) {
-                WriteReplyData.appendCarsToFile(newCar);
-            }
-
-            // Sleep thread wait for create new car again
-            try {
-                Thread.sleep(Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
-            } catch (Exception ex) {
-                new ExceptionWriter().write("CreateCarInNewGame run()", ex, false);
+                LocalDateTime tempDate2 = LocalDateTime.now();
+                long diffInMilli = ChronoUnit.MILLIS.between(tempDate, tempDate2);
+                System.out.println(diffInMilli);
+                tempDate = tempDate2;
+                WriteReplyData.appendCarsToFile(newCar, diffInMilli);
             }
 
         }
