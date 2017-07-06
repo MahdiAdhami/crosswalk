@@ -50,12 +50,14 @@ public final class Sheep implements Drawable, Serializable {
     }
 
     public void newSheep() {
-        Level = 1;
-        Score = 0;
-        Life = 3;
-        setDefaultPosition();
-        Line.SheepCurrentLine = -1;
-        ImageStatus = 0;
+        if (Sheep.AutoMove) {
+            Level = 1;
+            Score = 0;
+            Life = 3;
+            setDefaultPosition();
+            Line.SheepCurrentLine = -1;
+            ImageStatus = 0;
+        }
     }
 
     @Override
