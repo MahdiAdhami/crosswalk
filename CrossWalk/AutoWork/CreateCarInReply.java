@@ -11,6 +11,8 @@ import java.util.Scanner;
 import CrossWalk.Menu.GameSetting;
 import CrossWalk.UI.InitGame;
 import CrossWalk.Utilities.ExceptionWriter;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class CreateCarInReply extends CreateCar {
 
@@ -24,9 +26,7 @@ public class CreateCarInReply extends CreateCar {
 
     @Override
     public void run() {
-
         Scanner reader = null;
-
         try {
             reader = new Scanner(new File(CarsPath));
         } catch (FileNotFoundException ex) {
@@ -34,7 +34,7 @@ public class CreateCarInReply extends CreateCar {
         }
 
         if (reader != null) {
-
+            LocalDateTime tempDate = LocalDateTime.now();
             while (reader.hasNextLine()) {
                 if (InitGame.GameEnd) {
                     break;
@@ -45,6 +45,12 @@ public class CreateCarInReply extends CreateCar {
 
                 String[] temp = reader.nextLine().split(",");
 
+                try {
+                    Thread.sleep(Long.parseLong((temp[5])));//Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
+                } catch (InterruptedException ex) {
+                    new ExceptionWriter().write("CreateCarInReply run()", ex, false);
+                }
+
                 Line tempLine = getLine().get(Integer.parseInt((temp[4])) - 1);
 
                 if (tempLine.getDirection() == Const.LINE_DIRECTION_LTR) {
@@ -53,11 +59,11 @@ public class CreateCarInReply extends CreateCar {
                     tempLine.getCars().add(new CarRtl(Const.GAME_WINDOWS_WIDTH, Float.parseFloat(temp[2]), temp[3], tempLine));
                 }
 
-                try {
-                    Thread.sleep(Const.CAR_CREATE_MAX_SLEEP_TIME - GameSetting.getAutoCreateCarRate());
-                } catch (InterruptedException ex) {
-                    new ExceptionWriter().write("CreateCarInReply run()", ex, false);
-                }
+                LocalDateTime tempDate2 = LocalDateTime.now();
+                long diffInMilli = ChronoUnit.MILLIS.between(tempDate, tempDate2);
+                System.out.println(diffInMilli);
+                tempDate = tempDate2;
+
             }
         }
     }
