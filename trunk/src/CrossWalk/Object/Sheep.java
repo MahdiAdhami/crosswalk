@@ -49,6 +49,13 @@ public final class Sheep implements Drawable, Serializable {
         setDefaultPosition();
     }
 
+    public void newSheep() {
+        Level = 1;
+        Score = 0;
+        Life = 3;
+        setDefaultPosition();
+    }
+
     @Override
     public String toString() {
         return String.format("Sheep,%d,%d,%d,%d,%d,%s,%d,%d,%d", getXPositionForDraw(), getYPositionForDraw(), MoveRate[0], MoveRate[1], ImageStatus, ImageCode, Level, Score, Life);

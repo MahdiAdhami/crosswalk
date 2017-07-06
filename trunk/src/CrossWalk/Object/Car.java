@@ -11,7 +11,7 @@ import java.io.Serializable;
 public abstract class Car implements Moveable, Drawable, Serializable {
 
     private float HeadPosition;
-    private float Speed;
+    public float Speed;
     private final CarType CarType;
     private float TempCarSpeed;
     private boolean IsNowOverTaking;
@@ -82,7 +82,7 @@ public abstract class Car implements Moveable, Drawable, Serializable {
     }
 
     public void setTempCarSpeed(float tempCarSpeed) {
-        Speed = tempCarSpeed;
+        TempCarSpeed = tempCarSpeed;
     }
 
     public void setIsNowOverTaking(boolean isNowOverTaking) {

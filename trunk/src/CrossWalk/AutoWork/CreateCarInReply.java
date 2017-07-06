@@ -45,12 +45,12 @@ public class CreateCarInReply extends CreateCar {
 
                 String[] temp = reader.nextLine().split(",");
 
-                Line tempLine = getLine().get(Integer.parseInt((temp[5])) - 1);
+                Line tempLine = getLine().get(Integer.parseInt((temp[4])) - 1);
 
                 if (tempLine.getDirection() == Const.LINE_DIRECTION_LTR) {
-                    tempLine.getCars().add(new CarLtr(Integer.parseInt(temp[1]), Float.parseFloat(temp[3]), temp[4], tempLine));
+                    tempLine.getCars().add(new CarLtr(0, Float.parseFloat(temp[2]), temp[3], tempLine));
                 } else {
-                    tempLine.getCars().add(new CarRtl(Integer.parseInt(temp[1]), Float.parseFloat(temp[3]), temp[4], tempLine));
+                    tempLine.getCars().add(new CarRtl(Const.GAME_WINDOWS_WIDTH, Float.parseFloat(temp[2]), temp[3], tempLine));
                 }
 
                 try {
