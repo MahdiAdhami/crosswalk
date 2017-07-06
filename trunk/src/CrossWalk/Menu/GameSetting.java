@@ -272,7 +272,8 @@ public class GameSetting {
             // staff elements
             Element staff = doc.createElement("GameSettings");
             rootElement.appendChild(staff);
-
+            
+            //creating nodes 
             Element firstname = doc.createElement(SettingConst.RTL_LINE_COUNT);
             firstname.appendChild(doc.createTextNode(String.format("%d", getRtlLineCount())));
             staff.appendChild(firstname);

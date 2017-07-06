@@ -7,8 +7,8 @@ import CrossWalk.Utilities.ExceptionWriter;
 import java.io.Serializable;
 
 public final class Line implements Serializable {
-
-    // Line Id
+    // Fields
+        // Line Id
     private int Id;
     private int MaxCarSpeed;
     private int MinCarSpeed;
@@ -75,7 +75,8 @@ public final class Line implements Serializable {
     public void addCar(Car newCar) {
         Cars.add(newCar);
     }
-
+    
+    // Determine if Car Has gone a specified Distance to create a new car 
     public boolean createNewCar(Car newCar) {
         try {
             if (Cars.size() > 0) {
@@ -104,7 +105,8 @@ public final class Line implements Serializable {
     public void disposeCar(Car car) {
         Cars.remove(car);
     }
-
+    
+    //calculate distance before cross line for decreasing speed 
     private float[] calcuteXCrosswalkPosistion() {
         float middle = GameSetting.getCrosswalkMiddlePosition();
         float[] result = new float[2];
@@ -116,7 +118,8 @@ public final class Line implements Serializable {
 
             return result;
 
-        } else {
+        } 
+        else {
             result[0] = middle - Const.CROSSWALK_WIDTH / 2;
             result[1] = middle + Const.CROSSWALK_WIDTH / 2 + Const.CAR_DISTANCE_TO_CROSSWALK_FOR_DECREASE_SPEED;
 

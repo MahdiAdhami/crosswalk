@@ -18,6 +18,8 @@ public class ReplyMenu extends Menu {
 
     @Override
     protected void createPanel() {
+        
+        //getting files of repliable games to watch
         File buttons = new File(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS);
         String[] buttonsName = buttons.list();
 
@@ -27,7 +29,8 @@ public class ReplyMenu extends Menu {
         JPanel controls = new JPanel();
         controls.setLayout(grid);
         controls.setBorder(new EmptyBorder(10, 10, 10, 10));
-
+        
+        //creating buttons for each game that has reply movie
         for (int i = 1; i <= buttonsName.length; i++) {
             JButton currentButton = createButton(buttonsName[i - 1], (ActionEvent event) -> {
                 JButton temp = (JButton) event.getSource();

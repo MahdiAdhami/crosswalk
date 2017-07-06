@@ -45,6 +45,7 @@ public class SheepMoverInReply implements Runnable {
                 if (InitGame.GameStop) {
                     continue;
                 }
+                //split a line from file by , character
                 String[] split = sheepReader.nextLine().split(",");
 
                 long sleepTime = Long.parseLong(split[1]);

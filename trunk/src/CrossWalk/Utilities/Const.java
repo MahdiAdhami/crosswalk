@@ -54,6 +54,7 @@ public final class Const {
     public final static float CAR_SPEED_RATE_DISTANCE_FOR_REACH = .5f;
 
     //Setting File
+    public final static String MAIN_SETTING_FOLDER = "\\src\\resources\\Setting";
     public final static String MAIN_SETTING_FILE = "\\src\\resources\\Setting\\Setting.xml";
 
     // Game size

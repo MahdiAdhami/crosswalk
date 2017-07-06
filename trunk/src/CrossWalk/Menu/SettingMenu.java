@@ -21,6 +21,18 @@ public class SettingMenu extends Menu {
 
     @Override
     protected void createPanel() {
+        //creating map and setting folders
+        File mapMenuFolder = new File(Const.ROOT_PATH + Const.MAP_ROOT_ADDRESS);
+        if (!mapMenuFolder.exists()) {
+            mapMenuFolder.mkdir();
+        }
+        
+        File settingMenuFolder = new File(Const.ROOT_PATH + Const.MAIN_SETTING_FOLDER);
+        if (!settingMenuFolder.exists()) {
+            settingMenuFolder.mkdir();
+        }
+        
+        //initilize panel and frame
         JPanel panel = new JPanel(new BorderLayout(1, 1));
         panel.setBorder(new EmptyBorder(5, 10, 5, 10));
 
@@ -36,6 +48,8 @@ public class SettingMenu extends Menu {
         panel.add(otherSetting, BorderLayout.NORTH);
         panel.add(submit, BorderLayout.SOUTH);
 
+        //creating spinners and labels and buttons of setting frame
+        
         JSpinner topLineCount = createSpinner("تعداد لاین راست به چپ", GameSetting.getRtlLineCount(), MenuConst.MIN_TOP_LINE_COUNT - 10, MenuConst.MAX_TOP_LINE_COUNT + 10, 1, null);
         controls.add(topLineCount);
         controls.add(createMargin(10, 0, 10, 0));
@@ -99,7 +113,7 @@ public class SettingMenu extends Menu {
         otherSetting.add(goToSheepSelectMenu);
         otherSetting.add(goToLineSelectMenu);
 
-        
+        //setting information to setting.xml file
         JButton saveChanges = createButton("ذخیره",
                 (ActionEvent e) -> {
                     boolean error = false;
@@ -130,6 +144,7 @@ public class SettingMenu extends Menu {
 
         submit.add(saveChanges);
         
+        //setting information to map file
         JButton saveMap = createButton("ذخیره به عنوان مپ",
                 (ActionEvent e) -> {
                     boolean error = false;

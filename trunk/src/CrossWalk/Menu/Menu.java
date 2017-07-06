@@ -38,7 +38,7 @@ public abstract class Menu extends JFrame{
         createPanel();
         setInit();
     }
-
+    //initialize frames
     public void setInit() {
         Frame.setResizable(false);
         Frame.pack();
@@ -55,7 +55,8 @@ public abstract class Menu extends JFrame{
             new ExceptionWriter().write("Menu setInit()", ex, false);
         }
     }
-
+    
+    //method for creating required buttons
     protected JButton createButton(String Title, ActionListener actionListener) {
         JButton button = new JButton();
 
@@ -71,7 +72,8 @@ public abstract class Menu extends JFrame{
         button.addActionListener(actionListener);
         return button;
     }
-
+    
+     //method for creating required spinners
     protected JSpinner createSpinner(String Title, int defaultValue, int minValue, int maxValue, int step, ChangeListener changeListener) {
         SpinnerModel model = new SpinnerNumberModel(defaultValue, minValue, maxValue, step);
         JSpinner spinner = new JSpinner(model);
@@ -82,7 +84,8 @@ public abstract class Menu extends JFrame{
         spinner.addChangeListener(changeListener);
         return spinner;
     }
-
+    
+    //method for creating required labels
     protected JLabel createLabel(String Title) {
         JLabel label = new JLabel();
         label.setText(Title);
@@ -90,13 +93,15 @@ public abstract class Menu extends JFrame{
 
         return label;
     }
-
+    
+    //method for creating required distance between frame elements
     protected JLabel createMargin(int top, int right, int bottom, int left) {
         JLabel label = new JLabel();
         label.setBorder(new EmptyBorder(top, left, bottom, right));
         return label;
     }
-
+    
+     //method for creating required checkboxes
     protected JCheckBox createCheckBox(String title, boolean isSelected) {
         JCheckBox checkBox = new JCheckBox(title, isSelected);
         return checkBox;
