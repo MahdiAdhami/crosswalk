@@ -52,7 +52,7 @@ public class SelectMapMenu extends Menu {
 
                 if (AutoSheepMover) {
                     InitGame start = new InitGame();
-                    start.autoMoveSheep(250, 10);
+                    start.autoMoveSheep(250, 25);
                 } else {
                     TipsMenu tipsMenu = new TipsMenu();
                     //tipsMenu.show();
@@ -75,7 +75,7 @@ public class SelectMapMenu extends Menu {
 
                 if (AutoSheepMover) {
                     InitGame start = new InitGame();
-                    start.autoMoveSheep(250, 10);
+                    start.autoMoveSheep(250, 25);
                 } else {
                     InitGame start = new InitGame();
                     start.newGame();

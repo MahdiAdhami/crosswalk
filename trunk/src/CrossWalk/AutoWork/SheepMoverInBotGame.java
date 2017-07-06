@@ -19,7 +19,7 @@ public class SheepMoverInBotGame implements Runnable {
     // Constructor
     public SheepMoverInBotGame(long SleepInMilliSecond, int RandRate) {
         this.SleepInMilliSecond = (SleepInMilliSecond > 0) ? 200 : SleepInMilliSecond;
-        this.RandRate = (RandRate > 5) ? RandRate : 5;
+        this.RandRate = (RandRate > 15) ? RandRate : 15;
     }
 
     // Implements thread methods
@@ -36,12 +36,12 @@ public class SheepMoverInBotGame implements Runnable {
             // New random int
             int key = Const.RAND_METHOD.nextInt(RandRate);
 
-            if (key == 1 || key == 2) {
+            if (key < 5) {
                 InitGraphic.Sheep.move(83);
-            } else if (key == 3) {
+            } else if (key == 5) {
                 InitGraphic.Sheep.move(68);
 
-            } else if (key == 4) {
+            } else if (key == 6) {
                 InitGraphic.Sheep.move(65);
             } else {
                 InitGraphic.Sheep.move(87);
