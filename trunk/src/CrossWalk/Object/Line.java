@@ -3,6 +3,7 @@ package CrossWalk.Object;
 import java.util.ArrayList;
 import CrossWalk.Utilities.Const;
 import CrossWalk.Menu.GameSetting;
+import CrossWalk.Utilities.ExceptionWriter;
 import java.io.Serializable;
 
 public final class Line implements Serializable {
@@ -15,9 +16,9 @@ public final class Line implements Serializable {
     private int YPosition;
     private ArrayList<Car> Cars;
     private float[] CrosswalkXPosition;
-    private int CreatedCarCount;
-    public static int SheepCurrentLine;
     private boolean CanCarOvertaking;
+
+    public static int SheepCurrentLine;
 
     public Line() {
         this.Cars = new ArrayList<>();
@@ -34,28 +35,12 @@ public final class Line implements Serializable {
         CrosswalkXPosition = calcuteXCrosswalkPosistion();
     }
 
-    public Line(int Id, int MaxCarSpeed, int MinCarSpeed, boolean Direction, int Position, boolean CanCarOvertaking, int CreatedCarCount) {
-        this();
-        this.Id = Id;
-        this.MaxCarSpeed = MaxCarSpeed;
-        this.MinCarSpeed = MinCarSpeed;
-        this.Direction = Direction;
-        this.YPosition = Position;
-        this.CreatedCarCount = CreatedCarCount;
-        this.CanCarOvertaking = CanCarOvertaking;
-        CrosswalkXPosition = calcuteXCrosswalkPosistion();
-    }
-
     public int getYPosition() {
         return YPosition;
     }
 
     public boolean getCanCarOvertaking() {
         return CanCarOvertaking;
-    }
-
-    public int getCreatedCarCount() {
-        return CreatedCarCount;
     }
 
     public int getMinCarSpeed() {
@@ -84,11 +69,10 @@ public final class Line implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Line,%d,%d,%d,%s,%d,%s,%d", Id, MaxCarSpeed, MinCarSpeed, Direction == true ? "1" : "0", YPosition, CanCarOvertaking == true ? "1" : "0", CreatedCarCount);
+        return String.format("Line,%d,%d,%d,%s,%d,%s", Id, MaxCarSpeed, MinCarSpeed, Direction == true ? "1" : "0", YPosition, CanCarOvertaking == true ? "1" : "0");
     }
 
     public void addCar(Car newCar) {
-        increaseCreatedCarCount();
         Cars.add(newCar);
     }
 
@@ -98,26 +82,20 @@ public final class Line implements Serializable {
                 Car lastCar = Cars.get(Cars.size() - 1);
                 if (this.getDirection() == Const.LINE_DIRECTION_LTR) {
                     if (lastCar.getEndPosition() > Const.LINE_DISTANCE_NEED_TO_CREATE_NEW_CAR) {
-                        newCar.setId(CreatedCarCount);
                         Cars.add(newCar);
-                        CreatedCarCount++;
                         return true;
                     }
                 } else if (lastCar.getEndPosition() + Const.LINE_DISTANCE_NEED_TO_CREATE_NEW_CAR < Const.GAME_WINDOWS_WIDTH) {
-                    newCar.setId(CreatedCarCount);
                     Cars.add(newCar);
-                    CreatedCarCount++;
                     return true;
                 }
-
             } else {
-                newCar.setId(CreatedCarCount);
                 Cars.add(newCar);
-                CreatedCarCount++;
                 return true;
             }
             return false;
         } catch (Exception ex) {
+            new ExceptionWriter().write("Line createNewCar()", ex, false);
             return false;
         }
 
@@ -145,9 +123,4 @@ public final class Line implements Serializable {
             return result;
         }
     }
-
-    public void increaseCreatedCarCount() {
-        CreatedCarCount++;
-    }
-
 }

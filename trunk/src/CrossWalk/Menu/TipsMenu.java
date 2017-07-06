@@ -1,6 +1,7 @@
 package CrossWalk.Menu;
 
-import java.awt.Color;
+import CrossWalk.Utilities.Const;
+import javax.swing.JOptionPane;
 
 public class TipsMenu extends Menu {
 
@@ -10,8 +11,7 @@ public class TipsMenu extends Menu {
 
     @Override
     protected void createPanel() {
-        
-
+         JOptionPane.showMessageDialog(null, Const.TIPS, "نکات",JOptionPane.INFORMATION_MESSAGE);
     }
 
 }

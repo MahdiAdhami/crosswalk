@@ -59,7 +59,7 @@ public class ResumeAndLoad {
             while (LinesReader.hasNextLine()) {
                 nextLineFromReader = LinesReader.nextLine();
                 String[] temp = nextLineFromReader.split(",");
-                lines.add(new Line(Integer.parseInt(temp[1]), Integer.parseInt(temp[2]), Integer.parseInt(temp[3]), "1".equals(temp[4]), Integer.parseInt(temp[5]), "1".equals(temp[6]), Integer.parseInt(temp[7])));
+                lines.add(new Line(Integer.parseInt(temp[1]), Integer.parseInt(temp[2]), Integer.parseInt(temp[3]), "1".equals(temp[4]), Integer.parseInt(temp[5]), "1".equals(temp[6])));
             }
 
             while (CarReader.hasNextLine()) {
@@ -68,9 +68,9 @@ public class ResumeAndLoad {
                 Line tempLine = lines.get(Integer.parseInt(temp[5]) - 1);
 
                 if (tempLine.getDirection() == Const.LINE_DIRECTION_LTR) {
-                    tempLine.getCars().add(new CarLtr(Integer.parseInt(temp[1]), Float.parseFloat(temp[2]), Float.parseFloat(temp[3]), temp[4], tempLine));
+                    tempLine.getCars().add(new CarLtr(Float.parseFloat(temp[1]), Float.parseFloat(temp[2]), temp[3], tempLine));
                 } else {
-                    tempLine.getCars().add(new CarRtl(Integer.parseInt(temp[1]), Float.parseFloat(temp[2]), Float.parseFloat(temp[3]), temp[4], tempLine));
+                    tempLine.getCars().add(new CarRtl(Float.parseFloat(temp[1]), Float.parseFloat(temp[2]), temp[3], tempLine));
                 }
 
             }

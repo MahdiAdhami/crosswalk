@@ -114,6 +114,7 @@ public final class Sheep implements Drawable, Serializable {
         if (Const.TOP_MARGIN - getSheepWidth() >= getYPositionForDraw()) {
             return;
         }
+        Score += Const.SHEEP_SCORE_INCREASE / 10;
         ImageStatus = 0;
         PositionOfSheep[1] -= MoveRate[1];
     }
@@ -207,7 +208,7 @@ public final class Sheep implements Drawable, Serializable {
 
     private void goToNextLevel() {
         Level++;
-        Score += 50;
+        Score += Const.SHEEP_SCORE_INCREASE;
         setDefaultPosition();
         checkLine();
     }

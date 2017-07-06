@@ -3,24 +3,20 @@ Car Base Class
  */
 package CrossWalk.Object;
 
-import CrossWalk.Object.Line;
 import CrossWalk.Utilities.Const;
 import CrossWalk.Menu.GameSetting;
-import CrossWalk.Object.Drawable;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 public abstract class Car implements Moveable, Drawable, Serializable {
 
-    private int Id;
     private float HeadPosition;
     private float Speed;
     private final CarType CarType;
+    private float TempCarSpeed;
+    private boolean IsNowOverTaking;
+    private int IncreasLinePosition;
     private Line Line;
-
-    public float TempCarSpeed;
-    public boolean IsNowOverTaking;
-    public int IncreasLinePosition;
 
     // Constructors
     // Create new random car
@@ -32,8 +28,7 @@ public abstract class Car implements Moveable, Drawable, Serializable {
     }
 
     // Create new car from file data
-    public Car(int Id, float HeadPosition, float Speed, String CarType, Line Line) {
-        this.Id = Id;
+    public Car(float HeadPosition, float Speed, String CarType, Line Line) {
         this.HeadPosition = HeadPosition;
         this.Speed = Speed;
         this.CarType = new CarType(Line.getDirection(), CarType);
@@ -41,10 +36,6 @@ public abstract class Car implements Moveable, Drawable, Serializable {
     }
 
     // Getter methods
-    public int getId() {
-        return Id;
-    }
-
     public CarType getCarType() {
         return CarType;
     }
@@ -67,24 +58,39 @@ public abstract class Car implements Moveable, Drawable, Serializable {
     private float getSpeed() {
         return (TempCarSpeed > 0) ? TempCarSpeed : Speed;
     }
+    
+    public boolean getIsNowOverTaking(){
+        return IsNowOverTaking;
+    }
+    public int getIncreasLinePosition(){
+        return IncreasLinePosition;
+    }
 
     // Over ride toString Mehod
     @Override
     public String toString() {
-        return String.format("Car,%d,%f,%f,%s,%d", Id, HeadPosition, Speed, CarType.getCarNameAndType(), Line.getId());
+        return String.format("Car,%f,%f,%s,%d", HeadPosition, Speed, CarType.getCarNameAndType(), Line.getId());
     }
 
     // Setter methods
-    public void setId(int id) {
-        Id = id;
-    }
-
     public void setSpeed(float speed) {
         Speed = speed;
     }
 
     public void setLine(Line line) {
         Line = line;
+    }
+
+    public void setTempCarSpeed(float tempCarSpeed) {
+        Speed = tempCarSpeed;
+    }
+
+    public void setIsNowOverTaking(boolean isNowOverTaking) {
+        IsNowOverTaking = isNowOverTaking;
+    }
+
+    public void setIncreasLinePosition(int increasLinePosition) {
+        IncreasLinePosition = increasLinePosition;
     }
 
     public void setHeadPosition(float headPosition) {
@@ -133,5 +139,5 @@ public abstract class Car implements Moveable, Drawable, Serializable {
     // Implements Moveable
     @Override
     public abstract int getXPositionForDraw();
-    
+
 }

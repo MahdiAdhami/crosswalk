@@ -1,26 +1,16 @@
 package CrossWalk.Object;
 
-import CrossWalk.Object.Line;
 import CrossWalk.Utilities.Const;
 import CrossWalk.UI.InitGraphic;
-import java.util.ArrayList;
 
 public class CarRtl extends Car {
 
-    public CarRtl(int Speed, CarType CarType, Line Line) {
+    public CarRtl(int Speed, CrossWalk.Object.CarType CarType, CrossWalk.Object.Line Line) {
         super(Const.GAME_WINDOWS_WIDTH, Speed, CarType, Line);
     }
 
-    public CarRtl(float head, int Speed, CarType CarType, Line Line) {
-        super(head, Speed, CarType, Line);
-    }
-
-    public CarRtl(int Id, float HeadPosition, float Speed, String CarType, Line Line) {
-        super(Id, HeadPosition, Speed, CarType, Line);
-    }
-
-    public CarRtl(int Id, float Speed, String CarType, Line Line) {
-        super(Id, Const.GAME_WINDOWS_WIDTH, Speed, CarType, Line);
+    public CarRtl(float HeadPosition, float Speed, String CarType, CrossWalk.Object.Line Line) {
+        super(HeadPosition, Speed, CarType, Line);
     }
 
     @Override
@@ -61,13 +51,15 @@ public class CarRtl extends Car {
     @Override
     public int getYPositionForDraw() {
         int linePosition = getLine().getYPosition();
-        if (IsNowOverTaking) {
-            IncreasLinePosition += Const.CAR_INCREASE_POSITION_IN_Y;
-            if (IncreasLinePosition <= Const.LINE_IMAGE_HEIGHT) {
-                return linePosition += IncreasLinePosition - Const.LINE_IMAGE_HEIGHT;
+        if (getIsNowOverTaking()) {
+            int increasPostion = getIncreasLinePosition();
+            
+            setIncreasLinePosition(increasPostion + Const.CAR_INCREASE_POSITION_IN_Y);
+            if (increasPostion <= Const.LINE_IMAGE_HEIGHT) {
+                return linePosition += increasPostion - Const.LINE_IMAGE_HEIGHT;
             }
-            IsNowOverTaking = false;
-            IncreasLinePosition = 0;
+            setIsNowOverTaking(false);
+            setIncreasLinePosition(0);
         }
         return linePosition;
     }
@@ -84,7 +76,7 @@ public class CarRtl extends Car {
 
  @Override
     public void checkCarAccident(Line otherLine) {
-        TempCarSpeed = 0;
+       setTempCarSpeed(0);
 
         for (Car carTemp2 : getLine().getCars()) {
             if (carTemp2.getHeadPosition() > getHeadPosition() && getHeadPosition() <= carTemp2.getEndPosition() + Const.CAR_SPEED_DISTANCE_FOR_REACH) {
@@ -94,10 +86,10 @@ public class CarRtl extends Car {
                     getLine().disposeCar(this);
                     setLine(otherLine);
                     otherLine.addCar(this);
-                    IsNowOverTaking = true;
+                    setIsNowOverTaking(true);
 
                 } else {
-                    TempCarSpeed = carTemp2.getNowSpeed();
+                    setTempCarSpeed(carTemp2.getNowSpeed());
                 }
 
                 break;
