@@ -26,13 +26,13 @@ public class SheepMoverInBotGame implements Runnable {
     @Override
     public void run() {
         while (true) {
-            if (InitGame.GameStop) {
-                continue;
-            }
             if (InitGame.GameEnd) {
                 break;
             }
-
+            if (InitGame.GameStop) {
+                continue;
+            }
+            
             // New random int
             int key = Const.RAND_METHOD.nextInt(RandRate);
 

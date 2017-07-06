@@ -41,7 +41,7 @@ public final class Sheep implements Drawable, Serializable {
 
     public Sheep() {
         Level = 1;
-        Score = 50;
+        Score = 0;
         Life = 3;
         this.ImageCode = String.valueOf(GameSetting.getSheepImageNumber());
         this.PositionOfSheep = new float[2];
@@ -189,14 +189,13 @@ public final class Sheep implements Drawable, Serializable {
     }
 
     public void gameOver() {
-        if (Life > 0) {
+        if (Life > 1) {
             Life--;
             setDefaultPosition();
             checkLine();
         } else {
             InitGame.GameEnd = true;
             JOptionPane.showMessageDialog(null, "باختی جیگر!", "له شدی عزیزم", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
         }
     }
 

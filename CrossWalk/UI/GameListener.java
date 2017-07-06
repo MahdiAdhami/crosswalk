@@ -11,15 +11,12 @@ import CrossWalk.Object.Line;
 import CrossWalk.Object.Sheep;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class GameListener {
 
     private final KeyListener KeyListener;
-    private final MouseListener MouseListener;
 
     public GameListener(ArrayList<Line> Lines) {
 
@@ -34,9 +31,9 @@ public class GameListener {
                     saveGame.SaveGameForResume(Lines);
                     JOptionPane.showMessageDialog(null, "بازی با موفقیت ذخیره شد و در منوی اصلی قابل بازیابی است!", "ذخیره شد", JOptionPane.INFORMATION_MESSAGE);
                 }
-                else if (keyCode == KeyEvent.VK_ESCAPE) {
+                else if (keyCode == KeyEvent.VK_ESCAPE ||keyCode == KeyEvent.VK_P) {
                     InitGame.GameStop = true;
-                    ResumeGameMenu menu = new ResumeGameMenu();
+                    ResumeGameMenu menu = new ResumeGameMenu(Lines);
                     menu.show();
                 }
                 else if (Sheep.AutoMove) {
@@ -55,43 +52,10 @@ public class GameListener {
             }
         };
 
-        MouseListener = new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (e.getX() >= 2 && e.getX() < 90 && e.getY() > 0 && e.getY() < 60) {
-                    InitGame.GameStop = !InitGame.GameStop;
-                } else if (e.getX() > 100 && e.getX() < 320 && e.getY() > 0 && e.getY() < 60) {
-                    ResumeAndLoad saveGame = new ResumeAndLoad();
-                    saveGame.SaveGameForResume(Lines);
-                    InitGame.GameStop = !InitGame.GameStop;
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-
-        };
     }
 
     public KeyListener getKeyListener() {
         return KeyListener;
     }
 
-    public MouseListener getMouseListener() {
-        return MouseListener;
-    }
 }

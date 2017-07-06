@@ -47,6 +47,9 @@ public class InitGraphic extends JPanel implements Runnable {
     // Middle line Image
     private BufferedImage HeartImage;
 
+    // Main Frame of game 
+    private JFrame GameFrame;
+
     // Constructor for init lines and window
     public InitGraphic(ArrayList<Line> Lines) {
         super();
@@ -58,23 +61,22 @@ public class InitGraphic extends JPanel implements Runnable {
 
     // Initialize game window
     private void setInit() {
-        JFrame gameFrame = new JFrame(Const.GAME_NAME);
+        GameFrame = new JFrame(Const.GAME_NAME);
         try {
             HeartImage = ImageIO.read(new File(Const.ROOT_PATH + Const.SHEEP_HEART_PATH_IMAGE));
             CrosswalkImage = ImageIO.read(new File(Const.ROOT_PATH + Const.CROSSWALK_IMAGE_WITH_PLACEHOLDER.replace("{0}", String.valueOf(GameSetting.getCrossWalkImageNumber()))));
             LineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.LINE_IMAGE_PATH_WITH_PLACEHOLDER.replace("{0}", String.valueOf(GameSetting.getLineImageNumber()))));
             MiddleLineImage = ImageIO.read(new File(Const.ROOT_PATH + Const.MIDDLE_LINE_IMAGE_PATH.replace("{0}", String.valueOf(GameSetting.getMiddleLineImageNumber()))));
-            gameFrame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
+            GameFrame.setIconImage(ImageIO.read(new File(Const.ROOT_PATH + Const.GAME_ICON)));
         } catch (IOException ex) {
-            new ExceptionWriter().write("InitGraphic setInit()",ex,false);
+            new ExceptionWriter().write("InitGraphic setInit()", ex, false);
         }
 
         // Add listeners for mouse and keyboard events
         GameListener gameListener = new GameListener(this.Lines);
-        gameFrame.addKeyListener(gameListener.getKeyListener());
-        gameFrame.addMouseListener(gameListener.getMouseListener());
+        GameFrame.addKeyListener(gameListener.getKeyListener());
 
-        gameFrame.addWindowListener(new WindowAdapter() {
+        GameFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 InitGame.GameEnd = true;
@@ -83,18 +85,19 @@ public class InitGraphic extends JPanel implements Runnable {
         });
 
         int gameHeight = (GameSetting.getLtrLineCount() + GameSetting.getRtlLineCount()) * Const.LINE_IMAGE_HEIGHT + 4 * Const.TOP_MARGIN + Const.MIDDLE_LINE_IMAGE_HEIGHT;//+ Const.SHEEP_DISTANCE_LINE_WHEN_GAME_START;
-        gameFrame.setSize(Const.GAME_WINDOWS_WIDTH, gameHeight);
+        GameFrame.setSize(Const.GAME_WINDOWS_WIDTH, gameHeight);
 
-        gameFrame.setVisible(true);
-        gameFrame.setResizable(false);
+        GameFrame.setVisible(true);
+        GameFrame.setResizable(false);
 
-        gameFrame.setBackground(Color.white);
-        gameFrame.setFont(new Font("tahoma", 0, 12));
-        gameFrame.setForeground(Color.red);
+        GameFrame.setBackground(Color.white);
+        GameFrame.setFont(new Font("tahoma", 0, 12));
+        GameFrame.setForeground(Color.red);
 
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        gameFrame.setLocation((dimension.width / 2) - (Const.GAME_WINDOWS_WIDTH / 2), (dimension.height / 2) - (gameHeight / 2));
-        gameFrame.add(this);
+        GameFrame.setLocation((dimension.width / 2) - (Const.GAME_WINDOWS_WIDTH / 2), (dimension.height / 2) - (gameHeight / 2));
+        GameFrame.add(this);
+
     }
 
     // Over ride paint method for draw object 
@@ -134,7 +137,7 @@ public class InitGraphic extends JPanel implements Runnable {
             });
 
         } catch (Exception ex) {
-            new ExceptionWriter().write("InitGraphic paintComponents()", ex,false);
+            new ExceptionWriter().write("InitGraphic paintComponents()", ex, false);
         }
 
         // Draw Sheep
@@ -149,22 +152,17 @@ public class InitGraphic extends JPanel implements Runnable {
             g.drawImage(HeartImage, Const.GAME_WINDOWS_WIDTH - 225 - (i * 15), 5, this);
         }
 
-        g.drawRoundRect(10, 5, 70, 23, 5, 5);
-        g.drawString("توقف بازی", 20, 20);
-
-        g.drawRoundRect(100, 5, 120, 23, 6, 6);
-        g.drawString("ذخیره سازی بازی", 120, 20);
     }
 
     // Implements  Thread 
     @Override
     public void run() {
         while (true) {
-            if (InitGame.GameStop) {
-                continue;
-            }
             if (InitGame.GameEnd) {
                 break;
+            }
+            if (InitGame.GameStop) {
+                continue;
             }
             try {
                 Lines.stream().forEach((Line tempLine) -> {
@@ -192,8 +190,10 @@ public class InitGraphic extends JPanel implements Runnable {
                 Thread.sleep(Const.SLEEP_TIME_RE_PAINTING);
 
             } catch (Exception ex) {
-                new ExceptionWriter().write("InitGraphic run()",ex,false);
+                new ExceptionWriter().write("InitGraphic run()", ex, false);
             }
         }
+        GameFrame.dispose();
+
     }
 }

@@ -6,6 +6,7 @@ package CrossWalk.AutoWork;
 import CrossWalk.Utilities.Const;
 import CrossWalk.UI.InitGraphic;
 import CrossWalk.Object.Sheep;
+import CrossWalk.UI.InitGame;
 import CrossWalk.Utilities.ExceptionWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,6 +25,7 @@ public class SheepMoverInReply implements Runnable {
     // Implemets thread method
     @Override
     public void run() {
+
         Scanner sheepReader = null;
 
         // Find sheep file from path
@@ -37,13 +39,18 @@ public class SheepMoverInReply implements Runnable {
             Sheep.AutoMove = true;
 
             while (sheepReader.hasNextLine()) {
+                if (InitGame.GameEnd) {
+                    break;
+                }
+                if (InitGame.GameStop) {
+                    continue;
+                }
                 String[] split = sheepReader.nextLine().split(",");
-                
 
                 // Sleep time
                 try {
                     long sleepTime = Long.parseLong(split[1]);
-                    
+
                     // Write data time
                     if (sleepTime > 30) {
                         sleepTime -= 30;
@@ -52,7 +59,7 @@ public class SheepMoverInReply implements Runnable {
                     } else if (sleepTime > 5) {
                         sleepTime -= 3;
                     }
-                    
+
                     Thread.sleep(sleepTime);
                 } catch (InterruptedException ex) {
                     new ExceptionWriter().write("SheepMoverInReply run()", ex, false);

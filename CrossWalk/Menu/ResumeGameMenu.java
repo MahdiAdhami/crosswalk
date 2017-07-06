@@ -1,5 +1,7 @@
 package CrossWalk.Menu;
 
+import CrossWalk.Object.Line;
+import CrossWalk.StoreData.ResumeAndLoad;
 import CrossWalk.UI.InitGame;
 import CrossWalk.Utilities.Const;
 import java.awt.BorderLayout;
@@ -8,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,8 +18,13 @@ import javax.swing.border.EmptyBorder;
 
 public class ResumeGameMenu extends Menu {
 
-    public ResumeGameMenu() {
+    private ArrayList<Line> Lines;
+
+    public ResumeGameMenu(ArrayList<Line> Lines) {
         super("توقف بازی", 200, 200);
+
+        this.Lines = Lines;
+        
         Frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -24,6 +32,7 @@ public class ResumeGameMenu extends Menu {
                 e.getWindow().dispose();
             }
         });
+        Frame.setAlwaysOnTop(true);
     }
 
     @Override
@@ -39,57 +48,35 @@ public class ResumeGameMenu extends Menu {
 
         JButton loadLastGame = createButton("ادامه ی بازی",
                 (ActionEvent event) -> {
-                    InitGame.GameStop = true;
+                    InitGame.GameStop = false;
 
                     Frame.setVisible(false);
                     Frame.dispose();
-
                 }
         );
 
         controls.add(loadLastGame);
 
-        JButton startGame = createButton("شروع بازی",
+        JButton startGame = createButton("ذخیره ی بازی",
                 (ActionEvent e) -> {
-                    SelectMapMenu selectMapMenu = new SelectMapMenu(false);
-                    selectMapMenu.show();
+                    ResumeAndLoad saveGame = new ResumeAndLoad();
+                    saveGame.SaveGameForResume(Lines);
+                    Frame.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "بازی با موفقیت ذخیره شد و در منوی اصلی قابل بازیابی است!", "ذخیره شد", JOptionPane.INFORMATION_MESSAGE);
+                    Frame.setVisible(true);
                 }
         );
-        controls.add(startGame);//,BorderLayout.CENTER
+        controls.add(startGame);
 
-        JButton showRepliesButtons = createButton("مشاهده بازی ها",
+        JButton showRepliesButtons = createButton("بازگشت به منو",
                 (ActionEvent e) -> {
-                    if (new File(Const.ROOT_PATH + Const.REPLY_ROOT_ADDRESS).exists()) {
-                        ReplyMenu replyButton = new ReplyMenu();
-                        replyButton.show();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "اول باید یک بازی انجام دهید", "خطایی رخ داده", JOptionPane.ERROR_MESSAGE);
-                    }
-
+                    Frame.dispose();
+                    InitGame.GameEnd = true;
                 }
         );
         controls.add(showRepliesButtons);
 
-        JButton autoGame = createButton("حرکت خودکار ادمک",
-                (ActionEvent e) -> {
-                    SelectMapMenu selectMapMenu = new SelectMapMenu(true);
-                    selectMapMenu.show();
-                }
-        );
-        controls.add(autoGame);//,BorderLayout.CENTER
-
-        JButton Setting = createButton("تنظیمات بازی",
-                (ActionEvent event) -> {
-                    GameSetting.SetDefaultSettingPath();
-                    GameSetting.UpdateSettings();
-
-                    SettingMenu settingMenu = new SettingMenu("تنظیمات", 300, 600);
-                    settingMenu.show();
-                }
-        );
-        controls.add(Setting);
-
-        JButton exit = createButton("خروج",
+        JButton exit = createButton("خروج از کل بازی",
                 (ActionEvent event) -> {
                     System.exit(0);
                 }
