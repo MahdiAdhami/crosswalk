@@ -27,76 +27,76 @@ public class GameSetting {
 
     private static String SettingPath = Const.MAIN_SETTING_FILE;
 
-    private static int rtlLineCount;
-    private static int ltrLineCount;
-    private static int crosswalkMiddlePosition;
-    private static int autoCreateCarRate;
-    private static int lineImageNumber;
-    private static int middleLineImageNumber;
-    private static int crossWalkImageNumber;
-    private static int sheepImageNumber;
-    private static int changedLinesDirections;
-    private static float carsSpeedFromUser;
-    private static String carsNumbers;
+    private static int RtlLineCount;
+    private static int LtrLineCount;
+    private static int CrosswalkMiddlePosition;
+    private static int AutoCreateCarRate;
+    private static int LineImageNumber;
+    private static int MiddleLineImageNumber;
+    private static int CrossWalkImageNumber;
+    private static int SheepImageNumber;
+    private static int ChangedLinesDirections;
+    private static float CarsSpeedFromUser;
+    private static String CarsNumbers;
 
     /// Getter Methods
     public static int getAutoCreateCarRate() {
-        return autoCreateCarRate;
+        return AutoCreateCarRate;
     }
 
     public static int getRtlLineCount() {
-        return rtlLineCount;
+        return RtlLineCount;
     }
 
     public static int getLtrLineCount() {
-        return ltrLineCount;
+        return LtrLineCount;
     }
 
     public static int getCrosswalkMiddlePosition() {
-        return crosswalkMiddlePosition;
+        return CrosswalkMiddlePosition;
     }
 
     public static int getLineImageNumber() {
-        if (lineImageNumber == 0) {
+        if (LineImageNumber == 0) {
             return 1;
         }
-        return lineImageNumber;
+        return LineImageNumber;
     }
 
     public static int getMiddleLineImageNumber() {
-        if (middleLineImageNumber == 0) {
+        if (MiddleLineImageNumber == 0) {
             return 1;
         }
-        return middleLineImageNumber;
+        return MiddleLineImageNumber;
     }
 
     public static int getCrossWalkImageNumber() {
-        if (crossWalkImageNumber == 0) {
+        if (CrossWalkImageNumber == 0) {
             return 1;
         }
-        return crossWalkImageNumber;
+        return CrossWalkImageNumber;
     }
 
     public static int getSheepImageNumber() {
-        if (sheepImageNumber == 0) {
+        if (SheepImageNumber == 0) {
             return 1;
         }
-        return sheepImageNumber;
+        return SheepImageNumber;
     }
 
     public static int getChangedLinesDirections() {
-        return changedLinesDirections;
+        return ChangedLinesDirections;
     }
 
     public static String getCarsNumbers() {
-        if (carsNumbers == null) {
+        if (CarsNumbers == null) {
             return "1234";
         }
-        return carsNumbers;
+        return CarsNumbers;
     }
 
     public static float getCarsSpeed() {
-        return carsSpeedFromUser;
+        return CarsSpeedFromUser;
     }
 
     /// Setter Methods
@@ -112,7 +112,7 @@ public class GameSetting {
     public static boolean setRtlLineCount(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
         if (valueAsInt >= MenuConst.MIN_TOP_LINE_COUNT && valueAsInt <= MenuConst.MAX_TOP_LINE_COUNT) {
-            rtlLineCount = valueAsInt;
+            RtlLineCount = valueAsInt;
             return true;
         }
         return false;
@@ -121,7 +121,7 @@ public class GameSetting {
     public static boolean setLtrLineCount(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
         if (valueAsInt >= MenuConst.MIN_BOTTOM_LINE_COUNT && valueAsInt <= MenuConst.MAX_BOTTOM_LINE_COUNT) {
-            ltrLineCount = valueAsInt;
+            LtrLineCount = valueAsInt;
             return true;
         }
         return false;
@@ -130,7 +130,7 @@ public class GameSetting {
     public static boolean setCrosswalkMiddlePosition(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
         if (valueAsInt >= MenuConst.MIN_CROSSWALK_POS && valueAsInt <= MenuConst.MAX_CROSSWALK_POS) {
-            crosswalkMiddlePosition = valueAsInt;
+            CrosswalkMiddlePosition = valueAsInt;
             return true;
         }
         return false;
@@ -139,7 +139,7 @@ public class GameSetting {
     public static boolean setAutoCreateCarRate(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
         if (valueAsInt >= MenuConst.MIN_CREATE_CAR_RATE && valueAsInt <= MenuConst.MAX_CREATE_CAR_RATE) {
-            autoCreateCarRate = valueAsInt;
+            AutoCreateCarRate = valueAsInt;
             return true;
         }
         return false;
@@ -148,7 +148,7 @@ public class GameSetting {
     public static boolean setChangedLinesDirections(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
         if (valueAsInt >= MenuConst.MIN_LINE_DIRECTION && valueAsInt <= MenuConst.MAX_LINE_DIRECTION) {
-            changedLinesDirections = valueAsInt;
+            ChangedLinesDirections = valueAsInt;
             return true;
         }
         return false;
@@ -156,38 +156,38 @@ public class GameSetting {
 
     public static boolean setCarsNumbers(Object value) {
         String valueAsString = value.toString().trim();
-        carsNumbers = valueAsString;
+        CarsNumbers = valueAsString;
         return true;
     }
 
     public static boolean setLineImageNumber(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
-        lineImageNumber = valueAsInt;
+        LineImageNumber = valueAsInt;
         return true;
     }
 
     public static boolean setMiddleLineImageNumber(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
-        middleLineImageNumber = valueAsInt;
+        MiddleLineImageNumber = valueAsInt;
         return true;
     }
 
     public static boolean setCrossWalkImageNumber(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
-        crossWalkImageNumber = valueAsInt;
+        CrossWalkImageNumber = valueAsInt;
         return true;
     }
 
     public static boolean setSheepImageNumber(Object value) {
         int valueAsInt = Integer.parseInt(value.toString().trim());
-        sheepImageNumber = valueAsInt;
+        SheepImageNumber = valueAsInt;
         return true;
     }
 
     public static boolean setCarsSpeed(Object value) {
         Float valueAsFloat = Float.parseFloat(value.toString().trim());
         if (valueAsFloat >= MenuConst.MIN_CARS_SPEED && valueAsFloat <= MenuConst.MAX_CARS_SPEED) {
-            carsSpeedFromUser = valueAsFloat;
+            CarsSpeedFromUser = valueAsFloat;
             return true;
         }
         return false;
@@ -256,6 +256,10 @@ public class GameSetting {
     }
 
     public static void writeSetting(String path) {
+//        File settingFolder = new File(Const.ROOT_PATH + path);
+//        if(!(settingFolder.exists())){
+//            settingFolder.mkdir();
+//        }
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();

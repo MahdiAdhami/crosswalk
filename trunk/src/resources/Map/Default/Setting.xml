@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Settings>
     <GameSettings>
-        <rtlLineCount>3</rtlLineCount>
-        <ltrLineCount>3</ltrLineCount>
-        <autoCreateCarRate>1000</autoCreateCarRate>
-        <crosswalkMiddlePosition>400</crosswalkMiddlePosition>
-        <lineImageNumber>1</lineImageNumber>
-        <sheepImageNumber>1</sheepImageNumber>
-        <lineDirection>0</lineDirection>
-        <carsNumbers>13</carsNumbers>
-        <carsSpeed>3.000000</carsSpeed>
-        <middleLineImageNumber>1</middleLineImageNumber>
-        <crossWalkImageNumber>1</crossWalkImageNumber>
+        <RtlLineCount>2</RtlLineCount>
+        <LtrLineCount>2</LtrLineCount>
+        <AutoCreateCarRate>2000</AutoCreateCarRate>
+        <CrosswalkMiddlePosition>400</CrosswalkMiddlePosition>
+        <LineImageNumber>1</LineImageNumber>
+        <SheepImageNumber>1</SheepImageNumber>
+        <LineDirection>0</LineDirection>
+        <CarsNumbers>1234</CarsNumbers>
+        <CarsSpeed>3.000000</CarsSpeed>
+        <MiddleLineImageNumber>1</MiddleLineImageNumber>
+        <CrossWalkImageNumber>1</CrossWalkImageNumber>
     </GameSettings>
 </Settings>
