@@ -47,23 +47,30 @@ public class SheepMoverInReply implements Runnable {
                 }
                 String[] split = sheepReader.nextLine().split(",");
 
+                long sleepTime = Long.parseLong(split[1]);
+                // Write data time
+                if (sleepTime >= 5) {
+                    sleepTime -= 5;
+                }
+
                 // Sleep time
                 try {
-                    long sleepTime = Long.parseLong(split[1]);
-
-                    // Write data time
-                    if(sleepTime >= 5) {
-                        sleepTime -= 5;
-                    }
-
                     Thread.sleep(sleepTime);
                 } catch (InterruptedException ex) {
                     new ExceptionWriter().write("SheepMoverInReply run()", ex, false);
                 }
                 InitGraphic.Sheep.move(Integer.parseInt(split[0]));
             }
-
             sheepReader.close();
+            
+            // Sleep time for end game
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                new ExceptionWriter().write("SheepMoverInReply run()", ex, false);
+            }
+            InitGame.GameEnd = true;
+
         }
     }
 }

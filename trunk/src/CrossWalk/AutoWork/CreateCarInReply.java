@@ -61,10 +61,15 @@ public class CreateCarInReply extends CreateCar {
 
                 LocalDateTime tempDate2 = LocalDateTime.now();
                 long diffInMilli = ChronoUnit.MILLIS.between(tempDate, tempDate2);
-                System.out.println(diffInMilli);
                 tempDate = tempDate2;
-
             }
+            
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                new ExceptionWriter().write("SheepMoverInReply run()", ex, false);
+            }
+            InitGame.GameEnd = true;
         }
     }
 
