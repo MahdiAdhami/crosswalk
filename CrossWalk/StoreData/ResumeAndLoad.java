@@ -65,7 +65,7 @@ public class ResumeAndLoad {
             while (CarReader.hasNextLine()) {
                 nextLineFromReader = CarReader.nextLine();
                 String[] temp = nextLineFromReader.split(",");
-                Line tempLine = lines.get(Integer.parseInt(temp[5]) - 1);
+                Line tempLine = lines.get(Integer.parseInt(temp[4]) - 1);
 
                 if (tempLine.getDirection() == Const.LINE_DIRECTION_LTR) {
                     tempLine.getCars().add(new CarLtr(Float.parseFloat(temp[1]), Float.parseFloat(temp[2]), temp[3], tempLine));
