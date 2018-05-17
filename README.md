@@ -1,4 +1,2 @@
 # crosswalk
 
-# license
-# mit
